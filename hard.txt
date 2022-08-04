@@ -1,0 +1,17 @@
+Judul		: Pembuatan Sistem Pengadaan Bantuan Pertanian untuk Kelompok Tani di Kabupaten Toba
+
+Topik		: RPLSI
+
+client	: Kedinasan Pertanian
+
+Dasar Masalah	:
+	- Pemberian bantuan agar tidak diterima oleh kelompok yang sama (1x2 thn)
+	- Pemerataan pemberian bantuan untuk kelompok tani
+	- 
+
+Cara Tradisional	: 
+	- 
+
+Item		:
+	- Bibit Jagung
+	- dll
