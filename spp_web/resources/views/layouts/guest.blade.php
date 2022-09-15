@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SPP Toba | @yield('title')</title>
+    <title>{{ env('APP_NICK_NAME') }} | @yield('title')</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
@@ -21,7 +21,16 @@
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="#"><b>Admin</b>LTE</a>
+            <a href="#">
+                <b>
+                    {{ env('APP_NAME') }}
+                </b>
+            </a>
+            <p>
+                <small>
+                    ({{ env('APP_NICK_NAME') }})
+                </small>
+            </p>
         </div>
         <!-- /.auth-logo -->
         <div class="card">
