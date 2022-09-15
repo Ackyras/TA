@@ -1,0 +1,52 @@
+1. Role
+	-	Koordinator Penyeluh (perwakilan kecamatan)
+		-	Memasukkan data pengajuan desa
+		-	melihat apa aja data pengajuan desa
+		-	
+
+	-	kepala bidang
+		-	List semua pengajuan difilter berdasarkan bidang pengajuan
+		-	memilih pengajuan yang dilaksanakan
+		-	menampilkan pemberitahuan bahwa desa sudah menerima bantuan lain dari bidang lain
+		-	filter berdasarkan terealisasikan, belum direlaisasikan, tidak direalisasikan per tahunnya
+		-	daftar pengajuan yang dipilih dimasukkan sebagai kegiatan tahun berjalan
+		-	
+
+	-	Kadis
+		-	menampilkan pengajuan bantuan filter berdasarkan yang masuk kegiatan tahun berjalan
+		-	
+
+2. Proposal Pengadaan
+	-	Masuk dari kelompok tani (apa aja requestnya) ke kecamatan
+	-	Kecamatan ngirim ke kabupaten
+	-	
+
+3. Bantuan
+	-	Bibit tanaman pangan
+	-	
+
+4. kepala bidang 
+	-	List semua pengajuan
+	-	filter berdasarkan terealisasikan, belum direlaisasikan, tidak direalisasikan per tahunnya
+	-	daftar pengajuan yang dipilih dimasukkan sebagai kegiatan tahun berjalan
+
+5. Kegiatan tahun berjalan
+	-	
+
+DB STurcture
+	-	Kecamatan
+	-	Desa
+	-	Kelompok Tani
+	-	Bantuan
+
+6. Data yang diperlukan dari dinas	
+	-	Kamus Usulan Umum
+	-	Form pengajuan(field dibutuhkan untuk disimpan)
+	-	form laporan akhir (apa saja yang mau ditampilkan, dimana mau ditampilkan, dan siapa yang menampilkan)
+	-	Struktur
+
+
+
+
+
+
