@@ -1,5 +1,6 @@
 <?php
 
+use App\Providers\RepositoryServiceProvider;
 use Illuminate\Support\Facades\Facade;
 
 return [
@@ -16,6 +17,19 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Version
+    |--------------------------------------------------------------------------
+    |
+    | This value is the version of your application. This value is used when the
+    | framework needs to place the application's version in a notification or
+    | any other location as required by the application or its packages.
+    |
+    */
+
+    'version' => env('APP_VERSION', '1'),
 
     /*
     |--------------------------------------------------------------------------
@@ -197,6 +211,9 @@ return [
 
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+
+        // Repository Service Provider
+        RepositoryServiceProvider::class
 
     ],
 
