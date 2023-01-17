@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\User\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,7 +23,14 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
     Route::controller(DashboardController::class)->group(function () {
         Route::get('', 'index')->name('index');
     });
-    // Route::get('/dashboard', )->name('dashboard');
+
+    Route::resource(
+        'users',
+        UserController::class,
+        [
+            'names'    =>  'user'
+        ]
+    );
 });
 
 
