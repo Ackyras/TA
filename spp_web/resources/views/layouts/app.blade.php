@@ -52,6 +52,7 @@
 
             <!-- Main content -->
             <section class="content">
+                @include('components.dashboard.alert')
 
                 <!-- Default box -->
                 @yield('content')
