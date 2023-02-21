@@ -110,5 +110,18 @@ class DistrictController extends Controller
     public function destroy(District $district)
     {
         //
+        if ($district->delete()) {
+            return back()->with(
+                [
+                    'destroyed'   =>  'Data desa berhasil dihapus'
+                ]
+            );
+        }
+
+        return back()->with(
+            [
+                'failed'    =>  'Data desa gagal dihapus'
+            ]
+        );
     }
 }

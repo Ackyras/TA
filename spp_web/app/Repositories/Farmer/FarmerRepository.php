@@ -5,9 +5,8 @@ namespace App\Repositories\Farmer;
 use App\Models\Village;
 use App\Models\District;
 use App\Repositories\Village\BaseVillageRepository;
-use App\Interfaces\Repository\VillageRepositoryInterface;
 
-class FarmerRepository extends BaseVillageRepository implements VillageRepositoryInterface
+class FarmerRepository extends BaseVillageRepository
 {
     protected $indexTableAction = [
         'show' => [
