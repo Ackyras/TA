@@ -4,17 +4,18 @@ namespace App\Http\Controllers\Dashboard\User;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Repositories\User\UserRepository;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Interfaces\Repository\UserRepositoryInterface;
 
 class UserController extends Controller
 {
-    private UserRepositoryInterface $repo;
+    private UserRepository $repo;
 
-    public function __construct(UserRepositoryInterface $userRepositoryInterface)
+    public function __construct(UserRepository $userRepository)
     {
-        $this->repo = $userRepositoryInterface;
+        $this->repo = $userRepository;
     }
 
     /**

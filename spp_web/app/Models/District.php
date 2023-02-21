@@ -17,4 +17,9 @@ class District extends Model
     {
         return $this->hasMany(Village::class);
     }
+
+    public function farmers()
+    {
+        return $this->hasManyThrough(Farmer::class, Village::class);
+    }
 }

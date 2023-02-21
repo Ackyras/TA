@@ -20,7 +20,18 @@ trait DatatableTrait
         } else {
             $datatable['rows'] = $datas;
         }
+        // dd($datatable);
 
         return $datatable;
     }
+
+    // public function customizeActions(array $actions)
+    // {
+    //     if (!is_null($actions)) {
+    //         foreach ($actions as $action) {
+    //             if(isset($action['']))
+    //         }
+    //     }
+    //     return $actions;
+    // }
 }
