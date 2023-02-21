@@ -22,8 +22,7 @@
         <!-- SidebarSearch Form -->
         <div class="form-inline">
             <div class="input-group" data-widget="sidebar-search">
-                <input class="form-control form-control-sidebar" type="search" placeholder="Search"
-                    aria-label="Search">
+                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
                 <div class="input-group-append">
                     <button class="btn btn-sidebar">
                         <i class="fas fa-search fa-fw"></i>
@@ -34,8 +33,7 @@
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                data-accordion="false">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                 with font-awesome or any other icon font library -->
                 <li class="nav-header">User</li>
@@ -57,17 +55,27 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-header">EXAMPLES</li>
+                <li class="nav-header">Daerah</li>
                 <li class="nav-item">
-                    <a href="{{ route('dashboard.index') }}"
-                        class="nav-link {{ request()->routeIs('dashboard.index') ? 'active' : '' }}">
+                    <a href="{{ route('dashboard.district.index') }}"
+                        class="nav-link {{ request()->routeIs('dashboard.district.*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-home"></i>
+                        <p>
+                            Kecamatan
+                        </p>
+                    </a>
+                </li>
+                {{-- <li class="nav-header">EXAMPLES</li>
+                <li class="nav-item">
+                    <a href="{{ route('dashboard.district.index') }}"
+                        class="nav-link {{ request()->routeIs('dashboard.district.index') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-home"></i>
                         <p>
                             Beranda
                         </p>
                     </a>
-                </li>
-                <li class="nav-header">MULTI LEVEL EXAMPLE</li>
+                </li> --}}
+                {{-- <li class="nav-header">MULTI LEVEL EXAMPLE</li>
                 <li class="nav-item">
                     <a href="#" class="nav-link active">
                         <i class="fas fa-circle nav-icon"></i>
@@ -150,7 +158,7 @@
                         <i class="nav-icon far fa-circle text-info"></i>
                         <p>Informational</p>
                     </a>
-                </li>
+                </li> --}}
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

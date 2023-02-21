@@ -22,7 +22,8 @@
                 <td class="d-flex d-inline-block">
                     @foreach ($table['actions'] as $action)
                     <x-button :text="$action['text']" :type="$action['type']"
-                        :route="route($action['route'], $row['id'])" :color="$action['color']" />
+                        :route="route($action['route'], $getActionParameter($action, $row))"
+                        :color="$action['color']" />
                     @endforeach
                 </td>
                 @endif
