@@ -36,8 +36,9 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                 with font-awesome or any other icon font library -->
-                <li class="nav-header">User</li>
-                <li class="nav-item {{ request()->routeIs('dashboard.user.*') ? 'active menu-open' : '' }}">
+                <li class="nav-header">Manajemen Kadis</li>
+                <li class="nav-header">Settings</li>
+                <li class="nav-item {{ request()->routeIs('dashboard.setting.*') ? 'active menu-open' : '' }}">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-users"></i>
                         <p>
@@ -47,10 +48,19 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('dashboard.user.index') }}"
-                                class="nav-link {{ request()->routeIs('dashboard.user.index') ? 'active' : '' }}">
+                            <a href="{{ route('dashboard.setting.user.index') }}"
+                                class="nav-link {{ request()->routeIs('dashboard.setting.user.index') ? 'active' : '' }}">
                                 <i class="fas fa-list nav-icon"></i>
                                 <p>List User</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard.setting.division.index') }}"
+                                class="nav-link {{ request()->routeIs('dashboard.setting.division.index') ? 'active' : '' }}">
+                                <i class="fas fa-list nav-icon"></i>
+                                <p>Bidang</p>
                             </a>
                         </li>
                     </ul>
@@ -73,6 +83,7 @@
                             Desa
                         </p>
                     </a>
+                </li>
                 </li>
                 <li class="nav-header">Manajemen Badan Penyuluh</li>
                 <li class="nav-item">

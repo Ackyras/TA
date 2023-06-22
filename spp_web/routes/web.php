@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\Dashboard\DashboardController;
-use App\Http\Controllers\Dashboard\DistrictController;
-use App\Http\Controllers\Dashboard\FarmerController;
-use App\Http\Controllers\Dashboard\User\UserController;
-use App\Http\Controllers\Dashboard\VillageController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Dashboard\FarmerController;
+use App\Http\Controllers\Dashboard\VillageController;
+use App\Http\Controllers\Dashboard\DistrictController;
+use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\User\UserController;
+use App\Http\Controllers\Dashboard\Division\DivisionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,13 +28,22 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
         Route::get('', 'index')->name('index');
     });
 
-    Route::resource(
-        'users',
-        UserController::class,
-        [
-            'names'    =>  'user',
-        ]
-    );
+    Route::prefix('settings')->as('setting.')->group(function () {
+        Route::resource(
+            'users',
+            UserController::class,
+            [
+                'names'    =>  'user',
+            ]
+        );
+        Route::resource(
+            'divisions',
+            DivisionController::class,
+            [
+                'names'    =>  'division',
+            ]
+        );
+    });
 
     Route::resource(
         'districts',
