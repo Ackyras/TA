@@ -4,12 +4,12 @@
         <caption>{{ $table['caption'] }}</caption>
         <thead>
             <tr>
-                @foreach ($table['headers'] as $header)
-                <th>{{ $header }}</th>
+                @foreach ($table['headers'] as $key=>$header)
+                <th>{{ str()->title($key) }}</th>
                 @endforeach
-                @if ($table['actions'])
+                @isset ($table['actions'])
                 <th>Aksi</th>
-                @endif
+                @endisset
             </tr>
         </thead>
         <tbody>
@@ -18,7 +18,7 @@
                 @foreach ($table['headers'] as $key => $header)
                 <td>{{ $row[$header] }}</td>
                 @endforeach
-                @if ($table['actions'])
+                @isset ($table['actions'])
                 <td class="d-flex d-inline-block">
                     @foreach ($table['actions'] as $action)
                     <x-button :text="$action['text']" :type="$action['type']"
@@ -26,7 +26,7 @@
                         :color="$action['color']" />
                     @endforeach
                 </td>
-                @endif
+                @endisset
             </tr>
             @endforeach
         </tbody>

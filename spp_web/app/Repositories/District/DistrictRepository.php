@@ -48,6 +48,17 @@ class DistrictRepository extends BaseDistrictRepository
         ;
     }
 
+    public function store(array $data)
+    {
+        return District::create($data);
+    }
+
+    public function update(District $district, array $data)
+    {
+        $district->update($data);
+        return $district->wasChanged();
+    }
+
     public function prepareDatatable($datas, $config = null)
     {
         $config = $this->datatableConfig;

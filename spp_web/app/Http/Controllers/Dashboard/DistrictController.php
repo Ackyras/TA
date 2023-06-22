@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\District\StoreDistrictRequest;
+use App\Http\Requests\District\UpdateDistrictRequest;
 use App\Interfaces\Repository\DistrictRepositoryInterface;
 use App\Models\District;
 use App\Repositories\District\DistrictRepository;
@@ -47,9 +49,22 @@ class DistrictController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreDistrictRequest $request)
     {
         //
+        $validated = $request->validated();
+        if ($this->repo->store($validated)) {
+            return back()->with(
+                [
+                    'created'   =>  __('message.district.created')
+                ]
+            );
+        }
+        return back()->with(
+            [
+                'failed'   =>  __('message.district.notCreated')
+            ]
+        );
     }
 
     /**
@@ -96,9 +111,22 @@ class DistrictController extends Controller
      * @param  \App\Models\District  $district
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, District $district)
+    public function update(UpdateDistrictRequest $request, District $district)
     {
         //
+        $validated = $request->validated();
+        if ($this->repo->update($district, $validated)) {
+            return back()->with(
+                [
+                    'created'   =>  __('message.district.updated')
+                ]
+            );
+        }
+        return back()->with(
+            [
+                'failed'   =>  __('message.district.notUpdated')
+            ]
+        );
     }
 
     /**
@@ -113,14 +141,14 @@ class DistrictController extends Controller
         if ($district->delete()) {
             return back()->with(
                 [
-                    'destroyed'   =>  'Data desa berhasil dihapus'
+                    'destroyed'   =>  __('message.district.deleted')
                 ]
             );
         }
 
         return back()->with(
             [
-                'failed'    =>  'Data desa gagal dihapus'
+                'failed'    =>  __('message.district.notDeleted')
             ]
         );
     }

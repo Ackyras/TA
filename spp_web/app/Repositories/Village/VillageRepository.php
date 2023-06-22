@@ -41,11 +41,6 @@ class VillageRepository extends BaseVillageRepository
     public function index()
     {
         return Village::query()
-            ->with(
-                [
-                    'farmers'
-                ]
-            )
             ->withCount(
                 [
                     'farmers'

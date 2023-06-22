@@ -10,7 +10,7 @@ class BaseFarmerRepository extends BaseRepository
         'headers'   => [
             'Nama'          =>  'name',
             'Alamat'        =>  'address',
-            'PIC'           =>  'head',
+            'PIC'           =>  'pic',
         ],
         'caption'   => 'Table of Farmer in District'
     ];

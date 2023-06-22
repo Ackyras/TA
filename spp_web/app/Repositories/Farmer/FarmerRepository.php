@@ -2,11 +2,12 @@
 
 namespace App\Repositories\Farmer;
 
+use App\Models\Farmer;
 use App\Models\Village;
 use App\Models\District;
-use App\Repositories\Village\BaseVillageRepository;
+use App\Repositories\Farmer\BaseFarmerRepository;
 
-class FarmerRepository extends BaseVillageRepository
+class FarmerRepository extends BaseFarmerRepository
 {
     protected $indexTableAction = [
         'show' => [
@@ -33,18 +34,38 @@ class FarmerRepository extends BaseVillageRepository
 
     public function index()
     {
-        return Village::query()
+        return Farmer::query()
             ->with(
                 [
-                    'farmers'
+                    'village'   =>  function ($query) {
+                        $query->select(
+                            [
+                                'id',
+                                'name',
+                                'district_id'
+                            ],
+                        );
+                    },
+                    'village.district'  =>  function ($query) {
+                        $query->select(
+                            [
+                                'id',
+                                'name'
+                            ]
+                        );
+                    }
                 ]
             )
-            ->withCount(
+            ->get(
                 [
-                    'farmers'
-                ]
+                    'name',
+                    'address',
+                    'pic',
+                    'village_id'
+                ],
             )
-            ->get()
+            // ->random(1)
+            // ->dd()
             //
         ;
     }
@@ -52,7 +73,6 @@ class FarmerRepository extends BaseVillageRepository
     public function prepareDatatable($datas, $config = null)
     {
         $config = $this->datatableConfig;
-        // $config['actions'] = $this->indexTableAction;
         return parent::prepareDatatable($datas, $config);
     }
 

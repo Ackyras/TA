@@ -7,14 +7,17 @@ use App\Models\District;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Repositories\Village\VillageRepository;
+use App\Repositories\District\DistrictRepository;
 
 class VillageController extends Controller
 {
     protected VillageRepository $repo;
+    protected DistrictRepository $districtRepo;
 
-    public function __construct(VillageRepository $villageRepository)
+    public function __construct(VillageRepository $villageRepository, DistrictRepository $districtRepository)
     {
         $this->repo = $villageRepository;
+        $this->districtRepo = $districtRepository;
     }
 
     /**
@@ -25,8 +28,10 @@ class VillageController extends Controller
     public function index()
     {
         //
-        $data = $this->repo->index();
-        dd($data);
+        $villages = $this->repo->index();
+        $villageTable = $this->repo->prepareDatatable($villages->toArray());
+        $districts = $this->districtRepo->index();
+        return view('pages.dashboard.village.index', compact('villages', 'villageTable', 'districts'));
     }
 
     /**
@@ -69,7 +74,8 @@ class VillageController extends Controller
             ]
         );
         $table = $this->repo->farmersDatatable($village->farmers->toArray());
-        return view('pages.dashboard.village.show', compact('village'));
+        // dd($table);
+        return view('pages.dashboard.village.show', compact('village', 'table'));
     }
 
     /**
@@ -107,14 +113,14 @@ class VillageController extends Controller
         if ($village->delete()) {
             return back()->with(
                 [
-                    'destroyed'   =>  'Data desa berhasil dihapus'
+                    'destroyed'   =>  __('message.village.deleted')
                 ]
             );
         }
 
         return back()->with(
             [
-                'failed'    =>  'Data desa gagal dihapus'
+                'failed'    =>  __('message.village.notDeleted')
             ]
         );
     }

@@ -1,16 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'List Desa')
-
-@section('css')
-@endsection
+@section('title', 'Detail Desa')
 
 @section('content')
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">List Desa</h3>
+        <h3 class="card-title">Detail Desa {{ $village->name }}</h3>
         <div class="card-tools">
-            <!-- Button trigger modal -->
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createVillageModal">
                 Tambah
             </button>
@@ -43,21 +39,21 @@
         </div>
     </div>
     <div class="card-body">
-        <x-table.datatable :table="$villageTable" />
+        {{--
+        <x-table.datatable :table="$villageTable" /> --}}
+        <table class="table table-sm w-auto table-borderless">
+            <tr scope="row">
+                <th class="w-auto" scope="col">Nama Desa</th>
+                <th class="w-auto" scope="col">:</th>
+                <td class="w-auto" scope="col">{{ $village->name }}</td>
+            </tr>
+            <tr scope="row">
+                <th class="w-auto" scope="col">Jumlah Kelompok Tani</th>
+                <th class="w-auto" scope="col">:</th>
+                <td class="w-auto" scope="col">{{ $village->farmers_count }}</td>
+            </tr>
+        </table>
+        <x-table.datatable :table="$table" />
     </div>
 </div>
-@endsection
-
-@section('script')
-<!-- Select2 -->
-<script src="{{ asset('adminLTE/plugins/select2/js/select2.js') }}"></script>
-
-<script>
-    $(document).ready(function() {
-            $('#select2').select2({
-            theme: 'bootstrap4',
-            dropdownParent: $('#createVillageModal')
-            });
-        });
-</script>
 @endsection

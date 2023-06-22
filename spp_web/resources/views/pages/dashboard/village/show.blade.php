@@ -25,9 +25,7 @@
                 <td class="w-auto" scope="col">{{ $village->farmers_count }}</td>
             </tr>
         </table>
-        {{--
-        {{--
-        <x-table.datatable :table="$table" /> --}} --}}
+        <x-table.datatable :table="$table" />
     </div>
 </div>
 @endsection

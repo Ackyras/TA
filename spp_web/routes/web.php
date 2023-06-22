@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\DistrictController;
+use App\Http\Controllers\Dashboard\FarmerController;
 use App\Http\Controllers\Dashboard\User\UserController;
 use App\Http\Controllers\Dashboard\VillageController;
 use Illuminate\Support\Facades\Route;
@@ -30,7 +31,7 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
         'users',
         UserController::class,
         [
-            'names'    =>  'user'
+            'names'    =>  'user',
         ]
     );
 
@@ -38,12 +39,26 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
         'districts',
         DistrictController::class,
         [
-            'names' =>  'district'
+            'names' =>  'district',
         ]
     );
 
+    Route::resource(
+        'villages',
+        VillageController::class,
+        [
+            'names' =>  'village',
+        ]
+    );
+    Route::resource(
+        'farmers',
+        FarmerController::class,
+        [
+            'names' =>  'farmer',
+        ],
+    );
+
     Route::controller(VillageController::class)->group(function () {
-        // Route::get('/', 'index')->name('index');
         Route::prefix('districts/{district}/village')->as('district.village.')->group(
             function () {
                 Route::get('/create', 'create')->name('create');

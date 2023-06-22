@@ -18,6 +18,9 @@
     <link rel="stylesheet"
         href="{{ asset('adminLTE/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('adminLTE/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+    <!-- Select2 -->
+    <link rel="stylesheet" href="{{ asset('adminLTE/plugins/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('adminLTE/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
     @yield('css')
 </head>
 
@@ -92,9 +95,11 @@
     <script src="{{ asset('adminLTE/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('adminLTE/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
     <script src="{{ asset('adminLTE/plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+    <!-- Select2 -->
+    <script src="{{ asset('adminLTE/plugins/select2/js/select2.min.js') }}"></script>
     <!-- Page specific script -->
     <script>
-        $(function() {
+        $(document).ready(function() {
             $("#datatable").DataTable({
                 "responsive": true,
                 "lengthChange": false,
@@ -112,7 +117,7 @@
             });
         });
     </script>
-    @stack('script')
+    @yield('script')
 </body>
 
 </html>

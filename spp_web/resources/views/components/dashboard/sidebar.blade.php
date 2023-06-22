@@ -59,9 +59,28 @@
                 <li class="nav-item">
                     <a href="{{ route('dashboard.district.index') }}"
                         class="nav-link {{ request()->routeIs('dashboard.district.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-home"></i>
+                        <i class="nav-icon fas fa-circle"></i>
                         <p>
                             Kecamatan
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('dashboard.village.index') }}"
+                        class="nav-link {{ request()->routeIs('dashboard.village.*') ? 'active' : '' }}">
+                        <i class="nav-icon fa fa-circle"></i>
+                        <p>
+                            Desa
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-header">Manajemen Badan Penyuluh</li>
+                <li class="nav-item">
+                    <a href="{{ route('dashboard.farmer.index') }}"
+                        class="nav-link {{ request()->routeIs('dashboard.farmer.*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-layer-group"></i>
+                        <p>
+                            Kelompok Tani
                         </p>
                     </a>
                 </li>

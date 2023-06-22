@@ -3,10 +3,9 @@
 namespace App\Repositories\User;
 
 use App\Repositories\User\BaseUserRepository;
-use App\Interfaces\Repository\UserRepositoryInterface;
 use App\Models\User;
 
-class UserRepository extends BaseUserRepository implements UserRepositoryInterface
+class UserRepository extends BaseUserRepository
 {
     protected $indexTableAction = [
         'show' => [

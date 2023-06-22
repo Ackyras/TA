@@ -19,7 +19,7 @@ class FarmerFactory extends Factory
         return [
             //
             'name'      =>  $this->faker->company(),
-            'address'   =>  $this->faker->address(),
+            'address'   =>  $this->faker->streetAddress(),
             'pic'       =>  $this->faker->name(),
         ];
     }
