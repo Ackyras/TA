@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\User;
 use App\Models\Division;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -15,10 +14,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('division_user', function (Blueprint $table) {
+        Schema::create('programs', function (Blueprint $table) {
             $table->id();
+            $table->string('code')->nullable();
+            $table->string('name');
+            $table->foreignId('parent_id')->nullable()->constrained('programs')->onDelete('cascade');
             $table->foreignIdFor(Division::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
+            $table->boolean('is_parent')->default(false);
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('division_user');
+        Schema::dropIfExists('programs');
     }
 };

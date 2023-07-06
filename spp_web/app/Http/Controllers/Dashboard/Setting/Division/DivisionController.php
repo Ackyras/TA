@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard\Division;
+namespace App\Http\Controllers\Dashboard\Setting\Division;
 
 use App\Models\Division;
 use App\Http\Controllers\Controller;
@@ -22,7 +22,7 @@ class DivisionController extends Controller
         $divisions = $this->repo->index();
         $divisionTable = $this->repo->prepareDatatable($divisions->toArray());
 
-        return view('pages.dashboard.division.index', compact('divisions', 'divisionTable'));
+        return view('pages.dashboard.division.index', compact('divisionTable'));
     }
     /**
      * Show the form for creating a new resource.

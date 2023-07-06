@@ -5,8 +5,9 @@ use App\Http\Controllers\Dashboard\FarmerController;
 use App\Http\Controllers\Dashboard\VillageController;
 use App\Http\Controllers\Dashboard\DistrictController;
 use App\Http\Controllers\Dashboard\DashboardController;
-use App\Http\Controllers\Dashboard\User\UserController;
-use App\Http\Controllers\Dashboard\Division\DivisionController;
+use App\Http\Controllers\Dashboard\Setting\User\UserController;
+use App\Http\Controllers\Dashboard\Setting\Program\ProgramController;
+use App\Http\Controllers\Dashboard\Setting\Division\DivisionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,13 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
             DivisionController::class,
             [
                 'names'    =>  'division',
+            ]
+        );
+        Route::resource(
+            'programs',
+            ProgramController::class,
+            [
+                'names' =>  'program'
             ]
         );
     });

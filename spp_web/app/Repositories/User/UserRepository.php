@@ -24,6 +24,7 @@ class UserRepository extends BaseUserRepository
 
     public function index()
     {
+        // return User::with('divisions')->get();
         return User::all();
     }
 

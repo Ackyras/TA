@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
                 DistrictSeeder::class,
                 FarmerSeeder::class,
                 DivisionSeeder::class,
+                ProgramSeeder::class,
             ]
         );
     }

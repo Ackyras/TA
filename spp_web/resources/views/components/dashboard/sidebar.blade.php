@@ -40,9 +40,9 @@
                 <li class="nav-header">Settings</li>
                 <li class="nav-item {{ request()->routeIs('dashboard.setting.*') ? 'active menu-open' : '' }}">
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-users"></i>
+                        <i class="nav-icon fas fa-cog"></i>
                         <p>
-                            Users
+                            Settings
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -61,6 +61,15 @@
                                 class="nav-link {{ request()->routeIs('dashboard.setting.division.index') ? 'active' : '' }}">
                                 <i class="fas fa-list nav-icon"></i>
                                 <p>Bidang</p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard.setting.program.index') }}"
+                                class="nav-link {{ request()->routeIs('dashboard.setting.program.index') ? 'active' : '' }}">
+                                <i class="fas fa-list nav-icon"></i>
+                                <p>Kamus Usulan</p>
                             </a>
                         </li>
                     </ul>

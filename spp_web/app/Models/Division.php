@@ -18,4 +18,9 @@ class Division extends Model
     {
         return $this->belongsToMany(User::class)->using(DivisionUser::class);
     }
+
+    public function programs()
+    {
+        return $this->hasMany(Program::class);
+    }
 }
