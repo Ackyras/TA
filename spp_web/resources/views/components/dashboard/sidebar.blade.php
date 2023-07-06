@@ -93,14 +93,22 @@
                         </p>
                     </a>
                 </li>
-                </li>
-                <li class="nav-header">Manajemen Badan Penyuluh</li>
                 <li class="nav-item">
                     <a href="{{ route('dashboard.farmer.index') }}"
                         class="nav-link {{ request()->routeIs('dashboard.farmer.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-layer-group"></i>
                         <p>
                             Kelompok Tani
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-header">Manajemen Badan Penyuluh</li>
+                <li class="nav-item">
+                    <a href="{{ route('dashboard.district.index') }}"
+                        class="nav-link {{ request()->routeIs('dashboard.district.*') ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-circle"></i>
+                        <p>
+                            Kecamatan
                         </p>
                     </a>
                 </li>

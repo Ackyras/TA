@@ -3,8 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Village;
+use App\Models\Division;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class UserSeeder extends Seeder
 {
@@ -32,25 +34,27 @@ class UserSeeder extends Seeder
             ]
         );
         $kadis->assignRole('kadis');
-        for ($i = 0; $i < 9; $i++) {
-            $kabid = User::create(
+        $divisions = Division::all();
+        foreach ($divisions as $key => $division) {
+            $kabid  =   User::create(
                 [
-                    'name'          =>  'kabid' . $i,
-                    'email'         =>  'kabid' . $i . '@kabid',
+                    'name'      =>  'Kabid ' . str()->lower($division->name),
+                    'email'     =>  'kabid' . $key + 1 . '@kabid',
                     'password'      =>  bcrypt('password'),
-                ]
+                ],
             );
             $kabid->assignRole('kabid');
         }
-        for ($i = 0; $i < rand(15, 50); $i++) {
+        $villages = Village::all();
+        foreach ($villages as $key => $village) {
             $koor = User::create(
                 [
-                    'name'          =>  'koor' . $i,
-                    'email'         =>  'koor' . $i . '@koor',
-                    'password'      =>  bcrypt('password'),
+                    'name'      =>  'Koor ' . str()->lower($village->name),
+                    'email'     =>  'koor' . $key + 1 . '@koor',
+                    'password'  =>  bcrypt('password'),
                 ]
             );
             $koor->assignRole('koor');
-        }
+        };
     }
 }

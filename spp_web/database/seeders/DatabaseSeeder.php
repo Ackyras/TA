@@ -25,10 +25,10 @@ class DatabaseSeeder extends Seeder
             [
                 RoleSeeder::class,
                 RolePermissionSeeder::class,
-                UserSeeder::class,
+                DivisionSeeder::class,
                 DistrictSeeder::class,
                 FarmerSeeder::class,
-                DivisionSeeder::class,
+                UserSeeder::class,
                 ProgramSeeder::class,
             ]
         );
