@@ -8,12 +8,6 @@ use App\Repositories\Division\BaseDivisionRepository;
 class DivisionRepository extends BaseDivisionRepository
 {
     protected $indexTableAction = [
-        'show' => [
-            'text'  =>  'Lihat',
-            'type'  =>  'redirect',
-            'route' =>  'dashboard.setting.division.show',
-            'color' =>  'primary',
-        ],
         'destroy' => [
             'text'  =>  'Hapus',
             'type'  =>  'delete',
