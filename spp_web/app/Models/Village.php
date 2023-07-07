@@ -24,4 +24,9 @@ class Village extends Model
     {
         return $this->hasMany(Farmer::class);
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class)->using(UserVillage::class);
+    }
 }

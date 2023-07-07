@@ -36,6 +36,7 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                 with font-awesome or any other icon font library -->
+                @canany(['users','divisions','programs'])
                 <li class="nav-header">Settings</li>
                 <li class="nav-item {{ request()->routeIs('dashboard.setting.*') ? 'active menu-open' : '' }}">
                     <a href="#" class="nav-link">
@@ -45,6 +46,7 @@
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
+                    @can('users')
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('dashboard.setting.user.index') }}"
@@ -54,6 +56,8 @@
                             </a>
                         </li>
                     </ul>
+                    @endcan
+                    @can('divisions')
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('dashboard.setting.division.index') }}"
@@ -63,6 +67,8 @@
                             </a>
                         </li>
                     </ul>
+                    @endcan
+                    @can('programs')
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{ route('dashboard.setting.program.index') }}"
@@ -72,8 +78,12 @@
                             </a>
                         </li>
                     </ul>
+                    @endcan
                 </li>
+                @endcanany
+                @canany(['districts','villages','farmers'])
                 <li class="nav-header">Daerah</li>
+                @can('districts')
                 <li class="nav-item">
                     <a href="{{ route('dashboard.district.index') }}"
                         class="nav-link {{ request()->routeIs('dashboard.district.*') ? 'active' : '' }}">
@@ -83,6 +93,8 @@
                         </p>
                     </a>
                 </li>
+                @endcan
+                @can('villages')
                 <li class="nav-item">
                     <a href="{{ route('dashboard.village.index') }}"
                         class="nav-link {{ request()->routeIs('dashboard.village.*') ? 'active' : '' }}">
@@ -92,6 +104,8 @@
                         </p>
                     </a>
                 </li>
+                @endcan
+                @can('farmers')
                 <li class="nav-item">
                     <a href="{{ route('dashboard.farmer.index') }}"
                         class="nav-link {{ request()->routeIs('dashboard.farmer.*') ? 'active' : '' }}">
@@ -101,6 +115,8 @@
                         </p>
                     </a>
                 </li>
+                @endcan
+                @endcanany
                 <li class="nav-header">Manajemen Badan Penyuluh</li>
                 <li class="nav-item">
                     <a href="{{ route('dashboard.district.index') }}"

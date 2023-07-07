@@ -26,6 +26,14 @@ class ProgramRepository extends BaseProgramRepository
     public function index()
     {
         return Division::query()
+            ->when(
+                auth()->user()->hasRole('kabid'),
+                function ($query) {
+                    $query->whereHas('users', function ($query) {
+                        $query->where('users.id', auth()->user()->id);
+                    });
+                }
+            )
             ->with(
                 [
                     'programs' => function ($query) {

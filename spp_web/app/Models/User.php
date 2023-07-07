@@ -49,6 +49,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Division::class)->using(DivisionUser::class);
     }
 
+    public function villages()
+    {
+        return $this->belongsToMany(Village::class)->using(UserVillage::class);
+    }
+
     public function canImpersonate()
     {
         // For example

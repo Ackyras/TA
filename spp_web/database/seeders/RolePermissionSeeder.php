@@ -48,6 +48,9 @@ class RolePermissionSeeder extends Seeder
             [
                 'requests' =>  $allCruds
             ],
+            [
+                'programs' =>  $allCruds
+            ],
         ];
         $dev = Role::where('name', 'dev')->first();
         $kadis = Role::where('name', 'kadis')->first();
@@ -82,6 +85,7 @@ class RolePermissionSeeder extends Seeder
                 'requests.read',
                 'requests.update',
                 'farmers',
+                'programs'
             ]
         );
         $kabid->syncPermissions(
@@ -90,6 +94,7 @@ class RolePermissionSeeder extends Seeder
                 'requests.read',
                 'requests.update',
                 'farmers.read',
+                'programs'
             ]
         );
         $koor->syncPermissions(

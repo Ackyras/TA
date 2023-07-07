@@ -44,6 +44,7 @@ class UserSeeder extends Seeder
                 ],
             );
             $kabid->assignRole('kabid');
+            $kabid->divisions()->attach($division);
         }
         $villages = Village::all();
         foreach ($villages as $key => $village) {
@@ -55,6 +56,7 @@ class UserSeeder extends Seeder
                 ]
             );
             $koor->assignRole('koor');
+            $kabid->villages()->attach($village);
         };
     }
 }
