@@ -1,9 +1,9 @@
 <div>
     <div class="form-group">
         <div class="form-check">
-            <input type="checkbox" class="form-check-input " id="{{ $name }}" name="{{ $name }}" value="{{ $value }}"
-                @if($hidden) hidden @endif>
-            <label class="form-check-label" for="{{ $name }}">{{ $title }}</label>
+            <input type="checkbox" class="form-check-input " id="{{ $id }}" name="{{ $name }}" value="{{ $value }}"
+                @if($hidden) hidden @endif @if($checked) checked @endif>
+            <label class="form-check-label" for="{{ $id }}">{{ $title }}</label>
         </div>
     </div>
     @error($name)
