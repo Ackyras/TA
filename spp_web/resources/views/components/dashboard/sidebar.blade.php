@@ -36,7 +36,6 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                 with font-awesome or any other icon font library -->
-                <li class="nav-header">Manajemen Kadis</li>
                 <li class="nav-header">Settings</li>
                 <li class="nav-item {{ request()->routeIs('dashboard.setting.*') ? 'active menu-open' : '' }}">
                     <a href="#" class="nav-link">
@@ -106,7 +105,7 @@
                 <li class="nav-item">
                     <a href="{{ route('dashboard.district.index') }}"
                         class="nav-link {{ request()->routeIs('dashboard.district.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-circle"></i>
+                        <i class="nav-icon fas fa-cog"></i>
                         <p>
                             Kecamatan
                         </p>

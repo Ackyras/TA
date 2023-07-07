@@ -211,6 +211,8 @@ return [
 
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
+        Lab404\Impersonate\ImpersonateServiceProvider::class,
+
 
         // Repository Service Provider
         RepositoryServiceProvider::class

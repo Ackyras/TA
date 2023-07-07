@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Coordinator\SettingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\FarmerController;
 use App\Http\Controllers\Dashboard\VillageController;
@@ -23,6 +24,8 @@ use App\Http\Controllers\Dashboard\Setting\Division\DivisionController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::impersonate();
 
 Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(function () {
     Route::controller(DashboardController::class)->group(function () {
@@ -88,6 +91,10 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
             }
         );
     });
+});
+
+Route::controller(SettingController::class)->group(function () {
+    Route::get('index', 'index')->name('index');
 });
 
 
