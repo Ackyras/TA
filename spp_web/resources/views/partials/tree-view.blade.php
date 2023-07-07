@@ -42,7 +42,7 @@
                                             :value="$parent['code']. '.'" />
                                         <x-form.input.text name="name" title="Nama Kamus Usulan" />
                                         <x-form.input.checkbox value="{{ true }}" name="is_parent"
-                                            title="Punya subProgram" />
+                                            id="{{ 'is_parent_'.$parent['id']  }}" title="Punya subProgram"  />
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">Close</button>
