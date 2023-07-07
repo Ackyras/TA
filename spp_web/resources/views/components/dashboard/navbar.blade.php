@@ -13,14 +13,14 @@
         @impersonating($guard = null)
         <a class="dropdown-item" href="{{ route('impersonate.leave') }}">
             <i class="far fa-user-circle"></i>
-            Return
+            Return ({{ auth()->id() }})
         </a>
         @endImpersonating
         @canImpersonate()
         <li class="nav-item dropdown">
             <button type="button" class="btn dropdown-toggle" id="navbarDropdown4" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
-                Dev-Tool
+                Dev-Tool ({{ auth()->id() }})
             </button>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown4">
                 <div class="dropdown-item">
