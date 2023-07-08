@@ -31,17 +31,43 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{ route('impersonate', 2) }}">
                     <i class="far fa-eye"></i>
-                    Kadis
+                    Kadis (2)
                 </a>
                 <a class="dropdown-item" href="{{ route('impersonate', 3) }}">
                     <i class="far fa-eye"></i>
-                    Kabid
+                    Kabid (3)
                 </a>
                 <a class="dropdown-item" href="{{ route('impersonate', 7) }}">
                     <i class="far fa-eye"></i>
-                    Koor
+                    Koor (7)
                 </a>
                 <div class="dropdown-divider"></div>
+                <form id="impersonateForm">
+                    @csrf
+
+                    <div class="dropdown-item">
+                        <label for="user_id">User ID:</label>
+                        <input type="text" name="user_id" id="user_id" class="form-control" required>
+                    </div>
+
+                    <div class="dropdown-divider"></div>
+
+                    <button type="submit" class="dropdown-item">
+                        <i class="far fa-eye"></i>
+                        Impersonate User
+                    </button>
+                </form>
+
+                <script>
+                    document.getElementById('impersonateForm').addEventListener('submit', function(event) {
+                        event.preventDefault();
+
+                        const userId = document.getElementById('user_id').value;
+                        const url = "{{ route('impersonate', ':userId') }}".replace(':userId', userId);
+
+                        window.location.href = url;
+                    });
+                </script>
             </div>
         </li>
         @endCanImpersonate
