@@ -56,30 +56,30 @@ class ProgramSeeder extends Seeder
                                     ]
                                 ]
                             ]
-                        ]
-                    ]
-                ],
-                [
-                    'code'          =>  '03.27.02.02',
-                    'name'          =>  'Pengelolaan sumber daya genetik (SDG) hewan, tumbuhan, dan mikro organisme kewenangan kabupaten/kota',
-                    'subprograms'   =>  [
+                        ],
                         [
-                            'code'  =>  '03.27.02.02.03',
-                            'name'  =>  'Pemanfaatan SDG Hewan/Tanaman',
+                            'code'          =>  '03.27.02.02',
+                            'name'          =>  'Pengelolaan sumber daya genetik (SDG) hewan, tumbuhan, dan mikro organisme kewenangan kabupaten/kota',
                             'subprograms'   =>  [
                                 [
-                                    'name'  =>  'Pengembangan tanaman kopi',
-                                ],
-                                [
-                                    'name'  =>  'Pengadaan bibit tanaman kelapa sawit',
-                                ],
-                                [
-                                    'name'  =>  'Pengadaan bibit kopi',
-                                ],
+                                    'code'  =>  '03.27.02.02.03',
+                                    'name'  =>  'Pemanfaatan SDG Hewan/Tanaman',
+                                    'subprograms'   =>  [
+                                        [
+                                            'name'  =>  'Pengembangan tanaman kopi',
+                                        ],
+                                        [
+                                            'name'  =>  'Pengadaan bibit tanaman kelapa sawit',
+                                        ],
+                                        [
+                                            'name'  =>  'Pengadaan bibit kopi',
+                                        ],
+                                    ]
+                                ]
                             ]
                         ]
                     ]
-                ]
+                ],
             ],
             'TPH'   =>  [
                 [
@@ -103,51 +103,51 @@ class ProgramSeeder extends Seeder
                                     ]
                                 ]
                             ]
-                        ]
-                    ]
-                ],
-                [
-                    'code'          =>  '03.27.02.02',
-                    'name'          =>  'Pengelolaan sumber daya genetik (SDG) hewan, tumbuhan, dan mikro organisme kewenangan kabupaten/kota',
-                    'subprograms'   =>  [
+                        ],
                         [
-                            'code'  =>  '03.27.02.02.03',
-                            'name'  =>  'Pemanfaatan SDG Hewan/Tanaman',
+                            'code'          =>  '03.27.02.02',
+                            'name'          =>  'Pengelolaan sumber daya genetik (SDG) hewan, tumbuhan, dan mikro organisme kewenangan kabupaten/kota',
                             'subprograms'   =>  [
                                 [
-                                    'name'  =>  'Pengadaan bibit padi',
-                                ],
-                                [
-                                    'name'  =>  'Pengadaan bibit jagung',
-                                ],
-                                [
-                                    'name'  =>  'Pengembangan tanaman kacang tanah',
-                                ],
-                                [
-                                    'name'  =>  'Pengembangan tanaman bawang merah',
-                                ],
-                                [
-                                    'name'  =>  'Pengembangan tanaman kentang',
-                                ],
-                                [
-                                    'name'  =>  'Pengembangan aneka sayuran',
-                                ],
-                                [
-                                    'name'  =>  'Pengadaan bibit jeruk',
-                                ],
-                                [
-                                    'name'  =>  'Pengadaan bibit durian',
-                                ],
-                                [
-                                    'name'  =>  'Pengadaan bibit pokat',
-                                ],
-                                [
-                                    'name'  =>  'Pengadaan bibit jahe',
-                                ],
+                                    'code'  =>  '03.27.02.02.03',
+                                    'name'  =>  'Pemanfaatan SDG Hewan/Tanaman',
+                                    'subprograms'   =>  [
+                                        [
+                                            'name'  =>  'Pengadaan bibit padi',
+                                        ],
+                                        [
+                                            'name'  =>  'Pengadaan bibit jagung',
+                                        ],
+                                        [
+                                            'name'  =>  'Pengembangan tanaman kacang tanah',
+                                        ],
+                                        [
+                                            'name'  =>  'Pengembangan tanaman bawang merah',
+                                        ],
+                                        [
+                                            'name'  =>  'Pengembangan tanaman kentang',
+                                        ],
+                                        [
+                                            'name'  =>  'Pengembangan aneka sayuran',
+                                        ],
+                                        [
+                                            'name'  =>  'Pengadaan bibit jeruk',
+                                        ],
+                                        [
+                                            'name'  =>  'Pengadaan bibit durian',
+                                        ],
+                                        [
+                                            'name'  =>  'Pengadaan bibit pokat',
+                                        ],
+                                        [
+                                            'name'  =>  'Pengadaan bibit jahe',
+                                        ],
+                                    ]
+                                ]
                             ]
                         ]
                     ]
-                ]
+                ],
             ],
 
             'TNK'   => [
