@@ -13,7 +13,7 @@ class UpdateUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return auth()->user()->can('users.update');
     }
 
     /**
@@ -24,7 +24,19 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name'      => 'required',
+            'email'     => 'required',
+            'roles'     => ['required', 'array'],
+            'divisions' => ['nullable', function ($attribute, $value, $fail) {
+                if (empty($value) && request()->has('roles') && !in_array('1', request()->input('roles')) && !in_array('2', request()->input('roles')) && !in_array('3', request()->input('roles'))) {
+                    return $fail('The ' . $attribute . ' field is required.');
+                }
+            }],
+            'villages'  => ['nullable', function ($attribute, $value, $fail) {
+                if (empty($value) && request()->has('roles') && !in_array('1', request()->input('roles')) && !in_array('2', request()->input('roles')) && !in_array('4', request()->input('roles'))) {
+                    return $fail('The ' . $attribute . ' field is required.');
+                }
+            }]
         ];
     }
 }

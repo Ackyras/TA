@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Dashboard\Setting\User;
 
 use App\Models\User;
+use App\Models\Village;
+use App\Models\Division;
+use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use App\Repositories\User\UserRepository;
 use App\Http\Requests\User\StoreUserRequest;
@@ -61,7 +64,13 @@ class UserController extends Controller
     public function show(User $user)
     {
         //
-        dd($user);
+        $user = $this->repo->show($user);
+
+        $divisions = Division::all();
+        $villages = Village::all();
+        $roles = Role::all();
+
+        return view('pages.dashboard.user.show', compact('user', 'divisions', 'villages', 'roles'));
     }
 
     /**
@@ -85,6 +94,18 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         //
+        if ($this->repo->update($request->validated(), $user)) {
+            return back()->with(
+                [
+                    'created'   =>  __('message.user.updated')
+                ]
+            );
+        }
+        return back()->with(
+            [
+                'failed'   =>  __('message.user.notUpdated')
+            ]
+        );
     }
 
     /**

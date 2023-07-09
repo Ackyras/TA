@@ -56,7 +56,7 @@ class UserSeeder extends Seeder
                 ]
             );
             $koor->assignRole('koor');
-            $kabid->villages()->attach($village);
+            $koor->villages()->attach($village);
         };
     }
 }

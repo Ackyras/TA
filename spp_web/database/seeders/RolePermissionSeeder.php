@@ -90,6 +90,7 @@ class RolePermissionSeeder extends Seeder
         );
         $kabid->syncPermissions(
             [
+                'divisions',
                 'supports',
                 'requests.read',
                 'requests.update',

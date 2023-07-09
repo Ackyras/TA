@@ -28,6 +28,53 @@ class UserRepository extends BaseUserRepository
         return User::all();
     }
 
+    public function show(User $user)
+    {
+        $user->load('permissions', 'roles');
+        if ($user->can('divisions')) {
+            $user->load('divisions');
+        }
+
+        // Check if the user has the 'koor' role
+        if ($user->can('villages')) {
+            $user->load('villages');
+        }
+
+        return $user;
+    }
+
+    public function update(array $datas, User $user)
+    {
+        $userChanged = false;
+        $roleChanged = false;;
+
+        if ($user->update($datas)) {
+            $userChanged = true;
+        }
+
+        if (isset($datas['roles'])) {
+            $user->syncRoles($datas['roles']);
+            $roleChanged = true;
+        }
+
+        if (!isset($datas['divisions'])) {
+            // Remove all relationships between the user and divisions
+            $user->divisions()->detach();
+        } else {
+            $user->divisions()->sync($datas['divisions']);
+        }
+
+        if (!isset($datas['villages'])) {
+            // Remove all relationships between the user and villages
+            $user->villages()->detach();
+        } else {
+            $user->villages()->sync($datas['villages']);
+        }
+
+        return $userChanged && $roleChanged;
+    }
+
+
     public function prepareDatatable($datas, $config = null)
     {
         $config = $this->datatableConfig;
