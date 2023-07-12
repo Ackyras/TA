@@ -1,31 +1,25 @@
 @extends('layouts.app')
 
-@section('title', 'Detail Desa')
+@section('title', 'Detail Bidang')
 
 @section('content')
 <div class="card">
-    <div class="card-header">
-        <h3 class="card-title">Detail Desa {{ $village->name }}</h3>
-        <div class="card-tools">
-            <span class="badge badge-primary">Label</span>
+    <form action="{{ route('dashboard.setting.division.update', $division) }}" method="POST">
+        <div class="card-header">
+            <h3 class="card-title">Detail Bidang {{ $division->name }}</h3>
+            <div class="card-tools">
+                <span class="badge badge-primary">Label</span>
+            </div>
         </div>
-    </div>
-    <div class="card-body">
-        {{--
-        <x-table.datatable :table="$villageTable" /> --}}
-        <table class="table table-sm w-auto table-borderless">
-            <tr scope="row">
-                <th class="w-auto" scope="col">Nama Desa</th>
-                <th class="w-auto" scope="col">:</th>
-                <td class="w-auto" scope="col">{{ $village->name }}</td>
-            </tr>
-            <tr scope="row">
-                <th class="w-auto" scope="col">Jumlah Kelompok Tani</th>
-                <th class="w-auto" scope="col">:</th>
-                <td class="w-auto" scope="col">{{ $village->farmers_count }}</td>
-            </tr>
-        </table>
-        <x-table.datatable :table="$table" />
-    </div>
+        @csrf
+        @method('PUT')
+        <div class="card-body">
+            <x-form.input.text name="name" title="Name" :value="$division->name" :in-line="true" />
+            <x-form.input.text name="nickname" title="Kode" :value="$division->nickname" :in-line="true" />
+        </div>
+        <div class="card-footer d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
 </div>
 @endsection

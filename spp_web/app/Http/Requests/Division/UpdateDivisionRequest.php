@@ -13,7 +13,7 @@ class UpdateDivisionRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return auth()->user()->can('divisions.update');
     }
 
     /**
@@ -23,8 +23,11 @@ class UpdateDivisionRequest extends FormRequest
      */
     public function rules()
     {
+        $divisionId = $this->route('division')->id;
         return [
             //
+            'name'      =>  'required',
+            'nickname'  =>  ['required', 'unique:divisions,nickname,' . $divisionId]
         ];
     }
 }

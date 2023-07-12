@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Dashboard\Setting\Division;
 
+use App\Models\User;
 use App\Models\Division;
 use App\Http\Controllers\Controller;
+use App\Repositories\Division\DivisionRepository;
 use App\Http\Requests\Division\StoreDivisionRequest;
 use App\Http\Requests\Division\UpdateDivisionRequest;
-use App\Repositories\Division\DivisionRepository;
 
 class DivisionController extends Controller
 {
@@ -20,6 +21,13 @@ class DivisionController extends Controller
     public function index()
     {
         $divisions = $this->repo->index();
+        if ($divisions->count() == 1) {
+            return view('pages.dashboard.division.show')->with(
+                [
+                    'division'  =>  $divisions->first()
+                ]
+            );
+        }
         $divisionTable = $this->repo->prepareDatatable($divisions->toArray());
 
         return view('pages.dashboard.division.index', compact('divisionTable'));
@@ -68,6 +76,7 @@ class DivisionController extends Controller
     public function show(Division $division)
     {
         //
+        return view('pages.dashboard.division.show', compact('division'));
     }
 
     /**
@@ -91,6 +100,18 @@ class DivisionController extends Controller
     public function update(UpdateDivisionRequest $request, Division $division)
     {
         //
+        if ($this->repo->update($request->validated(), $division)) {
+            return back()->with(
+                [
+                    'updated'   =>  __('message.division.updated')
+                ]
+            );
+        }
+        return back()->with(
+            [
+                'failed'   =>  __('message.division.notUpdated')
+            ]
+        );
     }
 
     /**

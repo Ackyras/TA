@@ -24,7 +24,24 @@ class DivisionRepository extends BaseDivisionRepository
 
     public function index()
     {
-        return Division::all();
+        return Division::query()
+            ->when(
+                auth()->user()->hasRole('kabid'),
+                function ($query) {
+                    $query->whereHas('users', function ($subQuery) {
+                        $subQuery->where('users.id', auth()->id());
+                    });
+                }
+            )
+            ->get();
+    }
+
+    public function update(array $datas, Division $division)
+    {
+        if ($division->update($datas)) {
+            return true;
+        }
+        return false;
     }
 
     public function store(array $data)

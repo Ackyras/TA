@@ -29,6 +29,15 @@ class VillageController extends Controller
     {
         //
         $villages = $this->repo->index();
+        if ($villages->count() == 1) {
+            $datas = $this->repo->show($villages->first());
+            return view('pages.dashboard.village.show')->with(
+                [
+                    'village'   =>  $datas['village'],
+                    'table'     =>  $datas['table']
+                ],
+            );
+        }
         $villageTable = $this->repo->prepareDatatable($villages->toArray());
         $districts = $this->districtRepo->index();
         return view('pages.dashboard.village.index', compact('villages', 'villageTable', 'districts'));
@@ -64,18 +73,15 @@ class VillageController extends Controller
     public function show(District $district, Village $village)
     {
         //
-        $village->load(
+        $datas = $this->repo->show($village);
+        return view(
+            'pages.dashboard.village.show',
+        )->with(
             [
-                'farmers',
-            ],
-        )->loadCount(
-            [
-                'farmers'
+                'village'  =>  $datas['village'],
+                'table'    =>  $datas['table']
             ]
         );
-        $table = $this->repo->farmersDatatable($village->farmers->toArray());
-        // dd($table);
-        return view('pages.dashboard.village.show', compact('village', 'table'));
     }
 
     /**

@@ -5,7 +5,10 @@ namespace App\Repositories\Farmer;
 use App\Models\Farmer;
 use App\Models\Village;
 use App\Models\District;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 use App\Repositories\Farmer\BaseFarmerRepository;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class FarmerRepository extends BaseFarmerRepository
 {
@@ -13,74 +16,70 @@ class FarmerRepository extends BaseFarmerRepository
         'show' => [
             'text'  =>  'Lihat',
             'type'  =>  'redirect',
-            'route' =>  'dashboard.district.village.show',
-            'routeParameter'    =>  [
-                'district'  =>  'district_id',
-                'village'   =>  'id',
-            ],
+            'route' =>  'dashboard.farmer.show',
             'color' =>  'primary',
         ],
         'destroy' => [
             'text'  =>  'Hapus',
             'type'  =>  'delete',
-            'route' =>  'dashboard.district.village.destroy',
-            'routeParameter'    =>  [
-                'district'  =>  'district_id',
-                'village'   =>  'id',
-            ],
+            'route' =>  'dashboard.farmer.destroy',
             'color' =>  'danger',
         ]
     ];
 
-    public function index()
-    {
-        return Farmer::query()
-            ->with(
-                [
-                    'village'   =>  function ($query) {
-                        $query->select(
-                            [
-                                'id',
-                                'name',
-                                'district_id'
-                            ],
-                        );
-                    },
-                    'village.district'  =>  function ($query) {
-                        $query->select(
-                            [
-                                'id',
-                                'name'
-                            ]
-                        );
-                    }
-                ]
-            )
-            ->get(
-                [
-                    'name',
-                    'address',
-                    'pic',
-                    'village_id'
-                ],
-            )
-            // ->random(1)
-            // ->dd()
-            //
-        ;
-    }
+    protected $allowedFilters = [
+        'name',
+        'pic',
+    ];
 
-    public function prepareDatatable($datas, $config = null)
+    public function index(Request $request)
+    {
+        $query = Farmer::query()
+            ->select(['name', 'address', 'pic', 'village_id', 'id'])
+            ->with([
+                'village' => function ($query) {
+                    $query->select(['id', 'name', 'district_id']);
+                },
+                'village.district' => function ($query) {
+                    $query->select(['id', 'name']);
+                }
+            ]);
+
+        $farmers = $this->filter($query, $request, false, true, 10);
+        return $farmers->withQueryString();
+    }
+    // public function index(Request $request)
+    // {
+    //     if ($request->query()) {
+    //         $query = Farmer::query()
+    //             ->select(['name', 'address', 'pic', 'village_id', 'id'])
+    //             ->with([
+    //                 'village' => function ($query) {
+    //                     $query->select(['id', 'name', 'district_id']);
+    //                 },
+    //                 'village.district' => function ($query) {
+    //                     $query->select(['id', 'name']);
+    //                 }
+    //             ]);
+
+    //         $farmers = $this->filter($query, $request, false, true, 10);
+    //     } else {
+    //         $farmers = new LengthAwarePaginator(
+    //             [],
+    //             0,
+    //             10,
+    //             1,
+    //             [
+    //                 'path' => LengthAwarePaginator::resolveCurrentPath()
+    //             ]
+    //         );
+    //     }
+    //     return $farmers->withQueryString();
+    // }
+
+    public function prepareDatatable($datas, $withActions = false)
     {
         $config = $this->datatableConfig;
         return parent::prepareDatatable($datas, $config);
-    }
-
-    public function farmersDatatable($datas)
-    {
-        if (!is_array($datas)) {
-            $datas->toArray();
-        }
-        dd($datas);
     }
 }

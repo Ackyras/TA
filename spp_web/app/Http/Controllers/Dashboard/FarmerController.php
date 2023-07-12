@@ -21,11 +21,10 @@ class FarmerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $farmers = $this->repo->index();
-        $farmerTable = $this->repo->prepareDatatable($farmers->toArray());
-        return view('pages.dashboard.farmer.index', compact('farmers', 'farmerTable'));
+        $farmers = $this->repo->index($request);
+        return view('pages.dashboard.farmer.index', compact('farmers'));
     }
 
     /**

@@ -41,6 +41,14 @@ class VillageRepository extends BaseVillageRepository
     public function index()
     {
         return Village::query()
+            ->when(
+                auth()->user()->hasRole('koor'),
+                function ($query) {
+                    $query->whereHas('users', function ($query) {
+                        $query->where('users.id', auth()->user()->id);
+                    });
+                }
+            )
             ->withCount(
                 [
                     'farmers'
@@ -49,6 +57,21 @@ class VillageRepository extends BaseVillageRepository
             ->get()
             //
         ;
+    }
+
+    public function show(Village $village)
+    {
+        $datas['village'] = $village->load(
+            [
+                'farmers',
+            ],
+        )->loadCount(
+            [
+                'farmers'
+            ]
+        );
+        $datas['table'] = $this->farmersDatatable($village->farmers->toArray());
+        return $datas;
     }
 
     public function prepareDatatable($datas, $config = null)
