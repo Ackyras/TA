@@ -10,19 +10,21 @@ class Option extends Component
     public $options;
     public $selected;
     public $title;
+    public $inLine;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($name, $options, $title, $selected = null)
+    public function __construct($name, $options, $title, $selected = null, $inLine = false)
     {
         //
         $this->name = $name;
         $this->options = $options;
         $this->selected = $selected;
         $this->title = $title;
+        $this->inLine = $inLine;
     }
 
     /**
