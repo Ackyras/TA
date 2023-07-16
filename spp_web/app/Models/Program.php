@@ -15,7 +15,24 @@ class Program extends Model
         'code',
         'is_parent',
         'parent_id',
+        'period_id',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope('current_period', function ($query) {
+            // Define your scope conditions here
+            $query->where('period_id', Period::query()->where('is_active', true)->first()->id);
+        });
+    }
+
+    // public function scopeActivePeriod($query)
+    // {
+    //     return $query->where('period_id', Period::query()->where('is_active', true)->first()->id);
+    // }
+
 
     public function division()
     {
@@ -40,5 +57,10 @@ class Program extends Model
     public function lowerProgramTree()
     {
         return $this->hasMany(Program::class, 'parent_id')->with('lowerProgramTree');
+    }
+
+    public function period()
+    {
+        return $this->belongsTo(Period::class);
     }
 }

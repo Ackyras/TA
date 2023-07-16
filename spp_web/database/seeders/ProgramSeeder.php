@@ -215,6 +215,7 @@ class ProgramSeeder extends Seeder
             'parent_id' => $parent ? $parent->id : null,
             'division_id'   =>  $division->id,
             'is_parent'     =>  isset($programData['subprograms']) ? true : false,
+            'period_id'     =>  1,
         ]);
 
         if (isset($programData['subprograms'])) {

@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\Farmer;
+use App\Models\Period;
+use App\Models\Program;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,12 +16,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('periods', function (Blueprint $table) {
+        Schema::create('requests', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->date('start_date');
-            $table->date('end_date');
-            $table->boolean('is_active')->default(false);
+            $table->foreignIdFor(Farmer::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Program::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Period::class)->constrained()->cascadeOnDelete();
+            $table->string('status');
             $table->timestamps();
         });
     }
@@ -30,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('periods');
+        Schema::dropIfExists('requests');
     }
 };

@@ -13,5 +13,6 @@ class Period extends Model
         'name',
         'start_date',
         'end_date',
+        'is_active',
     ];
 }

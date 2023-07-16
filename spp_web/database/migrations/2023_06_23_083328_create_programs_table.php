@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Period;
 use App\Models\Division;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
@@ -20,6 +21,7 @@ return new class extends Migration
             $table->string('name');
             $table->foreignId('parent_id')->nullable()->constrained('programs')->onDelete('cascade');
             $table->foreignIdFor(Division::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Period::class)->constrained()->cascadeOnDelete();
             $table->boolean('is_parent')->default(false);
             $table->timestamps();
         });
