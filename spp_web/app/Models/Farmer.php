@@ -20,4 +20,18 @@ class Farmer extends Model
     {
         return $this->belongsTo(Village::class);
     }
+
+    public function requests()
+    {
+        return $this->belongsToMany(Program::class, 'requests')
+            ->using(Request::class)
+            ->withPivot(
+                [
+                    'id',
+                    'volume',
+                    'status',
+                    'unit_id',
+                ]
+            )->withTimestamps();
+    }
 }

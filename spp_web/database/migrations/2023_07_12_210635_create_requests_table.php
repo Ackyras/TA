@@ -3,6 +3,7 @@
 use App\Models\Farmer;
 use App\Models\Period;
 use App\Models\Program;
+use App\Models\Unit;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -21,7 +22,9 @@ return new class extends Migration
             $table->foreignIdFor(Farmer::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Program::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Period::class)->constrained()->cascadeOnDelete();
-            $table->string('status');
+            $table->foreignIdFor(Unit::class)->constrained()->cascadeOnDelete();
+            $table->string('status')->default('requested');
+            $table->integer('volume');
             $table->timestamps();
         });
     }

@@ -24,15 +24,9 @@ class Program extends Model
 
         static::addGlobalScope('current_period', function ($query) {
             // Define your scope conditions here
-            $query->where('period_id', Period::query()->where('is_active', true)->first()->id);
+            $query->where('programs.period_id', Period::query()->where('is_active', true)->first()->id);
         });
     }
-
-    // public function scopeActivePeriod($query)
-    // {
-    //     return $query->where('period_id', Period::query()->where('is_active', true)->first()->id);
-    // }
-
 
     public function division()
     {
@@ -62,5 +56,19 @@ class Program extends Model
     public function period()
     {
         return $this->belongsTo(Period::class);
+    }
+
+    public function farmers()
+    {
+        return $this->belongsToMany(Farmer::class, 'requests')
+            ->using(Request::class)
+            ->withPivot(
+                [
+                    'id',
+                    'volume',
+                    'status',
+                    'unit_id',
+                ]
+            )->withTimestamps();
     }
 }

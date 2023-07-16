@@ -19,7 +19,7 @@ class FarmerSeeder extends Seeder
         //
         $villages = Village::all();
         foreach ($villages as $village) {
-            Farmer::factory(rand(10, 20))->for($village)->create();
+            Farmer::factory(rand(1, 10))->for($village)->create();
         }
     }
 }

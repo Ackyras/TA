@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Program;
 use App\Models\Division;
+use App\Models\Unit;
 use Illuminate\Database\Seeder;
 
 class ProgramSeeder extends Seeder
