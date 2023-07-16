@@ -17,6 +17,7 @@ class RolePermissionSeeder extends Seeder
     public function run()
     {
         $allCruds = [
+            '*',
             'create',
             'read',
             'update',
