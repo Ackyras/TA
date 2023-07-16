@@ -6,7 +6,8 @@ $model = [
     'village'   =>  'Desa',
     'farmer'    =>  'Kelompok Tani',
     'division'  =>  'Bidang Tani',
-    'program'   =>  'Kamus Usulan'
+    'program'   =>  'Kamus Usulan',
+    'request'   =>  'Pengajuan Bantuan',
 ];
 
 return $model;
