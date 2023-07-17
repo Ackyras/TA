@@ -71,4 +71,9 @@ class Program extends Model
                 ]
             )->withTimestamps();
     }
+
+    public function requests()
+    {
+        return $this->hasMany(Request::class);
+    }
 }

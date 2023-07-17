@@ -4,11 +4,19 @@ namespace Database\Seeders;
 
 use App\Models\Program;
 use App\Models\Division;
+use App\Models\Period;
 use App\Models\Unit;
 use Illuminate\Database\Seeder;
 
 class ProgramSeeder extends Seeder
 {
+    protected Period $period;
+
+    public function __construct()
+    {
+        $this->period = Period::where('is_active', true)->first();
+    }
+
     public function run()
     {
         $divisionPrograms = [
@@ -199,11 +207,11 @@ class ProgramSeeder extends Seeder
                 ]
             ]
         ];
-
+        $period = Period::where('is_active', true)->first();
         foreach ($divisionPrograms as $key => $programs) {
             $division = Division::query()->where('nickname', $key)->first();
             foreach ($programs as $programData) {
-                $this->createProgram($division, $programData);
+                $this->createProgram($division, $programData, null);
             }
         }
     }
@@ -216,7 +224,7 @@ class ProgramSeeder extends Seeder
             'parent_id' => $parent ? $parent->id : null,
             'division_id'   =>  $division->id,
             'is_parent'     =>  isset($programData['subprograms']) ? true : false,
-            'period_id'     =>  1,
+            'period_id'     =>  $this->period->id,
         ]);
 
         if (isset($programData['subprograms'])) {

@@ -21,7 +21,7 @@ class Farmer extends Model
         return $this->belongsTo(Village::class);
     }
 
-    public function requests()
+    public function programs()
     {
         return $this->belongsToMany(Program::class, 'requests')
             ->withPivot(
@@ -32,5 +32,10 @@ class Farmer extends Model
                     'unit_id',
                 ]
             )->withTimestamps();
+    }
+
+    public function requests()
+    {
+        return $this->hasMany(Request::class);
     }
 }

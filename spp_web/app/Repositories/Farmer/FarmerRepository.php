@@ -48,6 +48,34 @@ class FarmerRepository extends BaseFarmerRepository
         $farmers = $this->filter($query, $request, false, true, 10);
         return $farmers->withQueryString();
     }
+
+    public function show(Farmer $farmer)
+    {
+        $datas = [];
+        $datas['farmer'] = $farmer->load(
+            [
+                'requests' => function ($query) {
+                    $query->with(
+                        [
+                            'program'   =>  function ($query) {
+                                $query->withoutGlobalScope('current_period');
+                            }
+                        ]
+                    );
+                },
+                'village' => function ($query) {
+                    $query->select(['id', 'name', 'district_id']);
+                },
+                'village.district' => function ($query) {
+                    $query->select(['id', 'name']);
+                }
+            ]
+        )->loadCount([
+            'requests'
+        ]);
+        return $datas;
+    }
+
     // public function index(Request $request)
     // {
     //     if ($request->query()) {
@@ -80,6 +108,7 @@ class FarmerRepository extends BaseFarmerRepository
     public function prepareDatatable($datas, $withActions = false)
     {
         $config = $this->datatableConfig;
+        $config['actions'] = $this->indexTableAction;
         return parent::prepareDatatable($datas, $config);
     }
 }
