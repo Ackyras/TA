@@ -9,6 +9,11 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user (optional) -->
+        <div class="pb-3 mt-3 mb-3 user-panel d-flex">
+            <div class="info">
+                <a href="" class="d-block">Periode {{ getCurrentPeriod()->name }}</a>
+            </div>
+        </div>
 
         <!-- SidebarSearch Form -->
         <div class="form-inline">
