@@ -24,7 +24,6 @@ class Farmer extends Model
     public function requests()
     {
         return $this->belongsToMany(Program::class, 'requests')
-            ->using(Request::class)
             ->withPivot(
                 [
                     'id',

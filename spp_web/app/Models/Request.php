@@ -4,9 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class Request extends Pivot
+class Request extends Model
 {
     use HasFactory;
 
@@ -16,6 +15,7 @@ class Request extends Pivot
         'farmer_id',
         'support_id',
         'period_id',
+        'program_id',
         'status',
         'volume',
         'unit_id',
@@ -26,14 +26,13 @@ class Request extends Pivot
         parent::boot();
 
         static::addGlobalScope('current_period', function ($query) {
-            // Define your scope conditions here
-            $query->where('requests.period_id', Period::query()->where('is_active', true)->first()->id);
+            $query->where('period_id', Period::query()->where('is_active', true)->first()->id);
         });
     }
 
     public function attachments()
     {
-        return $this->hasMany(RequestAttachment::class, 'request_id', 'id');
+        return $this->hasMany(RequestAttachment::class);
     }
 
     public function farmer()
