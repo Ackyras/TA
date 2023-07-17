@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\Coordinator\SettingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\FarmerController;
 use App\Http\Controllers\Dashboard\VillageController;
 use App\Http\Controllers\Dashboard\DistrictController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\Request\InstructorRequestController;
 use App\Http\Controllers\Dashboard\Setting\User\UserController;
 use App\Http\Controllers\Dashboard\Setting\Program\ProgramController;
 use App\Http\Controllers\Dashboard\Setting\Division\DivisionController;
@@ -91,11 +91,18 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
             }
         );
     });
-});
 
-Route::controller(SettingController::class)->group(function () {
-    Route::get('index', 'index')->name('index');
+    Route::middleware(['role:koor|dev'])->group(function () {
+        Route::prefix('requests')->as('request.')->group(function () {
+            Route::get('/', [InstructorRequestController::class, 'index'])->name('index');
+            Route::post('/', [InstructorRequestController::class, 'store'])->name('store');
+            Route::get('/create', [InstructorRequestController::class, 'create'])->name('create');
+            Route::get('/{request}', [InstructorRequestController::class, 'show'])->name('show');
+            Route::put('/{instructorRequest}', [InstructorRequestController::class, 'update'])->name('update');
+            Route::delete('/{request}', [InstructorRequestController::class, 'destroy'])->name('destroy');
+            Route::match(['GET', 'DELETE'], '/dashboard/requests/{request}/attachment/{attachment}', [InstructorRequestController::class, 'destroyAttachment'])->name('attachment.destroy');
+        });
+    });
 });
-
 
 require __DIR__ . '/auth.php';

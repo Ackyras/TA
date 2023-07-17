@@ -9,20 +9,12 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <!-- Sidebar user (optional) -->
-        <div class="pb-3 mt-3 mb-3 user-panel d-flex">
-            <div class="image">
-                <img src="{{ asset('adminLTE/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
-                    alt="User Image">
-            </div>
-            <div class="info">
-                <a href="#" class="d-block">{{ auth()->user()->name }}</a>
-            </div>
-        </div>
 
         <!-- SidebarSearch Form -->
         <div class="form-inline">
             <div class="input-group" data-widget="sidebar-search">
-                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                <input class="form-control form-control-sidebar" type="search" placeholder="Search"
+                    aria-label="Search">
                 <div class="input-group-append">
                     <button class="btn btn-sidebar">
                         <i class="fas fa-search fa-fw"></i>
@@ -33,97 +25,98 @@
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                 with font-awesome or any other icon font library -->
-                @canany(['users','divisions','programs'])
-                <li class="nav-header">Settings</li>
-                <li class="nav-item {{ request()->routeIs('dashboard.setting.*') ? 'active menu-open' : '' }}">
-                    <a href="#" class="nav-link">
+                @canany(['users', 'divisions', 'programs'])
+                    <li class="nav-header">Settings</li>
+                    <li class="nav-item {{ request()->routeIs('dashboard.setting.*') ? 'active menu-open' : '' }}">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-cog"></i>
+                            <p>
+                                Settings
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        @can('users')
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('dashboard.setting.user.index') }}"
+                                        class="nav-link {{ request()->routeIs('dashboard.setting.user.index') ? 'active' : '' }}">
+                                        <i class="fas fa-list nav-icon"></i>
+                                        <p>List User</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        @endcan
+                        @can('divisions')
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('dashboard.setting.division.index') }}"
+                                        class="nav-link {{ request()->routeIs('dashboard.setting.division.index') ? 'active' : '' }}">
+                                        <i class="fas fa-list nav-icon"></i>
+                                        <p>Bidang</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        @endcan
+                        @can('programs')
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('dashboard.setting.program.index') }}"
+                                        class="nav-link {{ request()->routeIs('dashboard.setting.program.index') ? 'active' : '' }}">
+                                        <i class="fas fa-list nav-icon"></i>
+                                        <p>Kamus Usulan</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        @endcan
+                    </li>
+                @endcanany
+                @canany(['districts', 'villages', 'farmers'])
+                    <li class="nav-header">Daerah</li>
+                    @can('districts')
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard.district.index') }}"
+                                class="nav-link {{ request()->routeIs('dashboard.district.*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-circle"></i>
+                                <p>
+                                    Kecamatan
+                                </p>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('villages')
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard.village.index') }}"
+                                class="nav-link {{ request()->routeIs('dashboard.village.*') ? 'active' : '' }}">
+                                <i class="nav-icon fa fa-circle"></i>
+                                <p>
+                                    Desa
+                                </p>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('farmers')
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard.farmer.index') }}"
+                                class="nav-link {{ request()->routeIs('dashboard.farmer.*') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-layer-group"></i>
+                                <p>
+                                    Kelompok Tani
+                                </p>
+                            </a>
+                        </li>
+                    @endcan
+                @endcanany
+                <li class="nav-header">Pengajuan</li>
+                <li class="nav-item">
+                    <a href="{{ route('dashboard.request.index') }}"
+                        class="nav-link {{ request()->routeIs('dashboard.request.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-cog"></i>
                         <p>
-                            Settings
-                            <i class="right fas fa-angle-left"></i>
-                        </p>
-                    </a>
-                    @can('users')
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('dashboard.setting.user.index') }}"
-                                class="nav-link {{ request()->routeIs('dashboard.setting.user.index') ? 'active' : '' }}">
-                                <i class="fas fa-list nav-icon"></i>
-                                <p>List User</p>
-                            </a>
-                        </li>
-                    </ul>
-                    @endcan
-                    @can('divisions')
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('dashboard.setting.division.index') }}"
-                                class="nav-link {{ request()->routeIs('dashboard.setting.division.index') ? 'active' : '' }}">
-                                <i class="fas fa-list nav-icon"></i>
-                                <p>Bidang</p>
-                            </a>
-                        </li>
-                    </ul>
-                    @endcan
-                    @can('programs')
-                    <ul class="nav nav-treeview">
-                        <li class="nav-item">
-                            <a href="{{ route('dashboard.setting.program.index') }}"
-                                class="nav-link {{ request()->routeIs('dashboard.setting.program.index') ? 'active' : '' }}">
-                                <i class="fas fa-list nav-icon"></i>
-                                <p>Kamus Usulan</p>
-                            </a>
-                        </li>
-                    </ul>
-                    @endcan
-                </li>
-                @endcanany
-                @canany(['districts','villages','farmers'])
-                <li class="nav-header">Daerah</li>
-                @can('districts')
-                <li class="nav-item">
-                    <a href="{{ route('dashboard.district.index') }}"
-                        class="nav-link {{ request()->routeIs('dashboard.district.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-circle"></i>
-                        <p>
-                            Kecamatan
-                        </p>
-                    </a>
-                </li>
-                @endcan
-                @can('villages')
-                <li class="nav-item">
-                    <a href="{{ route('dashboard.village.index') }}"
-                        class="nav-link {{ request()->routeIs('dashboard.village.*') ? 'active' : '' }}">
-                        <i class="nav-icon fa fa-circle"></i>
-                        <p>
-                            Desa
-                        </p>
-                    </a>
-                </li>
-                @endcan
-                @can('farmers')
-                <li class="nav-item">
-                    <a href="{{ route('dashboard.farmer.index') }}"
-                        class="nav-link {{ request()->routeIs('dashboard.farmer.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-layer-group"></i>
-                        <p>
-                            Kelompok Tani
-                        </p>
-                    </a>
-                </li>
-                @endcan
-                @endcanany
-                <li class="nav-header">Manajemen Badan Penyuluh</li>
-                <li class="nav-item">
-                    <a href="{{ route('dashboard.district.index') }}"
-                        class="nav-link {{ request()->routeIs('dashboard.district.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-cog"></i>
-                        <p>
-                            Kecamatan
+                            Semua Pengajuan
                         </p>
                     </a>
                 </li>

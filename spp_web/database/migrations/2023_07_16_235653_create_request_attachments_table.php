@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('url');
-            $table->foreignId('request_id')->references('id')->on('requests')->cascadeOnDelete();
+            $table->foreignId('request_id')->references('id')->on('requests')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

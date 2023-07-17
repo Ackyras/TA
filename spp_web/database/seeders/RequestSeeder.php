@@ -38,7 +38,7 @@ class RequestSeeder extends Seeder
             $farmer->load('requests');
             $requests = $farmer->requests;
             foreach ($requests as $request) {
-                RequestAttachment::factory(rand(1, 3))->for($request->pivot)->create();
+                RequestAttachment::factory(rand(1, 3))->for($request->pivot, 'request')->create();
             }
         }
     }

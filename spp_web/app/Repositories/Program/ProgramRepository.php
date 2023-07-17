@@ -4,7 +4,6 @@ namespace App\Repositories\Program;
 
 use App\Models\Program;
 use App\Models\Division;
-use App\Repositories\Division\BaseDivisionRepository;
 
 class ProgramRepository extends BaseProgramRepository
 {
