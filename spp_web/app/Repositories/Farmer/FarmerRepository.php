@@ -35,6 +35,9 @@ class FarmerRepository extends BaseFarmerRepository
     public function index(Request $request)
     {
         $query = Farmer::query()
+        ->when(
+            auth()->user()->hasRole('koor')
+        )
             ->select(['name', 'address', 'pic', 'village_id', 'id'])
             ->with([
                 'village' => function ($query) {
@@ -59,7 +62,9 @@ class FarmerRepository extends BaseFarmerRepository
                         [
                             'program'   =>  function ($query) {
                                 $query->withoutGlobalScope('current_period');
-                            }
+                            },
+                            'unit',
+                            'attachments'
                         ]
                     );
                 },

@@ -12,13 +12,15 @@ class Option extends Component
     public $title;
     public $inLine;
     public $id;
+    public $disabled;
+    public $selectedById;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($name, $options, $title, $selected = null, $inLine = false, $id = 'select2')
+    public function __construct($name, $options, $title, $selected = null, $inLine = false, $id = 'select2', $disabled = false)
     {
         //
         $this->name = $name;
@@ -27,6 +29,7 @@ class Option extends Component
         $this->title = $title;
         $this->inLine = $inLine;
         $this->id = $id;
+        $this->disabled = $disabled;
     }
 
     /**

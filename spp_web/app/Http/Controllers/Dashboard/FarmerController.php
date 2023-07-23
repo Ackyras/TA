@@ -57,6 +57,8 @@ class FarmerController extends Controller
     public function show(Farmer $farmer)
     {
         //
+        $datas = $this->repo->show($farmer);
+        return view('pages.dashboard.farmer.show', compact('datas'));
     }
 
     /**

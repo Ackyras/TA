@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="route('dashboard')" class="brand-link">
+    <a href="{{ route('dashboard.index') }}" class="brand-link">
         <img src="{{ asset('adminLTE/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
             class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">{{ env('APP_NICK_NAME') }}</span>
@@ -44,6 +44,17 @@
                                 <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
+                        @can('periods')
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('dashboard.setting.period.index') }}"
+                                        class="nav-link {{ request()->routeIs('dashboard.setting.period.index') ? 'active' : '' }}">
+                                        <i class="fas fa-list nav-icon"></i>
+                                        <p>List Periode</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        @endcan
                         @can('users')
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
@@ -116,15 +127,17 @@
                     @endcan
                 @endcanany
                 <li class="nav-header">Pengajuan</li>
-                <li class="nav-item">
-                    <a href="{{ route('dashboard.request.index') }}"
-                        class="nav-link {{ request()->routeIs('dashboard.request.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-cog"></i>
-                        <p>
-                            Semua Pengajuan
-                        </p>
-                    </a>
-                </li>
+                @can('requests.read')
+                    <li class="nav-item">
+                        <a href="{{ route('dashboard.request.index') }}"
+                            class="nav-link {{ request()->routeIs('dashboard.request.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-stream"></i>
+                            <p>
+                                Proposal Bantuan
+                            </p>
+                        </a>
+                    </li>
+                @endcan
                 {{-- <li class="nav-header">EXAMPLES</li>
                 <li class="nav-item">
                     <a href="{{ route('dashboard.district.index') }}"

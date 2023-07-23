@@ -49,4 +49,9 @@ class Request extends Model
     {
         return $this->belongsTo(Unit::class);
     }
+
+    public function result()
+    {
+        return $this->hasOne(RequestResult::class);
+    }
 }

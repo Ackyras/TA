@@ -24,7 +24,7 @@ return new class extends Migration
             $table->foreignIdFor(Period::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Unit::class)->constrained()->cascadeOnDelete();
             $table->string('status')->default('requested');
-            $table->integer('volume');
+            $table->float('volume');
             $table->timestamps();
         });
     }

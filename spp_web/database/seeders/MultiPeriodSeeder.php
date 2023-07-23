@@ -3,8 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Period;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class MultiPeriodSeeder extends Seeder
 {
@@ -15,6 +16,7 @@ class MultiPeriodSeeder extends Seeder
      */
     public function run()
     {
+        DB::enableQueryLog();
         //
         $periods = [
             [
@@ -60,6 +62,9 @@ class MultiPeriodSeeder extends Seeder
                 );
             }
         }
+        $queries = DB::getQueryLog();
+        $queryCount = count($queries);
+        echo "Total queries executed: " . $queryCount . PHP_EOL;
     }
 
     public function runSeeder()
@@ -68,6 +73,7 @@ class MultiPeriodSeeder extends Seeder
             [
                 ProgramSeeder::class,
                 RequestSeeder::class,
+                RequestResultSeeder::class,
             ]
         );
     }

@@ -9,21 +9,21 @@
         </div>
         <div class="card-body">
             <form action="{{ route('dashboard.farmer.index') }}" method="GET" class="mb-3">
-                <div class="card border-0">
-                    <div class="card-header p-2" data-toggle="collapse" data-target="#filterCard" aria-expanded="false"
+                <div class="border-0 card">
+                    <div class="p-2 card-header" data-toggle="collapse" data-target="#filterCard" aria-expanded="false"
                         aria-controls="filterCard">
-                        <a class="card-title mb-0 font-weight-bold">Filter</a>
-                        <button class="btn btn-link btn-sm float-right p-0" type="button" data-toggle="collapse"
+                        <a class="mb-0 card-title font-weight-bold">Filter</a>
+                        <button class="float-right p-0 btn btn-link btn-sm" type="button" data-toggle="collapse"
                             data-target="#filterCard" aria-expanded="false" aria-controls="filterCard">
                             <i class="fas fa-chevron-down"></i>
                         </button>
                     </div>
                     <div id="filterCard" class="collapse">
-                        <div class="card-body p-2">
+                        <div class="p-2 card-body">
                             <x-form.input.text name="filter[name]" title="Name" :value="request()->input('filter.name')" :in-line="true" />
                             <x-form.input.text name="filter[pic]" title="PIC" :value="request()->input('filter.pic')" :in-line="true" />
                         </div>
-                        <div class="card-footer d-flex justify-content-end p-2">
+                        <div class="p-2 card-footer d-flex justify-content-end">
                             <button type="submit" class="btn btn-primary">Filter</button>
                         </div>
                     </div>
@@ -36,6 +36,7 @@
                         <th>Nama</th>
                         <th>Alamat</th>
                         <th>PIC</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,11 +46,21 @@
                             <td>{{ $farmer->address }}, {{ $farmer->village->name }}, {{ $farmer->village->district->name }}
                             </td>
                             <td>{{ $farmer->pic }}</td>
+                            <td>
+                                <a href="{{ route('dashboard.farmer.show', $farmer) }}" class="btn btn-primary">Lihat</a>
+                                <form action="{{ route('dashboard.farmer.destroy', $farmer) }}" method="POST"
+                                    style="display: inline">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger">Hapus</button>
+                                </form>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-            <div class="d-flex justify-content-between mt-4">
+
+            <div class="mt-4 d-flex justify-content-between">
                 <div>
                     Showing {{ $farmers->firstItem() }} to {{ $farmers->lastItem() }} of {{ $farmers->total() }} entries
                 </div>

@@ -16,9 +16,7 @@ trait FilterModelTrait
             ->allowedFilters($exact ? $this->exactFilter($this->allowedFilters) : $this->allowedFilters);
 
         if ($paginate) {
-            $datas = $datas->paginate($perPage, [
-                'path'  =>  $request->fullUrl()
-            ]);
+            $datas = $datas->paginate($perPage);
         } else {
             $datas = $datas->get();
         }

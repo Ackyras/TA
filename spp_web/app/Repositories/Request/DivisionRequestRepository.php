@@ -10,10 +10,8 @@ use App\Models\Request;
 use App\Models\Division;
 use App\Models\RequestAttachment;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request as HttpRequest;
 
-class RequestRepository extends BaseRequestRepository
+class DivisionRequestRepository extends BaseRequestRepository
 {
     protected $indexTableAction = [
         'show' => [
@@ -30,55 +28,28 @@ class RequestRepository extends BaseRequestRepository
         ],
     ];
 
-    protected $allowedFilters = [
-        'status',
-        'program_id'
-    ];
-
-    public function index(HttpRequest $request)
+    public function index()
     {
         $datas = [];
-        $query = Request::query()
-            ->when(
-                auth()->user()->hasRole('koor'),
-                function ($query) {
-                    $query->whereHas('farmer', function ($query) {
-                        $query->whereHas('village', function ($query) {
-                            $query->whereHas('users', function ($query) {
-                                $query->where('users.id', auth()->id());
-                            });
-                        });
+        $datas = Request::query()
+            ->whereHas('program', function ($query) {
+                $query->whereHas('division', function ($query) {
+                    $query->whereHas('users', function ($query) {
+                        $query->where('users.id', auth()->id());
                     });
-                }
-            )
-            ->when(
-                auth()->user()->hasRole('kabid'),
-                function ($query) {
-                    $query->whereHas('program', function ($query) {
-                        $query->whereHas('division', function ($query) {
-                            $query->whereHas('users', function ($query) {
-                                $query->where('users.id', auth()->id());
-                            });
-                        });
-                    })->with(
-                        [
-                            'result'    =>  [
-                                'attachments',
-                                'unit'
-                            ]
-                        ]
-                    );
-                }
-            )
+                });
+            })
             ->with([
                 'attachments',
                 'farmer',
                 'program',
                 'unit'
-            ]);
-        $datas['paginator'] = $this->filter($query, $request, false, true, 10)->withQueryString();
-        $datas['items'] = $datas['paginator']->groupBy('farmer');
-        $datas['programs'] = $this->getPrograms(true);
+            ])
+            ->get()
+            ->groupBy('farmer') // Group the result by the farmer
+            //
+        ;
+        // dd($datas);
         return $datas;
     }
 

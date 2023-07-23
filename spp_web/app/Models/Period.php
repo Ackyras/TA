@@ -15,4 +15,14 @@ class Period extends Model
         'end_date',
         'is_active',
     ];
+
+    public function programs()
+    {
+        return $this->hasMany(Program::class);
+    }
+
+    public function requests()
+    {
+        return $this->hasMany(Request::class);
+    }
 }

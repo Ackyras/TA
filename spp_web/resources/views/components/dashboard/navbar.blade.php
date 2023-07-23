@@ -11,15 +11,15 @@
             </a>
         </li>
         @impersonating($guard = null)
-        <a class="dropdown-item" href="{{ route('impersonate.leave') }}">
-            <i class="far fa-user-circle"></i>
-            Return ({{ auth()->id() }})
-        </a>
+            <a class="dropdown-item" href="{{ route('impersonate.leave') }}">
+                <i class="far fa-user-circle"></i>
+                Return ({{ auth()->id() }})
+            </a>
         @endImpersonating
         @canImpersonate()
         <li class="nav-item dropdown">
-            <button type="button" class="btn dropdown-toggle" id="navbarDropdown4" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
+            <button type="button" class="btn dropdown-toggle" id="navbarDropdown4" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Dev-Tool ({{ auth()->id() }})
             </button>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown4">
@@ -72,8 +72,8 @@
         </li>
         @endCanImpersonate
         <li class="nav-item dropdown">
-            <button type="button" class="btn dropdown-toggle" id="navbarDropdown4" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
+            <button type="button" class="btn dropdown-toggle" id="navbarDropdown4" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{ auth()->user()->name }}
             </button>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown4">
