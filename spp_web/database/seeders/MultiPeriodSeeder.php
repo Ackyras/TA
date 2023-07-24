@@ -16,7 +16,9 @@ class MultiPeriodSeeder extends Seeder
      */
     public function run()
     {
-        DB::enableQueryLog();
+        if (env('APP_ENV') != 'production') {
+            DB::enableQueryLog();
+        }
         //
         $periods = [
             [
@@ -62,9 +64,11 @@ class MultiPeriodSeeder extends Seeder
                 );
             }
         }
-        $queries = DB::getQueryLog();
-        $queryCount = count($queries);
-        echo "Total queries executed: " . $queryCount . PHP_EOL;
+        if (env('APP_ENV') != 'production') {
+            $queries = DB::getQueryLog();
+            $queryCount = count($queries);
+            echo "Total queries executed: " . $queryCount . PHP_EOL;
+        }
     }
 
     public function runSeeder()
