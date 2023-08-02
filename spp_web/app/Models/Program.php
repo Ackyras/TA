@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -18,14 +19,19 @@ class Program extends Model
         'period_id',
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
+    // protected static function boot()
+    // {
+    //     parent::boot();
 
-        static::addGlobalScope('current_period', function ($query) {
-            // Define your scope conditions here
-            $query->where('programs.period_id', Period::query()->where('is_active', true)->first()->id);
-        });
+    //     static::addGlobalScope('current_period', function ($query) {
+    //         // Define your scope conditions here
+    //         $query->where('programs.period_id', Period::query()->where('is_active', true)->first()->id);
+    //     });
+    // }
+
+    public function scopeCurrentPeriod(Builder $query, Period $period)
+    {
+        $query->where('period_id', $period->id);
     }
 
     public function division()

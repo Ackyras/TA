@@ -21,13 +21,13 @@ class RequestResultSeeder extends Seeder
         foreach ($requests as $request) {
             $request->update(
                 [
-                    'status'    =>  'pending'
+                    'status'    =>  'requested'
                 ]
             );
             if (rand(0, 1)) {
                 $request->update(
                     [
-                        'status'    =>  'on progress',
+                        'status'    =>  'approved',
                     ]
                 );
                 $result = $request->result()->create(

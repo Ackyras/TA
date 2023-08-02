@@ -74,6 +74,11 @@ class VillageRepository extends BaseVillageRepository
         return $datas;
     }
 
+    public function store(array $datas)
+    {
+        return Village::create($datas);
+    }
+
     public function prepareDatatable($datas, $config = null)
     {
         $config = $this->datatableConfig;

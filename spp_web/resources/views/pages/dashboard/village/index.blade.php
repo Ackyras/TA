@@ -26,7 +26,7 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form action="{{ route('dashboard.district.store') }}" method="post">
+                            <form action="{{ route('dashboard.village.store') }}" method="post">
                                 @csrf
                                 <div class="modal-body">
                                     <x-form.input.option name="district_id" title="Kecamatan" :options="$districts" />

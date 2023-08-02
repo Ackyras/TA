@@ -16,6 +16,15 @@ class PeriodRepository extends BasePeriodRepository
         ]
     ];
 
+    protected $archiveTableAction = [
+        'show' => [
+            'text'  =>  'Lihat',
+            'type'  =>  'redirect',
+            'route' =>  'dashboard.archive.show',
+            'color' =>  'primary',
+        ]
+    ];
+
     public function index()
     {
         $periods = Period::query()
@@ -49,10 +58,16 @@ class PeriodRepository extends BasePeriodRepository
         return false;
     }
 
-    public function prepareDatatable($datas, $config = null)
+    public function prepareDatatable($datas, $type = 'index')
     {
-        $config = $this->datatableConfig;
-        $config['actions'] = $this->indexTableAction;
+        foreach ($this->datatableConfig as $key => $config) {
+            $configs[$key] = $config;
+        }
+        if ($type == 'index') {
+            $configs['actions'] = $this->indexTableAction;
+        } elseif ($type == 'archive') {
+            $configs['actions'] = $this->archiveTableAction;
+        }
         foreach ($datas as $key => $data) {
             if ($datas[$key]['is_active'] == true) {
                 $datas[$key]['is_active'] = 'Active';
@@ -60,6 +75,6 @@ class PeriodRepository extends BasePeriodRepository
                 $datas[$key]['is_active'] = 'Inactive';
             }
         }
-        return parent::prepareDatatable($datas, $config);
+        return parent::prepareDatatable($datas, $configs);
     }
 }

@@ -70,6 +70,26 @@ class RequestRepository extends BaseRequestRepository
                     );
                 }
             )
+            ->when(
+                auth()->user()->hasRole('kadis'),
+                function ($query) {
+                    $query->with(
+                        [
+                            'result'    =>  [
+                                'attachments',
+                                'unit'
+                            ]
+                        ]
+                    )->orderByRaw(
+                        "CASE
+                            WHEN status = 'pending' THEN 0
+                            WHEN status = 'approved' THEN 1
+                            WHEN status = 'declined' THEN 2
+                            ELSE 3
+                        END"
+                    );
+                }
+            )
             ->with([
                 'attachments',
                 'farmer',
@@ -147,10 +167,11 @@ class RequestRepository extends BaseRequestRepository
 
     public function update(array $data, Request $request)
     {
-        $data['period_id'] = Period::query()->where('is_active', true)->first()->id;
+        $data['period_id'] = getCurrentPeriodId();
+        // dd($data);
         $request->update($data);
         $request->refresh();
-        if ($data['attachments']) {
+        if (isset($data['attachments'])) {
             foreach ($data['attachments'] as $attachmentData) {
                 // Save the uploaded file to storage
                 $file = $attachmentData['file'];
@@ -163,16 +184,29 @@ class RequestRepository extends BaseRequestRepository
                     'request_id' => $request->id
                 ]);
             }
-            return true;
         }
 
-        return false;
+        return true;
+    }
+
+    public function createResult(Request $request, array $datas)
+    {
     }
 
     public function getPrograms(bool $asArray = false)
     {
         $programs = Program::query()
             ->whereNull('parent_id')
+            ->when(
+                auth()->user()->hasRole('kabid'),
+                function ($query) {
+                    $query->whereHas('division', function ($query) {
+                        $query->whereHas('users', function ($query) {
+                            $query->where('users.id', auth()->id());
+                        });
+                    });
+                }
+            )
             ->with(
                 [
                     'lowerProgramTree',

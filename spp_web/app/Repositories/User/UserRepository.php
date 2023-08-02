@@ -30,7 +30,7 @@ class UserRepository extends BaseUserRepository
 
     public function show(User $user)
     {
-        $user->load('permissions', 'roles');
+        $user->load('roles.permissions', 'permissions');
         if ($user->can('divisions')) {
             $user->load('divisions');
         }

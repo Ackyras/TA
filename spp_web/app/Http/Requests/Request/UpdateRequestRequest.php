@@ -25,12 +25,13 @@ class UpdateRequestRequest extends FormRequest
     {
         return [
             //
-            'program_id' => 'required',
-            'volume' => 'required',
-            'unit_id' => 'required',
-            'attachments' => 'required|array',
-            'attachments.*.name' => 'required',
-            'attachments.*.file' => 'required|file',
+            'program_id' => 'filled',
+            'volume' => 'filled',
+            'unit_id' => 'filled',
+            'attachments' => 'filled|array',
+            'attachments.*.name' => 'filled',
+            'attachments.*.file' => 'filled|file',
+            'status'    =>  'filled',
         ];
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Dashboard\Archive\RequestController as ArchiveRequestController;
+use App\Http\Controllers\Dashboard\ArchiveController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Dashboard\FarmerController;
 use App\Http\Controllers\Dashboard\VillageController;
@@ -13,6 +15,7 @@ use App\Http\Controllers\Dashboard\Setting\Program\ProgramController;
 use App\Http\Controllers\Dashboard\Setting\Division\DivisionController;
 use App\Http\Controllers\Dashboard\Setting\Period\PeriodController;
 use App\Http\Middleware\ArchiveMiddleware;
+use App\Http\Middleware\ScopePeriod;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,7 +34,7 @@ Route::get('/', function () {
 
 Route::impersonate();
 
-Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(function () {
+Route::middleware(['auth', ScopePeriod::class])->prefix('dashboard')->as('dashboard.')->group(function () {
     Route::controller(DashboardController::class)->group(function () {
         Route::get('', 'index')->name('index');
     });
@@ -113,9 +116,20 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
         Route::delete('/{request}', [RequestController::class, 'destroy'])->name('destroy');
         Route::match(['GET', 'DELETE'], '/dashboard/requests/{request}/attachment/{attachment}', [RequestController::class, 'destroyAttachment'])->name('attachment.destroy');
     });
-
-    Route::middleware(ArchiveMiddleware::class)->prefix('archive/{period}')->as('archive.')->group(function () {
-        
+    Route::prefix('archive')->as('archive.')->group(function () {
+        Route::get('/', [ArchiveController::class, 'index'])->name('index');
+        Route::prefix('{period}')->group(function () {
+            Route::get('/', [ArchiveController::class, 'show'])->name('show');
+            Route::prefix('requests')->as('request.')->group(function () {
+                Route::get('/', [ArchiveRequestController::class, 'index'])->name('index');
+                Route::post('/', [ArchiveRequestController::class, 'store'])->name('store');
+                Route::get('/create', [ArchiveRequestController::class, 'create'])->name('create');
+                Route::get('/{request}', [ArchiveRequestController::class, 'show'])->name('show');
+                Route::put('/{instructorRequest}', [ArchiveRequestController::class, 'update'])->name('update');
+                Route::delete('/{request}', [ArchiveRequestController::class, 'destroy'])->name('destroy');
+                Route::match(['GET', 'DELETE'], '/dashboard/requests/{request}/attachment/{attachment}', [ArchiveRequestController::class, 'destroyAttachment'])->name('attachment.destroy');
+            });
+        });
     });
 });
 

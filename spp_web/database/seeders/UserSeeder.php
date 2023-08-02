@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
                 'password'      =>  bcrypt('password'),
             ]
         );
-        $dev->assignRole('dev');
+        $dev->assignRole('dev', 'kadis');
         $kadis = User::create(
             [
                 'name'          =>  'kadis',

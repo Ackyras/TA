@@ -138,6 +138,41 @@
                         </a>
                     </li>
                 @endcan
+                <li class="nav-header">Arsip</li>
+                @can('archives.*')
+                    <li class="nav-item">
+                        <a href="{{ route('dashboard.archive.index') }}"
+                            class="nav-link {{ request()->routeIs('dashboard.archive.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-stream"></i>
+                            <p>
+                                Arsip
+                            </p>
+                        </a>
+                    </li>
+                    @if (request()->routeIs('dashboard.archive.*'))
+                        <li class="nav-item {{ request()->routeIs('dashboard.archive.*') ? 'active menu-open' : '' }}">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-cog"></i>
+                                <p>
+                                    Data Arsip
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            @can('periods')
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="{{ route('dashboard.archive.request.index', ['period',request()->route()->parameter('period')]) }}"
+                                            class="nav-link {{ request()->routeIs('dashboard.archive.request.index') ? 'active' : '' }}">
+                                            <i class="fas fa-list nav-icon"></i>
+                                            <p>Pengajuan</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            @endcan
+                        </li>
+                    @else
+                    @endif
+                @endcan
                 {{-- <li class="nav-header">EXAMPLES</li>
                 <li class="nav-item">
                     <a href="{{ route('dashboard.district.index') }}"

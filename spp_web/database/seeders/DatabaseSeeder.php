@@ -13,7 +13,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
         $this->call(
             [
                 PeriodSeeder::class,
@@ -26,6 +25,7 @@ class DatabaseSeeder extends Seeder
                 UserSeeder::class,
                 ProgramSeeder::class,
                 RequestSeeder::class,
+                RequestResultSeeder::class,
             ]
         );
     }

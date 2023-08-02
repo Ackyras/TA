@@ -8,3 +8,10 @@ if (!function_exists('getCurrentPeriod')) {
         return Period::query()->where('is_active', true)->first();
     }
 }
+
+if (!function_exists('getCurrentPeriodId')) {
+    function getCurrentPeriodId(): ?int
+    {
+        return getCurrentPeriod()->id;
+    }
+}

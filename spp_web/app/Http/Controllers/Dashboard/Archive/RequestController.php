@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Dashboard\Request;
+namespace App\Http\Controllers\Dashboard\Archive;
 
 use Illuminate\Http\Request;
 use App\Models\RequestAttachment;
@@ -12,7 +12,6 @@ use App\Models\Request as ModelsRequest;
 
 class RequestController extends Controller
 {
-    //
     protected $repo;
 
     public function __construct(RequestRepository $requestRepository)
@@ -23,12 +22,13 @@ class RequestController extends Controller
     public function index(Request $request)
     {
         $datas = $this->repo->index($request);
+        dd($datas);
         if (auth()->user()->hasRole('koor')) {
-            return view('pages.dashboard.request.instructor.index', compact('datas'));
+            return view('pages.dashboard.archive.request.instructor.index', compact('datas'));
         } elseif (auth()->user()->hasRole('kabid')) {
-            return view('pages.dashboard.request.division.index', compact('datas'));
+            return view('pages.dashboard.archive.request.division.index', compact('datas'));
         } elseif (auth()->user()->hasRole('kadis')) {
-            return view('pages.dashboard.request.coordinator.index', compact('datas'));
+            return view('pages.dashboard.archive.request.coordinator.index', compact('datas'));
         }
     }
 

@@ -6,6 +6,8 @@ use App\Models\Village;
 use App\Models\District;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\District\UpdateVillageRequest;
+use App\Http\Requests\Village\StoreVillageRequest;
 use App\Repositories\Village\VillageRepository;
 use App\Repositories\District\DistrictRepository;
 
@@ -59,9 +61,23 @@ class VillageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreVillageRequest $request)
     {
         //
+        $validated = $request->validated();
+        // dd($validated);
+        if ($this->repo->store($validated)) {
+            return back()->with(
+                [
+                    'created'   =>  __('message.village.created')
+                ]
+            );
+        }
+        return back()->with(
+            [
+                'failed'   =>  __('message.village.notCreated')
+            ]
+        );
     }
 
     /**
