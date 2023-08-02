@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\District;
+namespace App\Http\Requests\Village;
 
 use Illuminate\Foundation\Http\FormRequest;
 

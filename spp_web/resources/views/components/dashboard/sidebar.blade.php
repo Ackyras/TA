@@ -48,7 +48,7 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ route('dashboard.setting.period.index') }}"
-                                        class="nav-link {{ request()->routeIs('dashboard.setting.period.index') ? 'active' : '' }}">
+                                        class="nav-link {{ request()->routeIs('dashboard.setting.period.*') ? 'active' : '' }}">
                                         <i class="fas fa-list nav-icon"></i>
                                         <p>List Periode</p>
                                     </a>
@@ -59,7 +59,7 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ route('dashboard.setting.user.index') }}"
-                                        class="nav-link {{ request()->routeIs('dashboard.setting.user.index') ? 'active' : '' }}">
+                                        class="nav-link {{ request()->routeIs('dashboard.setting.user.*') ? 'active' : '' }}">
                                         <i class="fas fa-list nav-icon"></i>
                                         <p>List User</p>
                                     </a>
@@ -70,7 +70,7 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ route('dashboard.setting.division.index') }}"
-                                        class="nav-link {{ request()->routeIs('dashboard.setting.division.index') ? 'active' : '' }}">
+                                        class="nav-link {{ request()->routeIs('dashboard.setting.division.*') ? 'active' : '' }}">
                                         <i class="fas fa-list nav-icon"></i>
                                         <p>Bidang</p>
                                     </a>
@@ -81,7 +81,7 @@
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="{{ route('dashboard.setting.program.index') }}"
-                                        class="nav-link {{ request()->routeIs('dashboard.setting.program.index') ? 'active' : '' }}">
+                                        class="nav-link {{ request()->routeIs('dashboard.setting.program.*') ? 'active' : '' }}">
                                         <i class="fas fa-list nav-icon"></i>
                                         <p>Kamus Usulan</p>
                                     </a>
