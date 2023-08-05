@@ -7,6 +7,7 @@ use App\Models\Village;
 use App\Models\Division;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\ScopePeriod;
 use App\Repositories\User\UserRepository;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
@@ -42,6 +43,11 @@ class UserController extends Controller
     public function create()
     {
         //
+        $divisions = Division::all();
+        $villages = Village::all();
+        $roles = Role::all();
+
+        return view('pages.dashboard.user.create', compact('divisions', 'villages', 'roles'));
     }
 
     /**
@@ -53,6 +59,8 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
         //
+        $validated = $request->validated();
+        dd($validated);
     }
 
     /**

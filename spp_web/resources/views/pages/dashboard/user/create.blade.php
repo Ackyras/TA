@@ -1,20 +1,17 @@
 @extends('layouts.app')
 
-@section('title', 'Detail ' . $user->name)
+@section('title', 'Create User')
 
 @section('content')
-    <form action="{{ route('dashboard.setting.user.update', $user) }}" method="POST" id="user-form">
+    <form action="{{ route('dashboard.setting.user.store') }}" method="POST" id="user-form">
         @csrf
-        @method('PUT')
         <div class="card">
-
             <div class="card-header">
                 <h3 class="card-title">Identitas</h3>
             </div>
-
             <div class="card-body">
-                <x-form.input.text name="name" title="Name" :value="$user->name" :in-line="true" />
-                <x-form.input.text name="email" title="Email" :value="$user->email" :in-line="true" />
+                <x-form.input.text name="name" title="Name" :in-line="true" />
+                <x-form.input.text name="email" title="Email" :in-line="true" />
             </div>
 
             <div class="card-body">
@@ -25,8 +22,8 @@
                     <div class="col row">
                         @foreach ($roles as $role)
                             <div class="col">
-                                <x-form.input.radio name="roles[]" :title="$role->name" :value="$role->id"
-                                    id="{{ 'roles_' . $role->id }}" :checked="$user->roles->contains('id', $role->id)" />
+                                <x-form.input.radio name="roles" :title="$role->name" :value="$role->id"
+                                    id="{{ 'roles_' . $role->id }}" :checked="old('roles') == $role->id" />
                             </div>
                         @endforeach
                     </div>

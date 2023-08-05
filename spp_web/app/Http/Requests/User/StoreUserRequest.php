@@ -13,7 +13,7 @@ class StoreUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return auth()->user()->can('users.create');
     }
 
     /**
@@ -25,6 +25,11 @@ class StoreUserRequest extends FormRequest
     {
         return [
             //
+            'name'      =>  'required',
+            'email'     =>  'required',
+            'roles'     =>  'required',
+            'divisions' =>  'required_if:roles,3',
+            'villages'  =>  'required_if:roles,4',
         ];
     }
 }
