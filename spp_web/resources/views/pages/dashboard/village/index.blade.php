@@ -26,17 +26,25 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form action="{{ route('dashboard.village.store') }}" method="post">
-                                @csrf
-                                <div class="modal-body">
-                                    <x-form.input.option name="district_id" title="Kecamatan" :options="$districts" />
-                                    <x-form.input.text name="name" title="Nama Desa" />
+                            @if (is_null($districts))
+                                <form action="{{ route('dashboard.village.store') }}" method="post">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <x-form.input.option name="district_id" title="Kecamatan" :options="$districts" />
+                                        <x-form.input.text name="name" title="Nama Desa" />
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Tambah</button>
+                                    </div>
+                                </form>
+                            @else
+                                <div class="m-2">
+                                    Belum ada data Kecamatan tersimpan di database.<a
+                                        href="{{ route('dashboard.district.index') }}">Klik di sini</a> untuk
+                                    menambahkan data Kecamatan
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Tambah</button>
-                                </div>
-                            </form>
+                            @endif
                         </div>
                     </div>
                 </div>
