@@ -75,13 +75,16 @@
         <!-- /.control-sidebar -->
     </div>
     <!-- ./wrapper -->
-
+    @vite('resources/js/app.js')
     <!-- jQuery -->
     <script src="{{ asset('adminLTE/plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap 4 -->
     <script src="{{ asset('adminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('adminLTE/dist/js/adminlte.min.js') }}"></script>
+    {{-- Custom Input --}}
+    <script src="{{ asset ('adminLTE/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+
     <!-- DataTables  & Plugins -->
     <script src="{{ asset('adminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('adminLTE/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -115,6 +118,11 @@
                 "autoWidth": false,
                 "responsive": true,
             });
+        });
+    </script>
+    <script>
+        $(function() {
+            bsCustomFileInput.init();
         });
     </script>
     @yield('script')

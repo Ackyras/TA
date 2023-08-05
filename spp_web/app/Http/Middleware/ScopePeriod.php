@@ -11,19 +11,26 @@ class ScopePeriod
 {
     public function handle(Request $request, Closure $next)
     {
-        $parameters = $request->route()->parameters();
-        $periodId = null;
-        if ($request->route()->hasParameter('period')) {
-            $periodId = $parameters['period'];
-        } else {
-            $periodId = getCurrentPeriodId();
+        if (!activePeriodIsExists()) {
+            return to_route('dashboard.setting.period.index')->with(
+                [
+                    'failed'    =>  'Buat periode baru terlebih dahulu'
+                ]
+            );
         }
-        Program::addGlobalScope('current_period', function ($query) use ($periodId) {
-            $query->where('period_id', $periodId);
+        $period = $request->route()->hasParameter('period')
+            ? $request->route()->parameter('period')
+            : getCurrentPeriod();
+
+        ModelsRequest::addGlobalScope('current_period', function ($query) use ($period) {
+            $query->where('period_id', $period->id)
+                ->with(['program']); // Eager load the "program" relationship
         });
-        ModelsRequest::addGlobalScope('current_period', function ($query) use ($periodId) {
-            $query->where('period_id', $periodId);
+
+        Program::addGlobalScope('current_period', function ($query) use ($period) {
+            $query->where('period_id', $period->id);
         });
+
         return $next($request);
     }
 }

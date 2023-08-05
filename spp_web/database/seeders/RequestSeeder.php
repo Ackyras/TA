@@ -23,6 +23,7 @@ class RequestSeeder extends Seeder
         $farmers = Farmer::all();
         $programs = Program::query()
             ->where('is_parent', false)
+            ->where('period_id', getCurrentPeriodId())
             ->get();
         $period = Period::where('is_active', true)->first();
         foreach ($farmers as $farmer) {

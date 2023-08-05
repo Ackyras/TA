@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Village;
+namespace App\Http\Requests\Seeding;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateVillageRequest extends FormRequest
+class StoreSeedingDataRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class UpdateVillageRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->can('villages.update');
+        return true;
     }
 
     /**
@@ -23,9 +23,9 @@ class UpdateVillageRequest extends FormRequest
      */
     public function rules()
     {
+        // dd(request()->input());
         return [
-            //
-            'name'  =>  ['required', 'unique:villages,name,except,id']
+            'file' => ['required', 'mimes:xlsx,xls, csv'],
         ];
     }
 }

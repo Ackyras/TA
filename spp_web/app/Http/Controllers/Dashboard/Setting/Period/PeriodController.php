@@ -31,15 +31,33 @@ class PeriodController extends Controller
         if ($this->repo->store($validated)) {
             return back()->with(
                 [
-                    'created'   =>  __('message.district.created')
+                    'created'   =>  __('message.period.created')
                 ]
             );
         }
         return back()->with(
             [
-                'failed'   =>  __('message.district.notCreated')
+                'failed'   =>  __('message.period.notCreated')
             ]
         );
         dd($validated);
+    }
+
+    public function destroy(Period $period)
+    {
+        //
+        if ($period->delete()) {
+            return back()->with(
+                [
+                    'destroyed'   =>  __('message.period.deleted')
+                ]
+            );
+        }
+
+        return back()->with(
+            [
+                'failed'    =>  __('message.period.notDeleted')
+            ]
+        );
     }
 }

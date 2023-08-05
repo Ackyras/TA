@@ -6,10 +6,10 @@ use App\Models\Village;
 use App\Models\District;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\District\UpdateVillageRequest;
-use App\Http\Requests\Village\StoreVillageRequest;
 use App\Repositories\Village\VillageRepository;
 use App\Repositories\District\DistrictRepository;
+use App\Http\Requests\Village\StoreVillageRequest;
+use App\Http\Requests\Village\UpdateVillageRequest;
 
 class VillageController extends Controller
 {
@@ -118,9 +118,22 @@ class VillageController extends Controller
      * @param  \App\Models\Village  $village
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Village $village)
+    public function update(UpdateVillageRequest $request, Village $village)
     {
         //
+        $validated = $request->validated();
+        if ($this->repo->update($village, $validated)) {
+            return back()->with(
+                [
+                    'created'   =>  __('message.village.updated')
+                ]
+            );
+        }
+        return back()->with(
+            [
+                'failed'   =>  __('message.village.notUpdated')
+            ]
+        );
     }
 
     /**

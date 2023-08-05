@@ -9,6 +9,7 @@ $model = [
     'program'       =>  'Kamus Usulan',
     'request'       =>  'Pengajuan Bantuan',
     'attachment'    =>  'File Pendukung',
+    'period'        =>  'Periode'
 ];
 
 return $model;

@@ -9,9 +9,6 @@
                 <div class="col">
                     <h3 class="card-title">List Proposal Bantuan Koordinator Penyuluh</h3>
                 </div>
-                <div class="col-auto">
-                    <a href="{{ route('dashboard.request.create') }}" class="btn btn-primary">Tambah</a>
-                </div>
             </div>
         </div>
         <div class="card-body">

@@ -7,13 +7,12 @@ use App\Http\Controllers\Dashboard\FarmerController;
 use App\Http\Controllers\Dashboard\VillageController;
 use App\Http\Controllers\Dashboard\DistrictController;
 use App\Http\Controllers\Dashboard\DashboardController;
-use App\Http\Controllers\Dashboard\Request\DivisionRequestController;
-use App\Http\Controllers\Dashboard\Request\InstructorRequestController;
 use App\Http\Controllers\Dashboard\Request\RequestController;
 use App\Http\Controllers\Dashboard\Setting\User\UserController;
 use App\Http\Controllers\Dashboard\Setting\Program\ProgramController;
 use App\Http\Controllers\Dashboard\Setting\Division\DivisionController;
 use App\Http\Controllers\Dashboard\Setting\Period\PeriodController;
+use App\Http\Controllers\Dashboard\Setting\SeedingController;
 use App\Http\Middleware\ArchiveMiddleware;
 use App\Http\Middleware\ScopePeriod;
 
@@ -34,7 +33,7 @@ Route::get('/', function () {
 
 Route::impersonate();
 
-Route::middleware(['auth', ScopePeriod::class])->prefix('dashboard')->as('dashboard.')->group(function () {
+Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(function () {
     Route::controller(DashboardController::class)->group(function () {
         Route::get('', 'index')->name('index');
     });
@@ -54,7 +53,7 @@ Route::middleware(['auth', ScopePeriod::class])->prefix('dashboard')->as('dashbo
                 'names'    =>  'division',
             ]
         );
-        Route::resource(
+        Route::middleware(ScopePeriod::class)->resource(
             'programs',
             ProgramController::class,
             [
@@ -69,6 +68,10 @@ Route::middleware(['auth', ScopePeriod::class])->prefix('dashboard')->as('dashbo
                 'names' =>  'period'
             ]
         );
+        Route::controller(SeedingController::class)->prefix('seeding')->as('seeding.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::post('/', 'storeComplete')->name('store.complete');
+        });
     });
 
     Route::resource(
@@ -107,18 +110,24 @@ Route::middleware(['auth', ScopePeriod::class])->prefix('dashboard')->as('dashbo
         );
     });
 
-    Route::prefix('requests')->as('request.')->group(function () {
-        Route::get('/', [RequestController::class, 'index'])->name('index');
-        Route::post('/', [RequestController::class, 'store'])->name('store');
-        Route::get('/create', [RequestController::class, 'create'])->name('create');
-        Route::get('/{request}', [RequestController::class, 'show'])->name('show');
-        Route::put('/{instructorRequest}', [RequestController::class, 'update'])->name('update');
-        Route::delete('/{request}', [RequestController::class, 'destroy'])->name('destroy');
-        Route::match(['GET', 'DELETE'], '/dashboard/requests/{request}/attachment/{attachment}', [RequestController::class, 'destroyAttachment'])->name('attachment.destroy');
+    Route::middleware(ScopePeriod::class)->group(function () {
+        Route::prefix('requests')->as('request.')->group(function () {
+            Route::get('/', [RequestController::class, 'index'])->name('index');
+            Route::post('/', [RequestController::class, 'store'])->name('store');
+            Route::get('/create', [RequestController::class, 'create'])->name('create');
+            Route::get('/{request}', [RequestController::class, 'show'])->name('show');
+            Route::put('/{instructorRequest}', [RequestController::class, 'update'])->name('update');
+            Route::delete('/{request}', [RequestController::class, 'destroy'])->name('destroy');
+            Route::match(['GET', 'DELETE'], '/dashboard/requests/{request}/attachment/{attachment}', [RequestController::class, 'destroyAttachment'])->name('attachment.destroy');
+            Route::prefix('result')->as('result.')->group(function () {
+                // Route::get('')
+            });
+        });
     });
-    Route::prefix('archive')->as('archive.')->group(function () {
+
+    Route::middleware([ArchiveMiddleware::class, ScopePeriod::class])->prefix('archive')->as('archive.')->group(function () {
         Route::get('/', [ArchiveController::class, 'index'])->name('index');
-        Route::prefix('{period}')->group(function () {
+        Route::prefix('{period}')->as('period.')->group(function () {
             Route::get('/', [ArchiveController::class, 'show'])->name('show');
             Route::prefix('requests')->as('request.')->group(function () {
                 Route::get('/', [ArchiveRequestController::class, 'index'])->name('index');

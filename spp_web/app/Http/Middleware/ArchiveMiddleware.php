@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Period;
 use App\Models\Program;
 use App\Models\Request as ModelsRequest;
 use Closure;
@@ -18,8 +19,13 @@ class ArchiveMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        ModelsRequest::disableGlobalScope('current_period');
-        Program::disableGlobalScope('current_period');
-        return $next($request);
+        if (Period::where('is_active', false)->exists() && activePeriodIsExists()) {
+            return $next($request);
+        };
+        return to_route('dashboard.index')->with(
+            [
+                'warning'   =>  'Belum ada arsip pengadaan bantuan'
+            ]
+        );
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Models\Farmer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Farmer\StoreFarmerRequest;
 use App\Repositories\Farmer\FarmerRepository;
 
 class FarmerController extends Controller
@@ -43,9 +44,22 @@ class FarmerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreFarmerRequest $request)
     {
         //
+        $validated = $request->validated();
+        if ($this->repo->store($validated)) {
+            return back()->with(
+                [
+                    'created'   =>  __('message.farmer.updated')
+                ]
+            );
+        }
+        return back()->with(
+            [
+                'failed'   =>  __('message.farmer.notUpdated')
+            ]
+        );
     }
 
     /**

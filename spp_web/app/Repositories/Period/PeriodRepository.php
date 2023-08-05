@@ -20,7 +20,7 @@ class PeriodRepository extends BasePeriodRepository
         'show' => [
             'text'  =>  'Lihat',
             'type'  =>  'redirect',
-            'route' =>  'dashboard.archive.show',
+            'route' =>  'dashboard.archive.period.show',
             'color' =>  'primary',
         ]
     ];
@@ -28,15 +28,7 @@ class PeriodRepository extends BasePeriodRepository
     public function index()
     {
         $periods = Period::query()
-            ->withCount(
-                [
-                    'programs',
-                    'requests',
-                ]
-            )
-            ->get()
-            //
-        ;
+            ->get();
         return Period::all();
     }
 
@@ -45,9 +37,11 @@ class PeriodRepository extends BasePeriodRepository
         $oldPeriod = getCurrentPeriod();
         $period = Period::create($datas);
         if ($datas['deactivate_active_period']) {
-            $oldPeriod->update([
-                'is_active' =>  false,
-            ]);
+            if ($oldPeriod) {
+                $oldPeriod->update([
+                    'is_active' =>  false,
+                ]);
+            }
             $period->update(
                 [
                     'is_active' =>  true,

@@ -19,19 +19,17 @@ class Program extends Model
         'period_id',
     ];
 
-    // protected static function boot()
-    // {
-    //     parent::boot();
-
-    //     static::addGlobalScope('current_period', function ($query) {
-    //         // Define your scope conditions here
-    //         $query->where('programs.period_id', Period::query()->where('is_active', true)->first()->id);
-    //     });
-    // }
-
-    public function scopeCurrentPeriod(Builder $query, Period $period)
+    public function __boot()
     {
-        $query->where('period_id', $period->id);
+        parent::boot();
+        $periodId = request()->route()->hasParameter('period')
+            ? (int) request()->route()->parameter('period')
+            : getCurrentPeriodId();
+
+        static::addGlobalScope('current_period', function ($query) use ($periodId) {
+            $query->where('period_id', $periodId)
+                ->with(['program']); // Eager load the "program" relationship
+        });
     }
 
     public function division()

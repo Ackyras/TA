@@ -26,7 +26,7 @@ class UpdateUserRequest extends FormRequest
         return [
             'name'      => 'required',
             'email'     => 'required',
-            'roles'     => ['required', 'array'],
+            'roles'     => 'required',
             'divisions' => ['nullable', function ($attribute, $value, $fail) {
                 if (empty($value) && request()->has('roles') && !in_array('1', request()->input('roles')) && !in_array('2', request()->input('roles')) && !in_array('3', request()->input('roles'))) {
                     return $fail('The ' . $attribute . ' field is required.');

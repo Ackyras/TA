@@ -35,9 +35,9 @@ class FarmerRepository extends BaseFarmerRepository
     public function index(Request $request)
     {
         $query = Farmer::query()
-        ->when(
-            auth()->user()->hasRole('koor')
-        )
+            ->when(
+                auth()->user()->hasRole('koor')
+            )
             ->select(['name', 'address', 'pic', 'village_id', 'id'])
             ->with([
                 'village' => function ($query) {
@@ -81,34 +81,16 @@ class FarmerRepository extends BaseFarmerRepository
         return $datas;
     }
 
-    // public function index(Request $request)
-    // {
-    //     if ($request->query()) {
-    //         $query = Farmer::query()
-    //             ->select(['name', 'address', 'pic', 'village_id', 'id'])
-    //             ->with([
-    //                 'village' => function ($query) {
-    //                     $query->select(['id', 'name', 'district_id']);
-    //                 },
-    //                 'village.district' => function ($query) {
-    //                     $query->select(['id', 'name']);
-    //                 }
-    //             ]);
+    public function store(array $data)
+    {
+        return Farmer::create($data);
+    }
 
-    //         $farmers = $this->filter($query, $request, false, true, 10);
-    //     } else {
-    //         $farmers = new LengthAwarePaginator(
-    //             [],
-    //             0,
-    //             10,
-    //             1,
-    //             [
-    //                 'path' => LengthAwarePaginator::resolveCurrentPath()
-    //             ]
-    //         );
-    //     }
-    //     return $farmers->withQueryString();
-    // }
+    public function update(Farmer $farmer, array $data)
+    {
+        $farmer->update($data);
+        return $farmer->wasChanged();
+    }
 
     public function prepareDatatable($datas, $withActions = false)
     {

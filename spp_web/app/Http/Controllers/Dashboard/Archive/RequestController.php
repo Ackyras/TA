@@ -22,7 +22,6 @@ class RequestController extends Controller
     public function index(Request $request)
     {
         $datas = $this->repo->index($request);
-        dd($datas);
         if (auth()->user()->hasRole('koor')) {
             return view('pages.dashboard.archive.request.instructor.index', compact('datas'));
         } elseif (auth()->user()->hasRole('kabid')) {

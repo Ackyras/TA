@@ -79,6 +79,12 @@ class VillageRepository extends BaseVillageRepository
         return Village::create($datas);
     }
 
+    public function update(Village $village, array $data)
+    {
+        $village->update($data);
+        return $village->wasChanged();
+    }
+
     public function prepareDatatable($datas, $config = null)
     {
         $config = $this->datatableConfig;

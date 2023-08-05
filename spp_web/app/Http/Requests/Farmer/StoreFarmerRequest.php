@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Village;
+namespace App\Http\Requests\Farmer;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateVillageRequest extends FormRequest
+class StoreFarmerRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class UpdateVillageRequest extends FormRequest
      */
     public function authorize()
     {
-        return auth()->user()->can('villages.update');
+        return auth()->user()->can('farmers.create');
     }
 
     /**
@@ -25,7 +25,10 @@ class UpdateVillageRequest extends FormRequest
     {
         return [
             //
-            'name'  =>  ['required', 'unique:villages,name,except,id']
+            'name'          =>  ['required', 'unique:farmers,name'],
+            'village_id'    =>  ['required', 'exists:villages,id'],
+            'pic'           =>  ['required'],
+            'address'       =>  ['required'],
         ];
     }
 }

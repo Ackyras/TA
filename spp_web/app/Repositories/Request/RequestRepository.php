@@ -9,6 +9,7 @@ use App\Models\Program;
 use App\Models\Request;
 use App\Models\Division;
 use App\Models\RequestAttachment;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request as HttpRequest;
@@ -38,6 +39,7 @@ class RequestRepository extends BaseRequestRepository
     public function index(HttpRequest $request)
     {
         $datas = [];
+        DB::enableQueryLog();
         $query = Request::query()
             ->when(
                 auth()->user()->hasRole('koor'),
@@ -48,7 +50,15 @@ class RequestRepository extends BaseRequestRepository
                                 $query->where('users.id', auth()->id());
                             });
                         });
-                    });
+                    })->orderByRaw(
+                        "CASE
+                            WHEN status = 'approved' THEN 0
+                            WHEN status = 'requested' THEN 1
+                            WHEN status = 'pending' THEN 2
+                            WHEN status = 'declined' THEN 3
+                            ELSE 3
+                        END"
+                    );
                 }
             )
             ->when(
@@ -67,6 +77,14 @@ class RequestRepository extends BaseRequestRepository
                                 'unit'
                             ]
                         ]
+                    )->orderByRaw(
+                        "CASE
+                            WHEN status = 'pending' THEN 0
+                            WHEN status = 'requested' THEN 1
+                            WHEN status = 'approved' THEN 2
+                            WHEN status = 'declined' THEN 3
+                            ELSE 3
+                        END"
                     );
                 }
             )
@@ -78,13 +96,14 @@ class RequestRepository extends BaseRequestRepository
                             'result'    =>  [
                                 'attachments',
                                 'unit'
-                            ]
+                            ],
                         ]
                     )->orderByRaw(
                         "CASE
-                            WHEN status = 'pending' THEN 0
+                            WHEN status = 'requested' THEN 0
                             WHEN status = 'approved' THEN 1
-                            WHEN status = 'declined' THEN 2
+                            WHEN status = 'pending' THEN 2
+                            WHEN status = 'declined' THEN 3
                             ELSE 3
                         END"
                     );
@@ -98,6 +117,9 @@ class RequestRepository extends BaseRequestRepository
             ]);
         $datas['paginator'] = $this->filter($query, $request, false, true, 10)->withQueryString();
         $datas['items'] = $datas['paginator']->groupBy('farmer');
+        $queries = DB::getQueryLog();
+        // dd($queries);
+        // dd($datas['items']);
         $datas['programs'] = $this->getPrograms(true);
         return $datas;
     }
@@ -135,7 +157,6 @@ class RequestRepository extends BaseRequestRepository
         );
         $datas['programs'] = $this->getPrograms(true);
         $datas['units'] = Unit::all();
-        // dd($datas['programs']);
         return $datas;
     }
 
@@ -187,10 +208,6 @@ class RequestRepository extends BaseRequestRepository
         }
 
         return true;
-    }
-
-    public function createResult(Request $request, array $datas)
-    {
     }
 
     public function getPrograms(bool $asArray = false)

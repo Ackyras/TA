@@ -20,7 +20,7 @@
                         <td>Pengajuan</td>
                         <td>
                             <div class="d-flex d-inline-block">
-                                <x-button text="Lihat" type="redirect" :route="route('dashboard.archive.request.index', ['period' => $period])" color="primary" />
+                                <x-button text="Lihat" type="redirect" :route="route('dashboard.archive.period.request.index', ['period' => $period])" color="primary" />
                             </div>
                         </td>
                     </tr>

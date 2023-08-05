@@ -1,59 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'List Of Request')
-
-@section('css')
-    <style>
-        /* Add this style to limit the height of the filter card */
-        #programAccordionCollapse .form-group.row {
-            max-height: 200px;
-            /* You can adjust the value as needed */
-            overflow-y: auto;
-        }
-
-        /* Add this style to make the program accordion pass the filter card */
-        #programAccordionCollapse {
-            position: absolute;
-            z-index: 1;
-            background-color: #fff;
-            /* Set the desired background color */
-            width: calc(100% - 16px);
-            /* Adjust the width if needed */
-        }
-
-        /* Add this style to adjust the positioning of the program accordion */
-        #programAccordion {
-            margin-bottom: 0;
-        }
-
-        /* Add this style to make the program accordion button look like it's part of the card header */
-        #programAccordionHeading {
-            background-color: #f8f9fa;
-            /* Set the desired background color */
-            border: 1px solid #ccc;
-            /* Add a border for better separation */
-            padding: 0.375rem 0.75rem;
-            /* Adjust the padding as needed */
-        }
-
-        /* Add this style to add a border to the accordion content */
-        #programAccordionCollapse .card-body {
-            border: 1px solid #ccc;
-            /* Add a border for differentiation */
-            border-top: none;
-            /* Remove top border since it's already part of the card header */
-            padding: 0.75rem;
-            /* Adjust padding as needed */
-        }
-    </style>
-@endsection
+@section('title', 'List Of Request Execution')
 
 @section('content')
     <div class="card">
         <div class="card-header">
             <div class="row align-items-center">
                 <div class="col">
-                    <h3 class="card-title">List Proposal Bantuan</h3>
+                    <h3 class="card-title">List Penyelenggaraan Bantuan</h3>
                 </div>
             </div>
         </div>
@@ -75,10 +29,12 @@
                                 <div class="col-sm-10">
                                     <select class="form-control select2bs4" id="select2" name="filter[status]">
                                         <option @selected(request()->input('filter.status') == '') value="">Semua</option>
-                                        <option @selected(request()->input('filter.status') == 'requested') value="requested">Requested</option>
-                                        <option @selected(request()->input('filter.status') == 'pending') value="pending">Pending</option>
-                                        <option @selected(request()->input('filter.status') == 'approved') value="approved">Approved</option>
-                                        <option @selected(request()->input('filter.status') == 'declined') value="declined">Declined</option>
+                                        <option @selected(request()->input('filter.status') == 'requested') value="Requested">Requested</option>
+                                        <option @selected(request()->input('filter.status') == 'pending') value="Pending">Pending</option>
+                                        <option @selected(request()->input('filter.status') == 'on progress')
+                                            value="On
+                                    Progress">On Progress</option>
+                                        <option @selected(request()->input('filter.status') == 'declined') value="Declined">Declined</option>
                                     </select>
                                 </div>
                             </div>
@@ -95,26 +51,24 @@
                                                         Select Program
                                                     </button>
                                                 </div>
+                                                <div id="programAccordionCollapse" class="collapse"
+                                                    aria-labelledby="programAccordionHeading"
+                                                    data-parent="#programAccordion">
+                                                    <div class="card-body">
+                                                        @foreach ($datas['programs'] as $program)
+                                                            @include('partials.program-tree-view-select', [
+                                                                'parent' => $program,
+                                                                'selected' => request()->input(
+                                                                    'filter.program_id'),
+                                                            ])
+                                                        @endforeach
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div id="programAccordionCollapse" class="collapse"
-                                        aria-labelledby="programAccordionHeading" data-parent="#programAccordion">
-                                        <div class="card-body form-group row">
-                                            @foreach ($datas['programs'] as $program)
-                                                <fieldset>
-                                                    <legend>{{ $program['name'] }}</legend>
-                                                    @include('partials.program-tree-view-select', [
-                                                        'parent' => $program,
-                                                        'selected' => request()->input('filter.program_id'),
-                                                    ])
-                                                </fieldset>
-                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                         <div class="p-2 card-footer d-flex justify-content-end">
                             <button type="submit" class="btn btn-primary">Filter</button>
