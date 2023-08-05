@@ -2,10 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Program;
-use App\Models\Request as ModelsRequest;
 use Closure;
+use App\Models\Period;
+use App\Models\Program;
 use Illuminate\Http\Request;
+use App\Models\Request as ModelsRequest;
 
 class ScopePeriod
 {
@@ -19,7 +20,7 @@ class ScopePeriod
             );
         }
         $period = $request->route()->hasParameter('period')
-            ? $request->route()->parameter('period')
+            ? Period::find($request->route()->parameter('period'))
             : getCurrentPeriod();
 
         ModelsRequest::addGlobalScope('current_period', function ($query) use ($period) {
