@@ -7,7 +7,7 @@
         <div class="card-header">
             <h3 class="card-title">List</h3>
             <div class="card-tools">
-                <button class="btn btn-primary" data-toggle="modal" data-target="#createPeriodModal">Create Period</button>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#createPeriodModal">Buat Periode Baru</button>
             </div>
         </div>
         <div class="card-body">
