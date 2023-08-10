@@ -17,10 +17,10 @@ class RoleSeeder extends Seeder
     {
         //
         $roles = [
-            [
-                'name'          =>  'dev',
-                'long_name'     =>  'Developer',
-            ],
+            // [
+            //     'name'          =>  'dev',
+            //     'long_name'     =>  'Developer',
+            // ],
             [
                 'name'          =>  'kadis',
                 'long_name'     =>  'Kepala Dinas',

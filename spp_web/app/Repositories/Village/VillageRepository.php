@@ -2,9 +2,11 @@
 
 namespace App\Repositories\Village;
 
+use App\Models\District;
 use App\Models\Village;
 use App\Repositories\Farmer\FarmerRepository;
 use App\Repositories\Village\BaseVillageRepository;
+use DB;
 
 class VillageRepository extends BaseVillageRepository
 {
@@ -76,7 +78,28 @@ class VillageRepository extends BaseVillageRepository
 
     public function store(array $datas)
     {
-        return Village::create($datas);
+        DB::beginTransaction();
+        try {
+            $village = Village::create($datas);
+            if ($datas['with_user']) {
+                $village->users()->create(
+                    [
+                        'name'      =>  'Desa ' . str()->title($village->name),
+                        'email'     =>  str()->snake(District::find($datas['district_id'])->name) . '.' . str()->snake($village->name) . '@sppbt.toba.gov.id',
+                        'password'  =>  bcrypt('password')
+                    ]
+                );
+            }
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+            if ($th instanceof \Exception) {
+                $errorMessage = $th->getMessage();
+            }
+            return false;
+        }
+        return true;
     }
 
     public function update(Village $village, array $data)

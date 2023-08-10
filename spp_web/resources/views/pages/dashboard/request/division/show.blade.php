@@ -27,7 +27,7 @@
             @method('PUT')
             <div class="card-body">
                 <fieldset disabled="disabled">
-                    <legend>Detail</legend>
+                    <legend>Detail Pengajuan <small>({{ __('status.' . $datas['request']->status) }})</small></legend>
                     <x-form.input.text name="farmer_id" title="Kelompok Tani" :value="$datas['request']->farmer->name" :in-line="true" />
                     <x-form.input.text name="program_id" title="Kamus Usulan" :value="$datas['request']->program->name" :in-line="true" />
                     <x-form.input.number name="volume" title="volume" :value="$datas['request']->volume" :in-line="true" />
@@ -42,7 +42,8 @@
                             <div class="mb-2 attachment-name-group d-flex align-items-center form-group row">
                                 <input type="text" name="attachments[{{ $index }}][name]"
                                     class="mr-2 form-control col" value="{{ $attachment->name }}" disabled readonly>
-                                <a href="{{ $attachment->url }}" class="mr-1 btn btn-primary col-1" target="_blank">View</a>
+                                <a href="{{ Storage::url($attachment->url) }}" class="mr-1 btn btn-primary col-1"
+                                    target="_blank">View</a>
                             </div>
                         @endforeach
                     </div>
@@ -55,9 +56,9 @@
                             <label for="status" class="col-sm-2 col-form-label">Status</label>
                             <div class="col-sm-10">
                                 <select class="form-control select2bs4" id="select2" name="status">
-                                    <option @selected($datas['request']->status == 'requested') value="Requested">Requested</option>
                                     <option @selected($datas['request']->status == 'pending') value="Pending">Pending</option>
-                                    <option @selected($datas['request']->status == 'on progress') value="On Progress">On Progress</option>
+                                    <option @selected($datas['request']->status == 'requested') value="requested">Requested</option>
+                                    <option @selected($datas['request']->status == 'approved') value="approved">Approved</option>
                                     <option @selected($datas['request']->status == 'declined') value="Declined">Declined</option>
                                     <option @selected($datas['request']->status == 'Done') value="Done">Done</option>
                                 </select>
@@ -73,7 +74,7 @@
                                     <div class="mb-2 attachment-name-group d-flex align-items-center form-group row">
                                         <input type="text" name="attachments[{{ $index }}][name]"
                                             class="mr-2 form-control col" value="{{ $attachment->name }}" disabled readonly>
-                                        <a href="{{ $attachment->url }}" class="mr-1 btn btn-primary col-1"
+                                        <a href="{{ Storage::url($attachment->url) }}" class="mr-1 btn btn-primary col-1"
                                             target="_blank">View</a>
                                         <a href="{{ route('dashboard.request.attachment.destroy', [$datas['request']->result, $attachment]) }}"
                                             class="btn btn-danger col-1">Delete</a>
@@ -106,13 +107,17 @@
                     </fieldset>
                 @endisset
             </div>
-            <div class="card-footer d-flex justify-content-end">
-                @if ($datas['request']->status == 'requested')
-                    <button type="submit" name="status" value="pending" class="btn btn-primary mr-2">Ajukan ke
-                        Kadis</button>
-                @endif
-                <button type="submit" class="btn btn-primary">Save</button>
-            </div>
+            @if ($datas['request']->status == 'pending' || $datas['request']->status == 'approved')
+                <div class="card-footer d-flex justify-content-end">
+                    @if ($datas['request']->status == 'pending')
+                        <button type="submit" name="status" value="requested" class="mr-2 btn btn-primary">Ajukan ke
+                            Kadis</button>
+                    @endif
+                    @if ($datas['request']->status == 'approved')
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    @endif
+                </div>
+            @endif
         </form>
     </div>
 @endsection

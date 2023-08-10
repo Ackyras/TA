@@ -56,9 +56,6 @@
                 <div class="col">
                     <h3 class="card-title">List Proposal Bantuan Koordinator Penyuluh</h3>
                 </div>
-                <div class="col-auto">
-                    <a href="{{ route('dashboard.request.create') }}" class="btn btn-primary">Tambah</a>
-                </div>
             </div>
         </div>
         <div class="card-body">
@@ -79,9 +76,10 @@
                                 <div class="col-sm-10">
                                     <select class="form-control select2bs4" id="select2" name="filter[status]">
                                         <option @selected(request()->input('filter.status') == '') value="">Semua</option>
-                                        <option @selected(request()->input('filter.status') == 'requested') value="requested">Requested</option>
                                         <option @selected(request()->input('filter.status') == 'pending') value="pending">Pending</option>
+                                        <option @selected(request()->input('filter.status') == 'requested') value="requested">Requested</option>
                                         <option @selected(request()->input('filter.status') == 'approved') value="approved">Approved</option>
+                                        <option @selected(request()->input('filter.status') == 'done') value="done">Done</option>
                                         <option @selected(request()->input('filter.status') == 'declined') value="declined">Declined</option>
                                     </select>
                                 </div>
@@ -173,8 +171,8 @@
                                         <ul>
                                             @forelse ($request->attachments as $attachment)
                                                 <li>
-                                                    <a href="{{ $attachment->url }}" target="_blank"
-                                                        rel="noopener noreferrer">
+                                                    <a href="{{ route('storage.request-attachment', ['requestAttachment' => $attachment]) }}"
+                                                        target="_blank" rel="noopener noreferrer">
                                                         {{ $attachment->name }}
                                                     </a>
                                                 </li>

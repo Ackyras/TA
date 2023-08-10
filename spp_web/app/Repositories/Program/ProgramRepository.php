@@ -50,8 +50,8 @@ class ProgramRepository extends BaseProgramRepository
 
     public function update(Program $program, array $data)
     {
-        $program->update($data);
-        return $program->wasChanged();
+        // dd($data);
+        return $program->update($data);
     }
 
     public function prepareDatatable($datas, $config = null)

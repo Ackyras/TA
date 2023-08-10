@@ -49,6 +49,7 @@ class ProgramController extends Controller
     public function store(StoreProgramRequest $request)
     {
         //
+        // dd($request->validated());
         if ($this->repo->store($request->validated())) {
             return back()->with(
                 [
@@ -98,13 +99,13 @@ class ProgramController extends Controller
         if ($this->repo->update($program, $request->validated())) {
             return back()->with(
                 [
-                    'created'   =>  __('message.program.updated')
+                    'updated'   =>  __('message.program.updated')
                 ]
             );
         }
         return back()->with(
             [
-                'created'   =>  __('message.district.notUpdated')
+                'failed'   =>  __('message.district.notUpdated')
             ]
         );
     }

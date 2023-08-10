@@ -21,7 +21,7 @@ class DivisionController extends Controller
     public function index()
     {
         $divisions = $this->repo->index();
-        if ($divisions->count() == 1) {
+        if ($divisions->count() == 1 && auth()->user()->hasRole('kabid')) {
             return view('pages.dashboard.division.show')->with(
                 [
                     'division'  =>  $divisions->first()

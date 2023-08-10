@@ -57,6 +57,6 @@ class User extends Authenticatable
     public function canImpersonate()
     {
         // For example
-        return $this->hasRole('dev');
+        return env('APP_ENV') != 'production' && ($this->hasRole('dev') || $this->hasRole('kadis'));
     }
 }

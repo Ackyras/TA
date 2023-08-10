@@ -60,7 +60,7 @@ class RolePermissionSeeder extends Seeder
                 ]
             ]
         ];
-        $dev = Role::where('name', 'dev')->first();
+        // $dev = Role::where('name', 'dev')->first();
         $kadis = Role::where('name', 'kadis')->first();
         $kabid = Role::where('name', 'kabid')->first();
         $koor = Role::where('name', 'koor')->first();
@@ -71,14 +71,14 @@ class RolePermissionSeeder extends Seeder
                         'name'  =>  $key,
                     ]
                 );
-                $parentPermission->assignRole($dev);
+                // $parentPermission->assignRole($dev);
                 foreach ($cruds as $crud) {
                     $childPermissions = Permission::create(
                         [
                             'name'  =>  $key . '.' . $crud,
                         ]
                     );
-                    $childPermissions->assignRole($dev);
+                    // $childPermissions->assignRole($dev);
                 }
             }
         }

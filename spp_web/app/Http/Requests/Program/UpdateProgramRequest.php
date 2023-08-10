@@ -6,6 +6,15 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateProgramRequest extends FormRequest
 {
+    public function prepareForValidation()
+    {
+        $this->merge(
+            [
+                'is_parent' =>  $this->input('is_parent') ? $this->input('is_parent') : false,
+            ]
+        );
+    }
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -25,7 +34,16 @@ class UpdateProgramRequest extends FormRequest
     {
         return [
             //
-            'name'  =>  'required',
+            'name'          =>  'required',
+            'is_parent'     =>  [
+                'nullable',
+                function ($attribute, $value, $fail) {
+                    $hasSubprograms = request()->route()->parameter('program')->subPrograms()->exists();
+                    if ($hasSubprograms && !$value) {
+                        $fail('Program ini memiliki sub program, hapus terlebih dahulu sub program lainnya.');
+                    }
+                }
+            ],
         ];
     }
 }

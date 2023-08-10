@@ -103,7 +103,7 @@ class RequestController extends Controller
 
     public function destroyAttachment(ModelsRequest $request, RequestAttachment $attachment)
     {
-        if ($attachment->delete()) {
+        if ($this->repo->destroyAttachment($attachment)) {
             return back()->with(
                 [
                     'destroyed'   =>  __('message.attachment.deleted')

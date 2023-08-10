@@ -30,7 +30,7 @@ class UpdateRequestRequest extends FormRequest
             'unit_id' => 'filled',
             'attachments' => 'filled|array',
             'attachments.*.name' => 'filled',
-            'attachments.*.file' => 'filled|file',
+            'attachments.*.file' => ['filled', 'file', 'mimes:png,jpg,pdf'],
             'status'    =>  'filled',
         ];
     }

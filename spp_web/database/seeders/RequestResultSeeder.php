@@ -19,30 +19,38 @@ class RequestResultSeeder extends Seeder
         //
         $requests = Request::inRandomOrder()->limit(rand(Request::count() / 5, Request::count() / 3))->get();
         foreach ($requests as $request) {
-            $request->update(
-                [
-                    'status'    =>  'requested'
-                ]
-            );
             if (rand(0, 1)) {
                 $request->update(
                     [
-                        'status'    =>  'approved',
-                    ]
-                );
-                $result = $request->result()->create(
-                    [
-                        'volume'    =>  $request->volume - rand(0, $request->volume),
-                        'unit_id'   =>  $request->unit_id,
+                        'status'    =>  'requested'
                     ]
                 );
                 if (rand(0, 1)) {
                     $request->update(
                         [
-                            'status'    =>  'done',
-                        ],
+                            'status'    =>  'approved',
+                        ]
                     );
-                    RequestResultAttachment::factory(rand(0, 2))->for($result, 'requestResult')->create();
+                    $result = $request->result()->create(
+                        [
+                            'volume'    =>  $request->volume - rand(0, $request->volume),
+                            'unit_id'   =>  $request->unit_id,
+                        ]
+                    );
+                    if (rand(0, 1)) {
+                        $request->update(
+                            [
+                                'status'    =>  'done',
+                            ],
+                        );
+                        RequestResultAttachment::factory(rand(0, 2))->for($result, 'requestResult')->create();
+                    }
+                } else {
+                    $request->update(
+                        [
+                            'status'    =>  'declined'
+                        ]
+                    );
                 }
             } else {
                 $request->update(

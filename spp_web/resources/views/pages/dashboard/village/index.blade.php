@@ -26,12 +26,23 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            @if (is_null($districts))
+                            @if ($districts->count() == 1)
                                 <form action="{{ route('dashboard.village.store') }}" method="post">
                                     @csrf
                                     <div class="modal-body">
                                         <x-form.input.option name="district_id" title="Kecamatan" :options="$districts" />
                                         <x-form.input.text name="name" title="Nama Desa" />
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" name="with_user"
+                                                    id="with_user" @checked(old('with_user')) value="true">
+                                                <label class="custom-control-label" for="with_user">Buat akun Koor
+                                                    Baru untuk desa ini.</label>
+                                            </div>
+                                        </div>
+                                        @error('with_user')
+                                            <div class="alert alert-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -42,7 +53,7 @@
                                 <div class="m-2">
                                     Belum ada data Kecamatan tersimpan di database.<a
                                         href="{{ route('dashboard.district.index') }}">Klik di sini</a> untuk
-                                    menambahkan data Kecamatan
+                                    menambahkan data Kecamatan.
                                 </div>
                             @endif
                         </div>

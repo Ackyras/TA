@@ -19,7 +19,7 @@ class RequestResultAttachmentFactory extends Factory
         return [
             //
             'name'  =>  $this->faker->word(),
-            'url'   =>  'https://drive.google.com/drive/folders/1QMxiRpL12wbQZtiejqcLUolgYOVOSSB_',
+            'url'   =>  'dummy/spasi-light.pdf'
         ];
     }
 }

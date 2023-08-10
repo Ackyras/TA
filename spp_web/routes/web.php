@@ -13,6 +13,7 @@ use App\Http\Controllers\Dashboard\Setting\Program\ProgramController;
 use App\Http\Controllers\Dashboard\Setting\Division\DivisionController;
 use App\Http\Controllers\Dashboard\Setting\Period\PeriodController;
 use App\Http\Controllers\Dashboard\Setting\SeedingController;
+use App\Http\Controllers\StorageController;
 use App\Http\Middleware\ArchiveMiddleware;
 use App\Http\Middleware\ScopePeriod;
 
@@ -141,5 +142,11 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
         });
     });
 });
+
+Route::middleware(['auth.storage'])->prefix('secured-storage')->as('storage.')->controller(StorageController::class)->group(function () {
+    Route::get('{requestAttachment}', 'getRequestAttachment')->name('request-attachment');
+    Route::get('{requestResultAttachment}', 'getRequestResultAttachment')->name('request-result-attachment');
+});
+
 
 require __DIR__ . '/auth.php';

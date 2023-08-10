@@ -35,9 +35,9 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <div class="modal-body">
-                                        <form action="{{ route('dashboard.setting.program.store') }}" method="POST">
-                                            @csrf
+                                    <form action="{{ route('dashboard.setting.program.store') }}" method="POST">
+                                        @csrf
+                                        <div class="modal-body">
                                             <x-form.input.hidden name='division_id' :value="$parent['division_id']" />
                                             <x-form.input.hidden name='parent_id' :value="$parent['id']" />
                                             <x-form.input.text name="code" title="Kode Kamus Usulan"
@@ -50,8 +50,8 @@
                                                     data-dismiss="modal">Close</button>
                                                 <button type="submit" class="btn btn-primary">Tambah</button>
                                             </div>
-                                        </form>
-                                    </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -76,9 +76,9 @@
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
-                                <div class="modal-body">
-                                    <form action="{{ route('dashboard.setting.program.update', $parent['id']) }}"
-                                        method="POST">
+                                <form action="{{ route('dashboard.setting.program.update', $parent['id']) }}"
+                                    method="POST">
+                                    <div class="modal-body">
                                         @csrf
                                         @method('PUT')
                                         @if ($parent['is_parent'])
@@ -86,13 +86,16 @@
                                                 :value="$parent['code']" :disabled="true" />
                                         @endif
                                         <x-form.input.text name=" name" title="Nama Kamus Usulan" :value="$parent['name']" />
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">Close</button>
-                                            <button type="submit" class="btn btn-info">Perbarui</button>
-                                        </div>
-                                    </form>
-                                </div>
+                                        <x-form.input.checkbox value="{{ true }}" name="is_parent"
+                                            id="{{ 'is_parent_' . $parent['id'] }}" :checked="$parent['is_parent']"
+                                            title="Punya subProgram" />
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-info">Perbarui</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

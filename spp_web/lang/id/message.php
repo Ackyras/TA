@@ -11,6 +11,9 @@ foreach ($models as $modelKey => $modelValue) {
         $messages[$modelKey][$eventKey] = __('event.' . $eventKey, ['model' => $modelValue]);
     }
 }
+
+$status = __('status');
+
 $messages['validation'] =
     [
         'error'     =>  'Data yang dimasukkan tidak valid'

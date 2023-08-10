@@ -39,7 +39,6 @@ class RequestRepository extends BaseRequestRepository
     public function index(HttpRequest $request)
     {
         $datas = [];
-        DB::enableQueryLog();
         $query = Request::query()
             ->when(
                 auth()->user()->hasRole('koor'),
@@ -55,7 +54,8 @@ class RequestRepository extends BaseRequestRepository
                             WHEN status = 'approved' THEN 0
                             WHEN status = 'requested' THEN 1
                             WHEN status = 'pending' THEN 2
-                            WHEN status = 'declined' THEN 3
+                            WHEN status = 'done' THEN 3
+                            WHEN status = 'declined' THEN 4
                             ELSE 3
                         END"
                     );
@@ -82,7 +82,8 @@ class RequestRepository extends BaseRequestRepository
                             WHEN status = 'pending' THEN 0
                             WHEN status = 'requested' THEN 1
                             WHEN status = 'approved' THEN 2
-                            WHEN status = 'declined' THEN 3
+                            WHEN status = 'done' THEN 3
+                            WHEN status = 'declined' THEN 4
                             ELSE 3
                         END"
                     );
@@ -103,23 +104,23 @@ class RequestRepository extends BaseRequestRepository
                             WHEN status = 'requested' THEN 0
                             WHEN status = 'approved' THEN 1
                             WHEN status = 'pending' THEN 2
-                            WHEN status = 'declined' THEN 3
+                            WHEN status = 'done' THEN 3
+                            WHEN status = 'declined' THEN 4
                             ELSE 3
                         END"
                     );
                 }
             )
-            ->with([
-                'attachments',
-                'farmer',
-                'program',
-                'unit'
-            ]);
+            ->with(
+                [
+                    'attachments',
+                    'farmer',
+                    'program',
+                    'unit'
+                ]
+            );
         $datas['paginator'] = $this->filter($query, $request, false, true, 10)->withQueryString();
         $datas['items'] = $datas['paginator']->groupBy('farmer');
-        $queries = DB::getQueryLog();
-        // dd($queries);
-        // dd($datas['items']);
         $datas['programs'] = $this->getPrograms(true);
         return $datas;
     }
@@ -141,7 +142,6 @@ class RequestRepository extends BaseRequestRepository
             ])
             ->get();
         $datas['programs'] = $this->getPrograms(true);
-        // dd($datas['units']);
         return $datas;
     }
 
@@ -167,22 +167,10 @@ class RequestRepository extends BaseRequestRepository
         $request->refresh();
         if ($request) {
             foreach ($data['attachments'] as $attachmentData) {
-                // Save the uploaded file to storage
-                $file = $attachmentData['file'];
-                $filePath = $file->store('request/attachments');
-
-                // Create the attachment record with name and URL
-                $attachment = new RequestAttachment([
-                    'name' => $attachmentData['name'],
-                    'url' => str(Storage::url($filePath)),
-                ]);
-
-                // Attach the attachment to the request
-                $request->attachments()->save($attachment);
+                $this->storeAttachment($request, $attachmentData);
             }
             return true;
         }
-
         return false;
     }
 
@@ -194,20 +182,29 @@ class RequestRepository extends BaseRequestRepository
         $request->refresh();
         if (isset($data['attachments'])) {
             foreach ($data['attachments'] as $attachmentData) {
-                // Save the uploaded file to storage
-                $file = $attachmentData['file'];
-                $filePath = $file->store('request/attachments');
-
-                // Create the attachment record with name and URL
-                $attachment = RequestAttachment::create([
-                    'name' => $attachmentData['name'],
-                    'url' => str(Storage::url($filePath)),
-                    'request_id' => $request->id
-                ]);
+                $this->storeAttachment($request, $attachmentData);
             }
         }
-
         return true;
+    }
+
+    public function storeAttachment(Request $request, $attachmentData)
+    {
+        $file = $attachmentData['file'];
+        $fileName = $file->hashName();
+
+        $storeFile = Storage::disk('local')->putFileAs(
+            'request/attachment',
+            $file,
+            $fileName
+        );
+
+        // Create the attachment record with name and URL
+        return RequestAttachment::create([
+            'name' => $attachmentData['name'],
+            'url' => $storeFile,
+            'request_id' => $request->id,
+        ]);
     }
 
     public function getPrograms(bool $asArray = false)
@@ -235,6 +232,14 @@ class RequestRepository extends BaseRequestRepository
             return $programs->toArray();
         }
         return $programs;
+    }
+
+    public function destroyAttachment(RequestAttachment $attachment)
+    {
+        if ($attachment->delete() && Storage::disk('local')->delete($attachment->url)) {
+            return true;
+        }
+        return false;
     }
 
     public function prepareDatatable($datas, $config = null)

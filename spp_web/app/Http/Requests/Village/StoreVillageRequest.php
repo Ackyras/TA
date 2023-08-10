@@ -27,6 +27,7 @@ class StoreVillageRequest extends FormRequest
             //
             'name'          =>  ['required', 'unique:villages,name'],
             'district_id'   =>  ['required', 'exists:districts,id'],
+            'with_user'     =>  ['nullable']
         ];
     }
 }

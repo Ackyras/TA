@@ -11,7 +11,9 @@
 @endsection
 
 @section('content')
-
+    @error('is_parent')
+        <div class="alert alert-danger">{{ $message }}</div>
+    @enderror
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">List Kamus Usulan</h3>
@@ -69,10 +71,9 @@
                                 </div>
                             </div>
                             <!-- ./card-header -->
-                            <div class="p-0 card-body">
+                            <div class="p-2 card-body">
                                 @each('partials.tree-view', $division['programs'], 'parent')
                             </div>
-
                             <!-- /.card-body -->
                         </div>
                         <!-- /.card -->

@@ -27,9 +27,10 @@
             @method('PUT')
             <div class="card-body">
                 <fieldset disabled="disabled">
-                    <legend>Detail</legend>
+                    <legend>Detail Pengajuan <small>({{ __('status.' . $datas['request']->status) }})</small></legend>
                     <x-form.input.text name="farmer_id" title="Kelompok Tani" :value="$datas['request']->farmer->name" :in-line="true" />
                     <x-form.input.text name="program_id" title="Kamus Usulan" :value="$datas['request']->program->name" :in-line="true" />
+                    {{-- <x-form.input.text name="status" title="Status" :value="__('status.' . $datas['request']->status)" :in-line="true" /> --}}
                     <x-form.input.number name="volume" title="volume" :value="$datas['request']->volume" :in-line="true" />
                     <x-form.input.option name="unit_id" title="Satuan" :options="$datas['units']" :disabled="true" :in-line="true"
                         :selected="$datas['request']->unit_id" />
@@ -42,7 +43,8 @@
                             <div class="mb-2 attachment-name-group d-flex align-items-center form-group row">
                                 <input type="text" name="attachments[{{ $index }}][name]"
                                     class="mr-2 form-control col" value="{{ $attachment->name }}" disabled readonly>
-                                <a href="{{ $attachment->url }}" class="mr-1 btn btn-primary col-1" target="_blank">View</a>
+                                <a href="{{ route('storage.request-attachment', ['requestAttachment' => $attachment]) }}"
+                                    target="_blank" rel="noopener noreferrer" class="mr-1 btn btn-primary col-1">View</a>
                             </div>
                         @endforeach
                     </div>
@@ -66,26 +68,32 @@
                         <x-form.input.number name="volume" title="volume" :value="$datas['request']->result->volume" :in-line="true" />
                         <x-form.input.option name="unit_id" title="Satuan" :options="$datas['units']" :in-line="true"
                             :selected="$datas['request']->result->unit_id" />
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Dokumentasi Realisasi</label>
-                            <div class="col-sm-10">
-                                @forelse ($datas['request']->result->attachments as $index => $attachment)
-                                    <div class="mb-2 attachment-name-group d-flex align-items-center form-group row">
-                                        <input type="text" name="attachments[{{ $index }}][name]"
-                                            class="mr-2 form-control col" value="{{ $attachment->name }}" disabled readonly>
-                                        <a href="{{ $attachment->url }}" class="mr-1 btn btn-primary col-1"
-                                            target="_blank">View</a>
-                                    </div>
-                                @empty
-                                @endforelse
-                            </div>
-                        </div>
                     </fieldset>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Dokumentasi Realisasi</label>
+                        <div class="col-sm-10">
+                            @forelse ($datas['request']->result->attachments as $index => $attachment)
+                                <div class="mb-2 attachment-name-group d-flex align-items-center form-group row">
+                                    <input type="text" name="attachments[{{ $index }}][name]"
+                                        class="mr-2 form-control col" value="{{ $attachment->name }}" disabled readonly>
+                                    <a href="{{ route('storage.request-result-attachment', ['requestResultAttachment' => $attachment]) }}"
+                                        target="_blank" rel="noopener noreferrer" class="mr-1 btn btn-primary col-1">View</a>
+                                </div>
+                            @empty
+                                -
+                            @endforelse
+                        </div>
+                    </div>
                 @endisset
             </div>
-            <div class="card-footer d-flex justify-content-end">
-                {{-- <button type="submit" class="btn btn-primary">Save</button> --}}
-            </div>
+            @if ($datas['request']->status == 'requested')
+                <div class="card-footer d-flex justify-content-end">
+                    <button type="submit" name="status" value="approved" class="btn btn-primary mr-2">Tandai
+                        Setujui</button>
+                    <button type="submit" name="status" value="declined" class="btn btn-warning mr-2">Tandai
+                        Ditolak</button>
+                </div>
+            @endif
         </form>
     </div>
 @endsection

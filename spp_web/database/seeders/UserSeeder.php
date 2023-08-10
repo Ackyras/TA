@@ -18,18 +18,19 @@ class UserSeeder extends Seeder
     public function run()
     {
         //
-        $dev = User::create(
-            [
-                'name'          =>  'dev',
-                'email'         =>  'dev@dev',
-                'password'      =>  bcrypt('password'),
-            ]
-        );
-        $dev->assignRole('dev', 'kadis');
+        $domain = 'sppbt.toba.gov.id';
+        // $dev = User::create(
+        //     [
+        //         'name'          =>  'dev',
+        //         'email'         =>  'dev@' . $domain,
+        //         'password'      =>  bcrypt('password'),
+        //     ]
+        // );
+        // $dev->assignRole('dev', 'kadis');
         $kadis = User::create(
             [
                 'name'          =>  'kadis',
-                'email'         =>  'kadis@kadis',
+                'email'         =>  'kadis@' . $domain,
                 'password'      =>  bcrypt('password'),
             ]
         );
@@ -38,8 +39,8 @@ class UserSeeder extends Seeder
         foreach ($divisions as $key => $division) {
             $kabid  =   User::create(
                 [
-                    'name'      =>  'Kabid ' . str()->lower($division->name),
-                    'email'     =>  'kabid' . $key + 1 . '@kabid',
+                    'name'      =>  'Kabid ' . str()->title($division->name),
+                    'email'     =>  'kabid.' . str()->lower($division->nickname) . '@' . $domain,
                     'password'      =>  bcrypt('password'),
                 ],
             );
@@ -48,13 +49,7 @@ class UserSeeder extends Seeder
         }
         $villages = Village::all();
         foreach ($villages as $key => $village) {
-            $koor = User::create(
-                [
-                    'name'      =>  'Koor ' . str()->lower($village->name),
-                    'email'     =>  'koor' . $key + 1 . '@koor',
-                    'password'  =>  bcrypt('password'),
-                ]
-            );
+            $koor = User::factory()->create();
             $koor->assignRole('koor');
             $koor->villages()->attach($village);
         };
