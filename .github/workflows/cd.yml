@@ -22,7 +22,7 @@ jobs:
 
       - name: Zip build files
         working-directory: ./spp_web
-        run: zip -r public/build/ temp/build.zip 
+        run: zip -r ./temp/build.zip ./public/build/ 
 
       - name: Upload to EC2 instance
         uses: appleboy/scp-action@master
