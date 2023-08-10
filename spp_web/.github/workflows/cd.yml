@@ -1,0 +1,53 @@
+name: SPPBT CD
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build the app
+        run: |
+          # Replace with your build commands
+          npm install
+          npm run build
+
+      - name: Zip build files
+        run: zip -r build.zip build/
+
+      - name: Upload to EC2 instance
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          source: build.zip
+          target: /var/www/ackyras/TA/spp_web/temp/build.zip
+
+      - name: SSH into EC2 instance
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
+            unzip /var/www/ackyras/TA/spp_web/temp/build.zip -d /var/www/ackyras/TA/spp_web/temp/
+            cp -r /var/www/ackyras/TA/spp_web/temp/build/* /var/www/ackyras/TA/spp_web/
+
+      - name: Pull changes on EC2 instance
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
+            cd /var/www/ackyras/TA/spp_web/
+            git pull
