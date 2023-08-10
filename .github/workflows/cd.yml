@@ -14,7 +14,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set working directory to spp_web
+      - name: Build app
         working-directory: ./spp_web
         run: |
           npm install
@@ -22,7 +22,7 @@ jobs:
 
       - name: Zip build files
         working-directory: ./spp_web
-        run: zip -r build.zip build/
+        run: zip -r temp/build.zip public/build/
 
       - name: Upload to EC2 instance
         uses: appleboy/scp-action@master
@@ -30,7 +30,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
-          source: ./spp_web/build.zip
+          source: ./spp_web/temp/build.zip
           target: /var/www/ackyras/TA/spp_web/temp/build.zip
 
       - name: SSH into EC2 instance
