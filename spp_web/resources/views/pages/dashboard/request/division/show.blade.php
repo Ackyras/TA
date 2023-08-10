@@ -94,7 +94,8 @@
                                     </div>
                                     <div class="col-5 form-group">
                                         <div class="custom-file">
-                                            <input type="file" name="attachments[][file]" class="custom-file-input">
+                                            <input type="file" name="attachments[][file]" class="custom-file-input"
+                                                accept=".png, .jpg, .jpeg, .pdf">
                                             <label class="custom-file-label" for="attachment_files[]">Choose file</label>
                                         </div>
                                     </div>
@@ -144,7 +145,7 @@
             </div>
             <div class="col-5 form-group">
                 <div class="custom-file">
-                    <input type="file" name="attachments[][file]" class="custom-file-input">
+                    <input type="file" name="attachments[][file]" class="custom-file-input" accept=".png, .jpg, .jpeg, .pdf">
                     <label class="custom-file-label" for="attachment_files[]">Choose file</label>
                 </div>
             </div>

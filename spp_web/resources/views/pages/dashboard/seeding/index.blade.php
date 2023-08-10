@@ -26,7 +26,8 @@
                             <div class="form-group">
                                 <label for="complete-file"></label>
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="complete-file" name="file">
+                                    <input type="file" class="custom-file-input" id="complete-file" name="file"
+                                        accept=".xlsx">
                                     <label class="custom-file-label" for="complete-file">Choose file</label>
                                 </div>
                             </div>

@@ -69,7 +69,8 @@
                             </div>
                             <div class="attachment-file">
                                 <div class="custom-file">
-                                    <input type="file" name="attachments[0][file]" class="custom-file-input">
+                                    <input type="file" name="attachments[0][file]" class="custom-file-input"
+                                        accept=".png, .jpg, .jpeg, .pdf">
                                     <label class="custom-file-label" for="attachments[0][file]">Choose file</label>
                                 </div>
                             </div>
@@ -132,7 +133,7 @@
                         </div>
                         <div class="attachment-file">
                             <div class="custom-file">
-                                <input type="file" name="attachments[${attachmentIndex}][file]" class="custom-file-input">
+                                <input type="file" name="attachments[${attachmentIndex}][file]" class="custom-file-input" accept=".png, .jpg, .jpeg, .pdf">
                                 <label class="custom-file-label" for="attachments[${attachmentIndex}][file]">Choose file</label>
                             </div>
                         </div>
