@@ -31,7 +31,7 @@ class VillageController extends Controller
     {
         //
         $villages = $this->repo->index();
-        if ($villages->count() == 1 && auth()->user()->hasRole('kabid')) {
+        if ($villages->count() == 1 && auth()->user()->hasRole('koor')) {
             $datas = $this->repo->show($villages->first());
             return view('pages.dashboard.village.show')->with(
                 [
