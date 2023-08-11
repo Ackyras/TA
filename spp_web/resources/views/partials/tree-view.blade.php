@@ -1,7 +1,7 @@
 <div class="px-3 py-2 subprogram-item">
     <div class="d-flex align-items-center">
         @isset($parent['parent_id'])
-            <i class="fas fa-level-up-alt mr-2" style="transform: rotate(90deg);"></i>
+            <i class="mr-2 fas fa-level-up-alt" style="transform: rotate(90deg);"></i>
         @endisset
         @if ($parent['is_parent'])
             <strong>
@@ -14,7 +14,7 @@
             <div class="row">
                 @if ($parent['is_parent'])
                     <div class="col-auto">
-                        <button type="button" class="btn btn-sm btn-light rounded-circle p-0" data-toggle="modal"
+                        <button type="button" class="p-0 btn btn-sm btn-light rounded-circle" data-toggle="modal"
                             data-target="#createSubProgramModal_{{ $parent['id'] }}">
                             <i class="fas fa-plus text-primary"></i>
                         </button>
@@ -59,7 +59,7 @@
                 @endif
 
                 <div class="col-auto">
-                    <button type="button" class="btn btn-sm btn-light rounded-circle p-0" data-toggle="modal"
+                    <button type="button" class="p-0 btn btn-sm btn-light rounded-circle" data-toggle="modal"
                         data-target="#editSubProgram_{{ $parent['id'] }}">
                         <i class="fas fa-edit text-info"></i>
                     </button>
@@ -107,7 +107,7 @@
                         onsubmit="return confirm('Yakin ingin menghapus Sub-Program?');" @endif>
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-light rounded-circle p-0">
+                        <button type="submit" class="p-0 btn btn-sm btn-light rounded-circle">
                             <i class="fas fa-trash text-danger"></i>
                         </button>
                     </form>

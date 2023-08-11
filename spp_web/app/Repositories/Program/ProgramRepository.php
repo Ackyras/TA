@@ -4,6 +4,7 @@ namespace App\Repositories\Program;
 
 use App\Models\Program;
 use App\Models\Division;
+use App\Models\ProposalDictionary;
 
 class ProgramRepository extends BaseProgramRepository
 {
@@ -24,34 +25,48 @@ class ProgramRepository extends BaseProgramRepository
 
     public function index()
     {
-        return Division::query()
-            ->when(
-                auth()->user()->hasRole('kabid'),
-                function ($query) {
-                    $query->whereHas('users', function ($query) {
-                        $query->where('users.id', auth()->user()->id);
-                    });
-                }
-            )
+        return Program::query()
+            ->whereNull('parent_id')
             ->with(
                 [
-                    'programs' => function ($query) {
-                        $query->whereNull('parent_id')->with('lowerProgramTree');
-                    },
+                    'lowerProgramTree'
                 ]
             )->get();
+        // return Division::query()
+        //     ->when(
+        //         auth()->user()->hasRole('kabid'),
+        //         function ($query) {
+        //             $query->whereHas('users', function ($query) {
+        //                 $query->where('users.id', auth()->user()->id);
+        //             });
+        //         }
+        //     )
+        //     ->with(
+        //         [
+        //             'programs' => function ($query) {
+        //                 $query->whereNull('parent_id')->with('lowerProgramTree');
+        //             },
+        //         ]
+        //     )->get();
     }
 
     public function store(array $data)
     {
         // dd($data);
-        return Program::create($data);
+
+        if ($program = Program::create($data)) {
+            return true;
+        }
+        return false;
     }
 
     public function update(Program $program, array $data)
     {
         // dd($data);
-        return $program->update($data);
+        if ($program->update($data)) {
+            return $program->update($data);
+        }
+        return false;
     }
 
     public function prepareDatatable($datas, $config = null)
@@ -59,5 +74,29 @@ class ProgramRepository extends BaseProgramRepository
         $config = $this->datatableConfig;
         $config['actions'] = $this->indexTableAction;
         return parent::prepareDatatable($datas, $config);
+    }
+
+    public function dictionaryIndex()
+    {
+        $datas = [];
+        $programs = Program::query()
+            ->whereNull('parent_id')
+            ->with(
+                [
+                    'lowerProgramTree'
+                ]
+            )->get();
+        // dd($programs);
+        // $programs->load('proposalDictionaries');
+        return $programs;
+    }
+
+    public function dictionaryStore(array $datas)
+    {
+        // dd($datas);
+        if ($dictionary = ProposalDictionary::create($datas)) {
+            return true;
+        }
+        return false;
     }
 }

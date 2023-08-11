@@ -5,25 +5,31 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Farmer extends Model
+class ProposalDictionary extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'name',
-        'address',
-        'pic',
-        'village_id',
+        'division_id',
+        'program_id',
+        'parent_id'
     ];
 
-    public function village()
+    public function program()
     {
-        return $this->belongsTo(Village::class);
+        return $this->belongsTo(Program::class);
     }
 
-    public function programs()
+    public function division()
     {
-        return $this->belongsToMany(ProposalDictionary::class, 'requests')
+        return $this->belongsTo(Division::class);
+    }
+
+    public function farmers()
+    {
+        return $this->belongsToMany(Farmer::class, 'requests')
+            ->using(Request::class)
             ->withPivot(
                 [
                     'id',

@@ -12,9 +12,7 @@ class Program extends Model
 
     protected $fillable = [
         'name',
-        'division_id',
         'code',
-        'is_parent',
         'parent_id',
         'period_id',
     ];
@@ -30,11 +28,6 @@ class Program extends Model
             $query->where('period_id', $periodId)
                 ->with(['program']); // Eager load the "program" relationship
         });
-    }
-
-    public function division()
-    {
-        return $this->belongsTo(Division::class);
     }
 
     public function subPrograms()
@@ -54,30 +47,44 @@ class Program extends Model
 
     public function lowerProgramTree()
     {
-        return $this->hasMany(Program::class, 'parent_id')->with('lowerProgramTree');
+        return $this->hasMany(Program::class, 'parent_id')
+            ->with(
+                'lowerProgramTree',
+                'proposalDictionaries'
+            );
     }
 
-    public function period()
+    public function proposalDictionaries()
     {
-        return $this->belongsTo(Period::class);
+        return $this->hasMany(ProposalDictionary::class, 'parent_id');
     }
 
-    public function farmers()
-    {
-        return $this->belongsToMany(Farmer::class, 'requests')
-            ->using(Request::class)
-            ->withPivot(
-                [
-                    'id',
-                    'volume',
-                    'status',
-                    'unit_id',
-                ]
-            )->withTimestamps();
-    }
+    // public function division()
+    // {
+    //     return $this->belongsTo(Division::class);
+    // }
 
-    public function requests()
-    {
-        return $this->hasMany(Request::class);
-    }
+    // public function period()
+    // {
+    //     return $this->belongsTo(Period::class);
+    // }
+
+    // public function farmers()
+    // {
+    //     return $this->belongsToMany(Farmer::class, 'requests')
+    //         ->using(Request::class)
+    //         ->withPivot(
+    //             [
+    //                 'id',
+    //                 'volume',
+    //                 'status',
+    //                 'unit_id',
+    //             ]
+    //         )->withTimestamps();
+    // }
+
+    // public function requests()
+    // {
+    //     return $this->hasMany(Request::class);
+    // }
 }

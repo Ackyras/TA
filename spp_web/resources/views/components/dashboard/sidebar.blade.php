@@ -93,6 +93,17 @@
                                     <a href="{{ route('dashboard.setting.program.index') }}"
                                         class="nav-link {{ request()->routeIs('dashboard.setting.program.*') ? 'active' : '' }}">
                                         <i class="fas fa-scroll nav-icon"></i>
+                                        <p>Program Pengadaan</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        @endcan
+                        @can('programs')
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('dashboard.setting.proposalDictionary.index') }}"
+                                        class="nav-link {{ request()->routeIs('dashboard.setting.proposalDictionary.*') ? 'active' : '' }}">
+                                        <i class="fas fa-scroll nav-icon"></i>
                                         <p>Kamus Usulan</p>
                                     </a>
                                 </li>

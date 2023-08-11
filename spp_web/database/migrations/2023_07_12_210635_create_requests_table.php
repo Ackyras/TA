@@ -3,6 +3,7 @@
 use App\Models\Farmer;
 use App\Models\Period;
 use App\Models\Program;
+use App\Models\ProposalDictionary;
 use App\Models\Unit;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -20,7 +21,7 @@ return new class extends Migration
         Schema::create('requests', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Farmer::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Program::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(ProposalDictionary::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Period::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Unit::class)->constrained()->cascadeOnDelete();
             $table->string('status')->default('pending');

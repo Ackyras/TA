@@ -31,7 +31,7 @@
         <div class="card-body">
             <div class="program-tree">
                 @forelse ($programs as $program)
-                    @include('partials.program_tree', ['parent' => $program])
+                    @include('partials.dictionary_tree', ['parent' => $program])
                 @empty
                     Belum ada data Program Pengadaan tersimpan.
                 @endforelse

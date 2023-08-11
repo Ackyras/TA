@@ -12,6 +12,7 @@ use App\Http\Controllers\Dashboard\Setting\User\UserController;
 use App\Http\Controllers\Dashboard\Setting\Program\ProgramController;
 use App\Http\Controllers\Dashboard\Setting\Division\DivisionController;
 use App\Http\Controllers\Dashboard\Setting\Period\PeriodController;
+use App\Http\Controllers\Dashboard\Setting\ProposalDictionaryController;
 use App\Http\Controllers\Dashboard\Setting\SeedingController;
 use App\Http\Controllers\StorageController;
 use App\Http\Middleware\ArchiveMiddleware;
@@ -54,11 +55,20 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
                 'names'    =>  'division',
             ]
         );
-        Route::middleware(ScopePeriod::class)->resource(
+
+        Route::resource(
             'programs',
             ProgramController::class,
             [
                 'names' =>  'program'
+            ]
+        );
+
+        Route::resource(
+            'proposalDictionaries',
+            ProposalDictionaryController::class,
+            [
+                'names' =>  'proposalDictionary'
             ]
         );
 

@@ -16,7 +16,7 @@ class Request extends Model
         'farmer_id',
         'support_id',
         'period_id',
-        'program_id',
+        'proposal_dictionary_id',
         'status',
         'volume',
         'unit_id',
@@ -47,7 +47,7 @@ class Request extends Model
 
     public function program()
     {
-        return $this->belongsTo(Program::class);
+        return $this->belongsTo(ProposalDictionary::class);
     }
 
     public function unit()

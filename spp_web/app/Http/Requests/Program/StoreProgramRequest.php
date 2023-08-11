@@ -9,11 +9,6 @@ class StoreProgramRequest extends FormRequest
 {
     public function prepareForValidation()
     {
-        $this->merge(
-            [
-                'period_id' =>  getCurrentPeriodId(),
-            ],
-        );
     }
     /**
      * Determine if the user is authorized to make this request.
@@ -37,9 +32,6 @@ class StoreProgramRequest extends FormRequest
             'code' => ['required_if:is_parent,true', 'string'],
             'name' => ['required', 'string'],
             'parent_id' => 'filled',
-            'division_id' => 'required',
-            'is_parent' => 'nullable',
-            'period_id' =>  'required'
         ];
     }
 }

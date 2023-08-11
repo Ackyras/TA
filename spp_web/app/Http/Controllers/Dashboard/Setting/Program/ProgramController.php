@@ -25,9 +25,9 @@ class ProgramController extends Controller
     public function index()
     {
         //
-        $divisions = $this->repo->index()->toArray();
-        // dd($divisions[0]);
-        return view('pages.dashboard.program.index', compact('divisions'));
+        $programs = $this->repo->index();
+        // dd($programs[0]);
+        return view('pages.dashboard.program.index', compact('programs'));
     }
 
     /**

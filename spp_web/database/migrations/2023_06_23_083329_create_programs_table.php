@@ -21,9 +21,9 @@ return new class extends Migration
             $table->string('code')->nullable();
             $table->string('name');
             $table->foreignId('parent_id')->nullable()->constrained('programs')->onDelete('cascade');
-            $table->foreignIdFor(Division::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Period::class)->constrained()->cascadeOnDelete();
-            $table->boolean('is_parent')->default(false);
+            // $table->foreignIdFor(Division::class)->constrained()->cascadeOnDelete();
+            // $table->foreignIdFor(Period::class)->constrained()->cascadeOnDelete();
+            // $table->boolean('is_parent')->default(false);
             $table->timestamps();
         });
     }

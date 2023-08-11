@@ -22,7 +22,6 @@ class ScopePeriod
         $period = $request->route()->hasParameter('period')
             ? Period::find($request->route()->parameter('period'))
             : getCurrentPeriod();
-        // dd($period);
         ModelsRequest::addGlobalScope('current_period', function ($query) use ($period) {
             $query->where('period_id', $period->id)
                 ->with(['program']); // Eager load the "program" relationship
