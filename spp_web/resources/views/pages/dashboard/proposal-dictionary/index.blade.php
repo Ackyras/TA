@@ -29,6 +29,24 @@
             </div>
         </div>
         <div class="card-body">
+            {{-- @forelse ($divisions as $division)
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Kamus Usulan Bidang {{ $division->name }}</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="program-tree">
+                            @forelse ($programs as $program)
+                                @include('partials.dictionary_tree', ['parent' => $program])
+                            @empty
+                                Belum ada data Program Pengadaan tersimpan.
+                            @endforelse
+                        </div>
+                    </div>
+                </div>
+            @empty
+                Belum ada data Bidang tersimpan
+            @endforelse --}}
             <div class="program-tree">
                 @forelse ($programs as $program)
                     @include('partials.dictionary_tree', ['parent' => $program])
@@ -78,7 +96,6 @@
         $(document).ready(function() {
             $('#select2').select2({
                 theme: 'bootstrap4',
-                dropdownParent: $('#createProgramModal')
             });
         });
     </script>

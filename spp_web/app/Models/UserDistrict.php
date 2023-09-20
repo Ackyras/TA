@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class UserVillage extends Pivot
+class UserDistrict extends Pivot
 {
     use HasFactory;
 
-    protected $table = 'user_village';
+    protected $table = 'user_district';
 }

@@ -41,6 +41,7 @@ class VillageController extends Controller
             );
         }
         $villageTable = $this->repo->prepareDatatable($villages->toArray());
+        // dd($villageTable);
         $districts = $this->districtRepo->index();
         return view('pages.dashboard.village.index', compact('villages', 'villageTable', 'districts'));
     }

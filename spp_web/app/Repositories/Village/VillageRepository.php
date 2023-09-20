@@ -46,8 +46,10 @@ class VillageRepository extends BaseVillageRepository
             ->when(
                 auth()->user()->hasRole('koor'),
                 function ($query) {
-                    $query->whereHas('users', function ($query) {
-                        $query->where('users.id', auth()->user()->id);
+                    $query->whereHas('district', function ($query) {
+                        $query->whereHas('users', function ($query) {
+                            $query->where('users.id', auth()->user()->id);
+                        });
                     });
                 }
             )

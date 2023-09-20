@@ -125,15 +125,17 @@
                         </li>
                     @endcan
                     @can('villages')
-                        <li class="nav-item">
-                            <a href="{{ route('dashboard.village.index') }}"
-                                class="nav-link {{ request()->routeIs('dashboard.village.*') ? 'active' : '' }}">
-                                <i class="nav-icon fa fa-home"></i>
-                                <p>
-                                    Desa
-                                </p>
-                            </a>
-                        </li>
+                        @unlessrole('koor')
+                            <li class="nav-item">
+                                <a href="{{ route('dashboard.village.index') }}"
+                                    class="nav-link {{ request()->routeIs('dashboard.village.*') ? 'active' : '' }}">
+                                    <i class="nav-icon fa fa-home"></i>
+                                    <p>
+                                        Desa
+                                    </p>
+                                </a>
+                            </li>
+                        @endunlessrole
                     @endcan
                     @can('farmers')
                         <li class="nav-item">
@@ -147,19 +149,18 @@
                         </li>
                     @endcan
                 @endcanany
-                @if (activePeriodIsExists())
-                    <li class="nav-header">Pengajuan</li>
-                    @can('requests.read')
-                        <li class="nav-item">
-                            <a href="{{ route('dashboard.request.index') }}"
-                                class="nav-link {{ request()->routeIs('dashboard.request.*') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-file"></i>
-                                <p>
-                                    Proposal Bantuan
-                                </p>
-                            </a>
-                        </li>
-                        {{-- @hasanyrole(['kadis', 'kabid'])
+                <li class="nav-header">Pengajuan</li>
+                @can('requests.read')
+                    <li class="nav-item">
+                        <a href="{{ route('dashboard.request.index') }}"
+                            class="nav-link {{ request()->routeIs('dashboard.request.*') ? 'active' : '' }}">
+                            <i class="nav-icon fas fa-file"></i>
+                            <p>
+                                Proposal Bantuan
+                            </p>
+                        </a>
+                    </li>
+                    {{-- @hasanyrole(['kadis', 'kabid'])
                         <li class="nav-item">
                             <a href="{{ route('dashboard.request.index') }}"
                                 class="nav-link {{ request()->routeIs('dashboard.request.*') ? 'active' : '' }}">
@@ -170,45 +171,43 @@
                             </a>
                         </li>
                     @endhasanyrole --}}
-                    @endcan
-                    @if (archivePeriodIsExists())
-                        @can('archives.*')
-                            <li class="nav-header">Arsip</li>
-                            <li class="nav-item">
-                                <a href="{{ route('dashboard.archive.index') }}"
-                                    class="nav-link {{ request()->routeIs('dashboard.archive.index') ? 'active' : '' }}">
-                                    <i class="nav-icon fas fa-box"></i>
+                @endcan
+                @if (archivePeriodIsExists())
+                    @can('archives.*')
+                        <li class="nav-header">Arsip</li>
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard.archive.index') }}"
+                                class="nav-link {{ request()->routeIs('dashboard.archive.index') ? 'active' : '' }}">
+                                <i class="nav-icon fas fa-box"></i>
+                                <p>
+                                    Arsip
+                                </p>
+                            </a>
+                        </li>
+                        @if (request()->routeIs('dashboard.archive.period.*'))
+                            <li class="nav-item {{ request()->routeIs('dashboard.archive.*') ? 'active menu-open' : '' }}">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-box-open"></i>
                                     <p>
-                                        Arsip
+                                        Data Arsip
+                                        <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
+                                @can('archives.requests')
+                                    <ul class="nav nav-treeview">
+                                        <li class="nav-item">
+                                            <a href="{{ route('dashboard.archive.period.request.index', ['period' => request()->route()->parameter('period')]) }}"
+                                                class="nav-link {{ request()->routeIs('dashboard.archive.period.request.*') ? 'active' : '' }}">
+                                                <i class="fas fa-file-archive nav-icon"></i>
+                                                <p>Pengajuan</p>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                @endcan
                             </li>
-                            @if (request()->routeIs('dashboard.archive.period.*'))
-                                <li
-                                    class="nav-item {{ request()->routeIs('dashboard.archive.*') ? 'active menu-open' : '' }}">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon fas fa-box-open"></i>
-                                        <p>
-                                            Data Arsip
-                                            <i class="right fas fa-angle-left"></i>
-                                        </p>
-                                    </a>
-                                    @can('archives.requests')
-                                        <ul class="nav nav-treeview">
-                                            <li class="nav-item">
-                                                <a href="{{ route('dashboard.archive.period.request.index', ['period' => request()->route()->parameter('period')]) }}"
-                                                    class="nav-link {{ request()->routeIs('dashboard.archive.period.request.*') ? 'active' : '' }}">
-                                                    <i class="fas fa-file-archive nav-icon"></i>
-                                                    <p>Pengajuan</p>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    @endcan
-                                </li>
-                            @else
-                            @endif
-                        @endcan
-                    @endif
+                        @else
+                        @endif
+                    @endcan
                 @endif
                 {{-- <li class="nav-header">EXAMPLES</li>
                 <li class="nav-item">

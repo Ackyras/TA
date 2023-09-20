@@ -25,7 +25,7 @@ class UpdateDistrictRequest extends FormRequest
     {
         return [
             //
-            'name'  =>  ['required', 'unique:districts,name,except,id']
+            'name'  =>  ['required']
         ];
     }
 }

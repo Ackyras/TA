@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Village;
+use App\Models\District;
 use App\Models\Division;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -47,11 +48,17 @@ class UserSeeder extends Seeder
             $kabid->assignRole('kabid');
             $kabid->divisions()->attach($division);
         }
-        $villages = Village::all();
-        foreach ($villages as $key => $village) {
-            $koor = User::factory()->create();
+        $districts = District::query()->get();
+        foreach ($districts as $district) {
+            $koor = User::create(
+                [
+                    'name'      =>  'Koordinator Kecamatan ' . str()->title($district->name),
+                    'email'     =>  'koor.' . str()->lower($district->name) . '@' . $domain,
+                    'password'      =>  bcrypt('password'),
+                ],
+            );
             $koor->assignRole('koor');
-            $koor->villages()->attach($village);
+            $koor->districts()->attach($district);
         };
     }
 }

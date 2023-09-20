@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Dashboard\Setting\Program;
 
-use App\Http\Controllers\Controller;
 use App\Models\Program;
+use App\Models\Division;
+use App\Http\Controllers\Controller;
+use App\Repositories\Program\ProgramRepository;
 use App\Http\Requests\Program\StoreProgramRequest;
 use App\Http\Requests\Program\UpdateProgramRequest;
-use App\Repositories\Program\ProgramRepository;
 
 class ProgramController extends Controller
 {
@@ -26,8 +27,9 @@ class ProgramController extends Controller
     {
         //
         $programs = $this->repo->index();
+        $divisions = Division::all();
         // dd($programs[0]);
-        return view('pages.dashboard.program.index', compact('programs'));
+        return view('pages.dashboard.program.index', compact('programs', 'divisions'));
     }
 
     /**

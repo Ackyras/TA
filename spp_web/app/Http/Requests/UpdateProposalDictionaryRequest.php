@@ -25,7 +25,6 @@ class UpdateProposalDictionaryRequest extends FormRequest
     {
         return [
             //
-            'code'          =>  'required',
             'name'          =>  'required',
         ];
     }

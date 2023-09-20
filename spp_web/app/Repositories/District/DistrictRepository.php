@@ -33,6 +33,14 @@ class DistrictRepository extends BaseDistrictRepository
     public function index()
     {
         return District::query()
+            ->when(
+                auth()->user()->hasRole('koor'),
+                function ($query) {
+                    $query->whereHas('users', function ($query) {
+                        $query->where('users.id', auth()->user()->id);
+                    });
+                }
+            )
             ->with(
                 [
                     'villages'
@@ -51,6 +59,25 @@ class DistrictRepository extends BaseDistrictRepository
     public function store(array $data)
     {
         return District::create($data);
+    }
+
+    public function show(District $district)
+    {
+        $district->load(
+            [
+                'villages'  =>  function ($query) {
+                    $query->withCount('farmers');
+                }
+            ]
+        )->loadCount(
+            [
+                'villages',
+                'farmers'
+            ]
+        );
+        $datas['district'] = $district;
+        $datas['table'] = $this->villagesDatatable($district->villages->toArray());
+        return District::create($datas);
     }
 
     public function update(District $district, array $data)

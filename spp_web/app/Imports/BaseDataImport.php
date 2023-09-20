@@ -32,7 +32,7 @@ class BaseDataImport implements WithHeadingRow, ToCollection
 
             if (!(empty($data['kecamatan']) && empty($data['nama_desa']) && empty($data['nama_poktan']) && empty($data['nama_ketua']) && empty($data['alamat_sekretariat']))) {
                 $datas[$currentDistrict][$currentVillage][] = [
-                    'name' => str($data['nama_poktan'])->snake()->title()->value(),
+                    'name' => str($data['nama_poktan'])->title()->value(),
                     'pic' => str($data['nama_ketua'])->title()->value(),
                     'address' => str($data['alamat_sekretariat'])->title()->value(),
                 ];

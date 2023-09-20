@@ -25,7 +25,7 @@ class StoreDistrictRequest extends FormRequest
     {
         return [
             //
-            'name'  =>  ['required', 'unique:districts,name']
+            'name'  =>  ['required']
         ];
     }
 }

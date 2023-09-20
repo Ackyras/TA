@@ -6,6 +6,7 @@ use App\Models\Unit;
 use App\Models\Farmer;
 use App\Models\Period;
 use App\Models\Program;
+use App\Models\ProposalDictionary;
 use Illuminate\Database\Seeder;
 use App\Models\RequestAttachment;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -21,10 +22,7 @@ class RequestSeeder extends Seeder
     {
         //
         $farmers = Farmer::all();
-        $programs = Program::query()
-            ->where('is_parent', false)
-            ->where('period_id', getCurrentPeriodId())
-            ->get();
+        $programs = ProposalDictionary::all();
         $period = Period::where('is_active', true)->first();
         foreach ($farmers as $farmer) {
             $tempPrograms = $programs->random(rand(1, 3));

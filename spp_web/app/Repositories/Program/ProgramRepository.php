@@ -32,28 +32,10 @@ class ProgramRepository extends BaseProgramRepository
                     'lowerProgramTree'
                 ]
             )->get();
-        // return Division::query()
-        //     ->when(
-        //         auth()->user()->hasRole('kabid'),
-        //         function ($query) {
-        //             $query->whereHas('users', function ($query) {
-        //                 $query->where('users.id', auth()->user()->id);
-        //             });
-        //         }
-        //     )
-        //     ->with(
-        //         [
-        //             'programs' => function ($query) {
-        //                 $query->whereNull('parent_id')->with('lowerProgramTree');
-        //             },
-        //         ]
-        //     )->get();
     }
 
     public function store(array $data)
     {
-        // dd($data);
-
         if ($program = Program::create($data)) {
             return true;
         }
@@ -83,11 +65,10 @@ class ProgramRepository extends BaseProgramRepository
             ->whereNull('parent_id')
             ->with(
                 [
-                    'lowerProgramTree'
+                    'lowerProgramTreeAndDictionaries'
                 ]
             )->get();
         // dd($programs);
-        // $programs->load('proposalDictionaries');
         return $programs;
     }
 
@@ -95,6 +76,14 @@ class ProgramRepository extends BaseProgramRepository
     {
         // dd($datas);
         if ($dictionary = ProposalDictionary::create($datas)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function dictionaryUpdate(array $datas, $proposalDictionary)
+    {
+        if ($dictionary = $proposalDictionary->update($datas)) {
             return true;
         }
         return false;

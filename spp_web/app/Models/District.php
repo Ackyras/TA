@@ -22,4 +22,9 @@ class District extends Model
     {
         return $this->hasManyThrough(Farmer::class, Village::class);
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_district')->using(UserDistrict::class);
+    }
 }

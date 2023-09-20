@@ -31,15 +31,11 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{ route('impersonate', 2) }}">
                     <i class="far fa-eye"></i>
-                    Kadis (2)
+                    Kabid (2)
                 </a>
-                <a class="dropdown-item" href="{{ route('impersonate', 3) }}">
+                <a class="dropdown-item" href="{{ route('impersonate', 6) }}">
                     <i class="far fa-eye"></i>
-                    Kabid (3)
-                </a>
-                <a class="dropdown-item" href="{{ route('impersonate', 7) }}">
-                    <i class="far fa-eye"></i>
-                    Koor (7)
+                    Koor (6)
                 </a>
                 <div class="dropdown-divider"></div>
                 <form id="impersonateForm">

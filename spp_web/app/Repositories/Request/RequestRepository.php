@@ -9,9 +9,8 @@ use App\Models\Program;
 use App\Models\Request;
 use App\Models\Division;
 use App\Models\RequestAttachment;
-use Illuminate\Support\Facades\DB;
+use App\Models\ProposalDictionary;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request as HttpRequest;
 
 class RequestRepository extends BaseRequestRepository
@@ -45,8 +44,10 @@ class RequestRepository extends BaseRequestRepository
                 function ($query) {
                     $query->whereHas('farmer', function ($query) {
                         $query->whereHas('village', function ($query) {
-                            $query->whereHas('users', function ($query) {
-                                $query->where('users.id', auth()->id());
+                            $query->whereHas('district', function ($query) {
+                                $query->whereHas('users', function ($query) {
+                                    $query->where('users.id', auth()->id());
+                                });
                             });
                         });
                     })->orderByRaw(
@@ -72,9 +73,9 @@ class RequestRepository extends BaseRequestRepository
                         });
                     })->with(
                         [
-                            'result'    =>  [
+                            'results'    =>  [
                                 'attachments',
-                                'unit'
+                                'unit',
                             ]
                         ]
                     )->orderByRaw(
@@ -94,9 +95,9 @@ class RequestRepository extends BaseRequestRepository
                 function ($query) {
                     $query->with(
                         [
-                            'result'    =>  [
+                            'results'    =>  [
                                 'attachments',
-                                'unit'
+                                'unit',
                             ],
                         ]
                     )->orderByRaw(
@@ -121,7 +122,22 @@ class RequestRepository extends BaseRequestRepository
             );
         $datas['paginator'] = $this->filter($query, $request, false, true, 10)->withQueryString();
         $datas['items'] = $datas['paginator']->groupBy('farmer');
-        $datas['programs'] = $this->getPrograms(true);
+        $datas['items']->map(function ($requests) {
+            foreach ($requests as $request) {
+                $request->totalVolume = 0;
+                foreach ($request->results as $result) {
+                    $request->totalVolume += $result->volume;
+                }
+            }
+        });
+        // dd($datas['items']);
+        $datas['proposalDictionaries'] = ProposalDictionary::query()
+            ->with(
+                [
+                    'division',
+                ],
+            )
+            ->get();
         return $datas;
     }
 
@@ -130,7 +146,7 @@ class RequestRepository extends BaseRequestRepository
         $datas = [];
         $datas['units'] = Unit::all();
         $datas['farmers'] = Farmer::query()
-            ->whereRelation('village.users', 'users.id', auth()->id())
+            ->whereRelation('village.district.users', 'users.id', auth()->id())
             ->select(['name', 'address', 'pic', 'village_id', 'id'])
             ->with([
                 'village' => function ($query) {
@@ -141,7 +157,15 @@ class RequestRepository extends BaseRequestRepository
                 }
             ])
             ->get();
-        $datas['programs'] = $this->getPrograms(true);
+        $datas['divisionProposalDictionaries'] =
+            ProposalDictionary::query()
+            ->with('division')
+            ->get()
+            ->groupBy(function ($item) {
+                return $item->division->nickname;
+            })
+            // ->dd()
+        ;
         return $datas;
     }
 
@@ -155,14 +179,19 @@ class RequestRepository extends BaseRequestRepository
                 'program.division'
             ]
         );
-        $datas['programs'] = $this->getPrograms(true);
+        $datas['proposalDictionaries'] = ProposalDictionary::query()
+            ->with(
+                [
+                    'division',
+                ],
+            )
+            ->get();
         $datas['units'] = Unit::all();
         return $datas;
     }
 
     public function store(array $data)
     {
-        $data['period_id'] = Period::query()->where('is_active', true)->first()->id;
         $request = Request::create($data);
         $request->refresh();
         if ($request) {
@@ -176,8 +205,6 @@ class RequestRepository extends BaseRequestRepository
 
     public function update(array $data, Request $request)
     {
-        $data['period_id'] = getCurrentPeriodId();
-        // dd($data);
         $request->update($data);
         $request->refresh();
         if (isset($data['attachments'])) {
@@ -224,7 +251,6 @@ class RequestRepository extends BaseRequestRepository
             ->with(
                 [
                     'lowerProgramTree',
-                    'division'
                 ]
             )
             ->get();

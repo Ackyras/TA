@@ -15,25 +15,24 @@ class Request extends Model
     protected $fillable = [
         'farmer_id',
         'support_id',
-        'period_id',
         'proposal_dictionary_id',
         'status',
         'volume',
         'unit_id',
     ];
 
-    public function __boot()
-    {
-        parent::boot();
-        $periodId = request()->route()->hasParameter('period')
-            ? (int) request()->route()->parameter('period')
-            : getCurrentPeriodId();
+    // public function __boot()
+    // {
+    //     parent::boot();
+    //     $periodId = request()->route()->hasParameter('period')
+    //         ? (int) request()->route()->parameter('period')
+    //         : getCurrentPeriodId();
 
-        static::addGlobalScope('current_period', function ($query) use ($periodId) {
-            $query->where('period_id', $periodId)
-                ->with(['program']); // Eager load the "program" relationship
-        });
-    }
+    //     static::addGlobalScope('current_period', function ($query) use ($periodId) {
+    //         $query->where('period_id', $periodId)
+    //             ->with(['program']); // Eager load the "program" relationship
+    //     });
+    // }
 
     public function attachments()
     {
@@ -47,7 +46,7 @@ class Request extends Model
 
     public function program()
     {
-        return $this->belongsTo(ProposalDictionary::class);
+        return $this->belongsTo(ProposalDictionary::class, 'proposal_dictionary_id');
     }
 
     public function unit()
@@ -55,8 +54,8 @@ class Request extends Model
         return $this->belongsTo(Unit::class);
     }
 
-    public function result()
+    public function results()
     {
-        return $this->hasOne(RequestResult::class);
+        return $this->hasMany(RequestResult::class);
     }
 }

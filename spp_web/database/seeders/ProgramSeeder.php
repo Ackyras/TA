@@ -2,20 +2,21 @@
 
 namespace Database\Seeders;
 
+use App\Models\Unit;
+use App\Models\Period;
 use App\Models\Program;
 use App\Models\Division;
-use App\Models\Period;
-use App\Models\Unit;
 use Illuminate\Database\Seeder;
+use App\Models\ProposalDictionary;
 
 class ProgramSeeder extends Seeder
 {
     protected Period $period;
 
-    public function __construct()
-    {
-        $this->period = Period::where('is_active', true)->first();
-    }
+    // public function __construct()
+    // {
+    //     $this->period = Period::where('is_active', true)->first();
+    // }
 
     public function run()
     {
@@ -165,11 +166,11 @@ class ProgramSeeder extends Seeder
                     'name'          => 'Program Penyediaan dan Pengembangan Sarana Pertanian',
                     'subprograms'   =>  [
                         [
-                            'code'          => '03.27.02.06.01',
+                            'code'          => '03.27.02.06',
                             'name'          => 'Penyediaan benih/bibit ternak dan hijauan pakan ternak yang sumbernya dalam 1 (satu) daerah kabupaten/kota lain',
                             'subprograms'   =>  [
                                 [
-                                    'code'          => '03.27.02.01.01',
+                                    'code'          => '03.27.02.06.01',
                                     'name'          => 'Pengadaan benih/bibit ternak yang sumbernya dari daerah kabupaten/kota lain',
                                     'subprograms'   =>  [
                                         [
@@ -211,28 +212,28 @@ class ProgramSeeder extends Seeder
         foreach ($divisionPrograms as $key => $programs) {
             $division = Division::query()->where('nickname', $key)->first();
             foreach ($programs as $programData) {
-                $this->createProgram($division, $programData, null);
+                $this->createProgram($division, $programData);
             }
         }
     }
 
     private function createProgram(Division $division, $programData, $parent = null)
     {
-        $program = Program::create([
-            'code' => isset($programData['code']) ? $programData['code'] : null,
-            'name' => $programData['name'],
-            'parent_id' => $parent ? $parent->id : null,
-            'division_id'   =>  $division->id,
-            'is_parent'     =>  isset($programData['subprograms']) ? true : false,
-            'period_id'     =>  $this->period->id,
-        ]);
-
         if (isset($programData['subprograms'])) {
-            $program->is_parent = true;
-            $program->save();
+            $program = Program::firstOrCreate([
+                'code' => isset($programData['code']) ? $programData['code'] : null,
+                'name' => $programData['name'],
+                'parent_id' => $parent ? $parent->id : null,
+            ]);
             foreach ($programData['subprograms'] as $subprogramData) {
                 $this->createProgram($division, $subprogramData, $program);
             }
+        } else {
+            $proposalDictionary = ProposalDictionary::create([
+                'name' => $programData['name'],
+                'parent_id' => $parent ? $parent->id : null,
+                'division_id' => $division->id
+            ]);
         }
     }
 }

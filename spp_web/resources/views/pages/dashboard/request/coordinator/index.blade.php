@@ -2,53 +2,6 @@
 
 @section('title', 'List Of Request Kadis')
 
-@section('css')
-    <style>
-        /* Add this style to limit the height of the filter card */
-        #programAccordionCollapse .form-group.row {
-            max-height: 200px;
-            /* You can adjust the value as needed */
-            overflow-y: auto;
-        }
-
-        /* Add this style to make the program accordion pass the filter card */
-        #programAccordionCollapse {
-            position: absolute;
-            z-index: 1;
-            background-color: #fff;
-            /* Set the desired background color */
-            width: calc(100% - 16px);
-            /* Adjust the width if needed */
-        }
-
-        /* Add this style to adjust the positioning of the program accordion */
-        #programAccordion {
-            margin-bottom: 0;
-        }
-
-        /* Add this style to make the program accordion button look like it's part of the card header */
-        #programAccordionHeading {
-            background-color: #f8f9fa;
-            /* Set the desired background color */
-            border: 1px solid #ccc;
-            /* Add a border for better separation */
-            padding: 0.375rem 0.75rem;
-            /* Adjust the padding as needed */
-        }
-
-        /* Add this style to add a border to the accordion content */
-        #programAccordionCollapse .card-body {
-            border: 1px solid #ccc;
-            /* Add a border for differentiation */
-            border-top: none;
-            /* Remove top border since it's already part of the card header */
-            padding: 0.75rem;
-            /* Adjust padding as needed */
-        }
-    </style>
-@endsection
-
-
 @section('content')
     <div class="card">
         <div class="card-header">
@@ -87,33 +40,15 @@
                             <div class="form-group row">
                                 <label for="program_id" class="col-sm-2 col-form-label">Kamus Usulan</label>
                                 <div class="col-sm-10">
-                                    <div class="pl-0">
-                                        <div id="programAccordion" class="accordion">
-                                            <div class="card">
-                                                <div class="card-header" id="programAccordionHeading">
-                                                    <button class="btn btn-link" type="button" data-toggle="collapse"
-                                                        data-target="#programAccordionCollapse" aria-expanded="false"
-                                                        aria-controls="programAccordionCollapse">
-                                                        Select Program
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="programAccordionCollapse" class="collapse"
-                                        aria-labelledby="programAccordionHeading" data-parent="#programAccordion">
-                                        <div class="card-body form-group row">
-                                            @foreach ($datas['programs'] as $program)
-                                                <fieldset>
-                                                    <legend>{{ $program['name'] }}</legend>
-                                                    @include('partials.program-tree-view-select', [
-                                                        'parent' => $program,
-                                                        'selected' => request()->input('filter.program_id'),
-                                                    ])
-                                                </fieldset>
-                                            @endforeach
-                                        </div>
-                                    </div>
+                                    <select class="form-control select2" id="dictionary"
+                                        name="filter[proposal_dictionary_id]" style="width: 100%;">
+                                        <option @selected(request()->input('filter.proposal_dictionary_id') == '') value="">Semua</option>
+                                        @foreach ($datas['proposalDictionaries'] as $proposalDictionary)
+                                            <option value="{{ $proposalDictionary->id }}" @selected(request()->input('filter.proposal_dictionary_id') == $proposalDictionary->id)>
+                                                {{ $proposalDictionary->name }}({{ $proposalDictionary->division->nickname }})
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 
@@ -256,25 +191,10 @@
 @section('script')
     <script>
         $(document).ready(function() {
-            $('.program-checkbox').on('change', function() {
-                $('.program-checkbox').not(this).prop('checked', false);
-                updateSelectProgramButton();
+            $('#dictionary').select2({
+                theme: 'bootstrap4',
+                width: 'resolve'
             });
-
-            function updateSelectProgramButton() {
-                var selectedProgram = $('.program-checkbox:checked').first();
-                if (selectedProgram.length > 0) {
-                    var programName = selectedProgram.data('program-name');
-                    $('#programAccordionHeading button').text('Selected Program: ' + programName);
-                } else {
-                    $('#programAccordionHeading button').text('Select Program');
-                }
-            }
-        });
-    </script>
-
-    <script>
-        $(document).ready(function() {
             $('#select2').select2({
                 theme: 'bootstrap4',
                 width: 'resolve'

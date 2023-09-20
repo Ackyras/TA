@@ -1,7 +1,7 @@
 <?php
 
+use App\Models\District;
 use App\Models\User;
-use App\Models\Village;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -15,10 +15,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('user_village', function (Blueprint $table) {
+        Schema::create('user_district', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Village::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(District::class)->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

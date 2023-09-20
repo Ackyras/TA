@@ -8,6 +8,7 @@ use App\Http\Controllers\Dashboard\VillageController;
 use App\Http\Controllers\Dashboard\DistrictController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\Request\RequestController;
+use App\Http\Controllers\Dashboard\Request\ResultController;
 use App\Http\Controllers\Dashboard\Setting\User\UserController;
 use App\Http\Controllers\Dashboard\Setting\Program\ProgramController;
 use App\Http\Controllers\Dashboard\Setting\Division\DivisionController;
@@ -121,21 +122,18 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
         );
     });
 
-    Route::middleware(ScopePeriod::class)->group(function () {
-        Route::prefix('requests')->as('request.')->group(function () {
-            Route::get('/', [RequestController::class, 'index'])->name('index');
-            Route::post('/', [RequestController::class, 'store'])->name('store');
-            Route::get('/create', [RequestController::class, 'create'])->name('create');
-            Route::get('/{request}', [RequestController::class, 'show'])->name('show');
-            Route::put('/{instructorRequest}', [RequestController::class, 'update'])->name('update');
-            Route::delete('/{request}', [RequestController::class, 'destroy'])->name('destroy');
-            Route::match(['GET', 'DELETE'], '/dashboard/requests/{request}/attachment/{attachment}', [RequestController::class, 'destroyAttachment'])->name('attachment.destroy');
-            Route::prefix('result')->as('result.')->group(function () {
-                // Route::get('')
-            });
+    Route::prefix('requests')->as('request.')->group(function () {
+        Route::get('/', [RequestController::class, 'index'])->name('index');
+        Route::post('/', [RequestController::class, 'store'])->name('store');
+        Route::get('/create', [RequestController::class, 'create'])->name('create');
+        Route::get('/{request}', [RequestController::class, 'show'])->name('show');
+        Route::put('/{instructorRequest}', [RequestController::class, 'update'])->name('update');
+        Route::delete('/{request}', [RequestController::class, 'destroy'])->name('destroy');
+        Route::match(['GET', 'DELETE'], '/dashboard/requests/{request}/attachment/{attachment}', [RequestController::class, 'destroyAttachment'])->name('attachment.destroy');
+        Route::controller(ResultController::class)->prefix('result')->as('result.')->group(function () {
+            Route::post('/', 'store')->name('store');
         });
     });
-
     Route::middleware([ArchiveMiddleware::class, ScopePeriod::class])->prefix('archive')->as('archive.')->group(function () {
         Route::get('/', [ArchiveController::class, 'index'])->name('index');
         Route::prefix('{period}')->as('period.')->group(function () {
@@ -156,6 +154,10 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
 Route::middleware(['auth.storage'])->prefix('secured-storage')->as('storage.')->controller(StorageController::class)->group(function () {
     Route::get('{requestAttachment}', 'getRequestAttachment')->name('request-attachment');
     Route::get('{requestResultAttachment}', 'getRequestResultAttachment')->name('request-result-attachment');
+});
+
+Route::get('test',function(){
+    return abort(404);
 });
 
 

@@ -27,7 +27,7 @@ class UpdateDivisionRequest extends FormRequest
         return [
             //
             'name'      =>  'required',
-            'nickname'  =>  ['required', 'unique:divisions,nickname,' . $divisionId]
+            'nickname'  =>  ['required']
         ];
     }
 }

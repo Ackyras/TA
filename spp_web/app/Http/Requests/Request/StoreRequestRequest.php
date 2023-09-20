@@ -26,7 +26,7 @@ class StoreRequestRequest extends FormRequest
         return [
             //
             'farmer_id' => 'required',
-            'program_id' => 'required',
+            'proposal_dictionary_id' => 'required',
             'volume' => 'required',
             'unit_id' => 'required',
             'attachments' => 'required|array',

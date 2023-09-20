@@ -31,41 +31,17 @@
                         :disabled="true" />
                     @if ($datas['request']->status == 'pending')
                         <div class="form-group row">
-                            <label for="program_id" class="col-sm-2 col-form-label">Kamus Usulan</label>
+                            <label for="proposal_dictionary_id" class="col-sm-2 col-form-label">Kamus Usulan</label>
                             <div class="col-sm-10">
-                                <div class="pl-0">
-                                    <div id="programAccordion" class="accordion">
-                                        <div class="card">
-                                            <div class="card-header" id="programAccordionHeading">
-                                                <button class="btn btn-link" type="button" data-toggle="collapse"
-                                                    data-target="#programAccordionCollapse" aria-expanded="false"
-                                                    aria-controls="programAccordionCollapse">
-                                                    @if ($datas['request']->program)
-                                                        Selected Program: {{ $datas['request']->program->division->name }} -
-                                                        {{ $datas['request']->program->name }}
-                                                    @else
-                                                        Select Program
-                                                    @endif
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="programAccordionCollapse" class="collapse"
-                                        aria-labelledby="programAccordionHeading" data-parent="#programAccordion"
-                                        style="max-height: 200px; overflow-y: auto; ">
-                                        <div class="card-body">
-                                            @foreach ($datas['programs'] as $program)
-                                                <fieldset>
-                                                    <legend>{{ $program['name'] }}</legend>
-                                                    @include('partials.program-tree-view-select', [
-                                                        'parent' => $program,
-                                                        'selected' => $datas['request']->program_id,
-                                                    ])
-                                                </fieldset>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                </div>
+                                <select class="form-control select2" id="dictionary" name="proposal_dictionary_id"
+                                    style="width: 100%;">
+                                    <option @selected(old('proposal_dictionary_id') == '') value="">Semua</option>
+                                    @foreach ($datas['proposalDictionaries'] as $proposalDictionary)
+                                        <option value="{{ $proposalDictionary->id }}" @selected(old('proposal_dictionary_id') == $proposalDictionary->id)>
+                                            {{ $proposalDictionary->name }}({{ $proposalDictionary->division->nickname }})
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                     @else
@@ -87,8 +63,8 @@
                                 <div class="mb-2 attachment-name-group d-flex align-items-center form-group row">
                                     <input type="text" name="attachments[{{ $index }}][name]"
                                         class="mr-2 form-control col" value="{{ $attachment->name }}" disabled readonly>
-                                    <a href="{{ Storage::url($attachment->url) }}" class="mr-1 btn btn-primary col-1"
-                                        target="_blank">View</a>
+                                    <a href="{{ route('storage.request-attachment', ['requestAttachment' => $attachment]) }}"
+                                        class="mr-1 btn btn-primary col-1" target="_blank">View</a>
                                     <a href="{{ route('dashboard.request.attachment.destroy', [$datas['request'], $attachment]) }}"
                                         class="btn btn-danger col-1">Delete</a>
                                 </div>
@@ -147,6 +123,10 @@
         });
 
         $(document).ready(function() {
+            $('#dictionary').select2({
+                theme: 'bootstrap4',
+                width: 'resolve'
+            });
             $('#select2').select2({
                 theme: 'bootstrap4',
                 width: 'resolve'

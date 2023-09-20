@@ -47,10 +47,22 @@ class Program extends Model
 
     public function lowerProgramTree()
     {
-        return $this->hasMany(Program::class, 'parent_id')
+        return $this->subPrograms()
             ->with(
-                'lowerProgramTree',
-                'proposalDictionaries'
+                [
+                    'lowerProgramTree',
+                ]
+            );
+    }
+
+    public function lowerProgramTreeAndDictionaries()
+    {
+        return $this->subPrograms()
+            ->with(
+                [
+                    'lowerProgramTreeAndDictionaries',
+                    'proposalDictionaries'
+                ]
             );
     }
 

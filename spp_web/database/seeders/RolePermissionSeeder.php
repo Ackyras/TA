@@ -112,6 +112,7 @@ class RolePermissionSeeder extends Seeder
             [
                 'supports.read',
                 'requests',
+                'districts',
                 'villages',
                 'farmers',
                 'archives.farmers',

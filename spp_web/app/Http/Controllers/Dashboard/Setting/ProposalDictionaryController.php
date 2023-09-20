@@ -96,6 +96,18 @@ class ProposalDictionaryController extends Controller
     public function update(UpdateProposalDictionaryRequest $request, ProposalDictionary $proposalDictionary)
     {
         //
+        if ($this->repo->dictionaryUpdate($request->validated(), $proposalDictionary)) {
+            return back()->with(
+                [
+                    'created'   =>  __('message.program.created')
+                ]
+            );
+        }
+        return back()->with(
+            [
+                'failed'   =>  __('message.program.notCreated')
+            ]
+        );
     }
 
     /**
@@ -107,5 +119,17 @@ class ProposalDictionaryController extends Controller
     public function destroy(ProposalDictionary $proposalDictionary)
     {
         //
+        if ($proposalDictionary->delete()) {
+            return back()->with(
+                [
+                    'destroyed'   =>  __('message.proposalDictionary.deleted')
+                ]
+            );
+        }
+        return back()->with(
+            [
+                'failed'   =>  __('message.proposalDictionary.notDeleted')
+            ]
+        );
     }
 }

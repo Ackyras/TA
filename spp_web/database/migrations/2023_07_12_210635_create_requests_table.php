@@ -22,7 +22,6 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Farmer::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(ProposalDictionary::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(Period::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Unit::class)->constrained()->cascadeOnDelete();
             $table->string('status')->default('pending');
             $table->float('volume');

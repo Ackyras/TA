@@ -41,7 +41,7 @@ class RequestController extends Controller
     {
         $validated = $request->validated();
         if ($this->repo->store($validated)) {
-            return to_route('dashboard.request.index')->with(
+            return back()->with(
                 [
                     'created'   =>  __('message.request.created')
                 ]
@@ -76,8 +76,10 @@ class RequestController extends Controller
         $datas = $this->repo->show($request);
         if (auth()->user()->hasRole('koor')) {
             return view('pages.dashboard.request.instructor.show', compact('datas'));
-        } elseif (auth()->user()->hasRole('kabid') || auth()->user()->hasRole('kadis')) {
+        } elseif (auth()->user()->hasRole('kabid')) {
             return view('pages.dashboard.request.division.show', compact('datas'));
+        } elseif (auth()->user()->hasRole('kadis')) {
+            return view('pages.dashboard.request.coordinator.show', compact('datas'));
         }
     }
 

@@ -29,6 +29,10 @@ class DistrictController extends Controller
     {
         //
         $districts = $this->repo->index();
+        if ($districts->count() == 1 && auth()->user()->hasRole('koor')) {
+            // $datas = $this->repo->show($districts->first());
+            return $this->show($districts->first());
+        }
         $districtTable = $this->repo->prepareDatatable($districts->toArray());
         return view('pages.dashboard.district.index', compact('districts', 'districtTable'));
     }
