@@ -36,7 +36,14 @@ class FarmerRepository extends BaseFarmerRepository
     {
         $query = Farmer::query()
             ->when(
-                auth()->user()->hasRole('koor')
+                auth()->user()->hasRole('koor'),
+                function ($query) {
+                    $query->whereHas('village', function ($query) {
+                        $query->whereHas('district', function ($query) {
+                            $query->whereRelation('users', 'users.id', auth()->id());
+                        });
+                    });
+                }
             )
             ->select(['name', 'address', 'pic', 'village_id', 'id'])
             ->with([

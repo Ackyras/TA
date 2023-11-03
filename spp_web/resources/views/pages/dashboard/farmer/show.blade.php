@@ -9,11 +9,14 @@
             <div class="card-tools">
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#editDistrictModal">
-                    Perbarui Kecamatan
+                    Perbarui Kelompok Tani
                 </button>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createVillageModal">
+                <a class="btn btn-primary"
+                    href="{{ route('dashboard.request.create', ['farmer' => $datas['farmer']->id]) }}">Tambah
+                    Pengajuan Bantuan</a>
+                {{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createVillageModal">
                     Tambah Pengajuan Bantuan
-                </button>
+                </button> --}}
                 <!-- Edit District Modal -->
                 <div class="modal fade" id="editDistrictModal" tabindex="-1" role="dialog"
                     aria-labelledby="editDistrictModalLabel" aria-hidden="true">

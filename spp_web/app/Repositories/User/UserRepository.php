@@ -36,8 +36,8 @@ class UserRepository extends BaseUserRepository
         }
 
         // Check if the user has the 'koor' role
-        if ($user->can('villages')) {
-            $user->load('villages');
+        if ($user->can('districts')) {
+            $user->load('districts');
         }
 
         return $user;

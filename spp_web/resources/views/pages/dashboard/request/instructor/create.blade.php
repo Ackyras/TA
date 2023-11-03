@@ -25,7 +25,7 @@
             @csrf
             <div class="card-body">
                 <x-form.input.option name="farmer_id" title="Kelompok Tani" :options="$datas['farmers']" :in-line="true"
-                    id="farmer_id_option" :selected="old('farmer_id')" />
+                    id="farmer_id_option" :selected="old('farmer_id') ? old('farmer') : request()->query('farmer')" />
                 <div class="form-group row">
                     <label for="proposal_dictionary_id" class="col-sm-2 col-form-label">Kamus Usulan</label>
                     <div class="col-sm-10">
@@ -67,7 +67,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="button" class="btn btn-secondary mt-2" id="add_attachment">Add Attachment</button>
+                    <button type="button" class="mt-2 btn btn-secondary" id="add_attachment">Add Attachment</button>
                 </div>
             </div>
 

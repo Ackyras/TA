@@ -35,6 +35,7 @@
                     <tr>
                         <th>Nama</th>
                         <th>Alamat</th>
+                        <th>Desa, Kecamatan</th>
                         <th>PIC</th>
                         <th>Aksi</th>
                     </tr>
@@ -43,7 +44,12 @@
                     @foreach ($farmers as $farmer)
                         <tr>
                             <td>{{ $farmer->name }}</td>
-                            <td>{{ $farmer->address }}, {{ $farmer->village->name }}, {{ $farmer->village->district->name }}
+                            <td>{{ $farmer->address }}</td>
+                            <td>
+                                <a
+                                    href="{{ route('dashboard.village.show', ['village' => $farmer->village->id]) }}">{{ $farmer->village->name }}</a>,
+                                <a
+                                    href="{{ route('dashboard.district.show', ['district' => $farmer->village->district->id]) }}">{{ $farmer->village->district->name }}</a>
                             </td>
                             <td>{{ $farmer->pic }}</td>
                             <td>

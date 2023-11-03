@@ -25,7 +25,8 @@ class StoreDistrictRequest extends FormRequest
     {
         return [
             //
-            'name'  =>  ['required']
+            'name'  =>  ['required'],
+            'with_user'     =>  ['nullable']
         ];
     }
 }

@@ -83,15 +83,6 @@ class VillageRepository extends BaseVillageRepository
         DB::beginTransaction();
         try {
             $village = Village::create($datas);
-            if ($datas['with_user']) {
-                $village->users()->create(
-                    [
-                        'name'      =>  'Desa ' . str()->title($village->name),
-                        'email'     =>  str()->snake(District::find($datas['district_id'])->name) . '.' . str()->snake($village->name) . '@sppbt.toba.gov.id',
-                        'password'  =>  bcrypt('password')
-                    ]
-                );
-            }
             DB::commit();
         } catch (\Throwable $th) {
             DB::rollBack();

@@ -60,7 +60,7 @@
 
             </div>
 
-            <div id="villages-form" style="display: none;">
+            <div id="districts-form" style="display: none;">
                 <hr>
                 <div class="card-header">
                     <h3 class="card-title">Manajemen Desa</h3>
@@ -69,23 +69,23 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group row">
-                                <label for="village-filter" class="col-sm-2 col-form-label">Filter Villages</label>
+                                <label for="district-filter" class="col-sm-2 col-form-label">Filter districts</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="village-filter">
+                                    <input type="text" class="form-control" id="district-filter">
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row" id="village-checkboxes">
-                        @forelse ($villages as $village)
+                    <div class="row" id="district-checkboxes">
+                        @forelse ($districts as $district)
                             <div class="col-md-3">
-                                <x-form.input.checkbox name="villages[]" :title="$village->name" :value="$village->id"
-                                    id="{{ 'villages_' . $village->id }}" :checked="$user->villages->contains('id', $village->id)" />
+                                <x-form.input.checkbox name="districts[]" :title="$district->name" :value="$district->id"
+                                    id="{{ 'districts_' . $district->id }}" :checked="$user->districts->contains('id', $district->id)" />
                             </div>
                         @empty
                             <div class="col-md-3">
                                 Belum ada data bidang tersimpan di database.
-                                <a href="{{ route('dashboard.village.index') }}">Klik di sini</a> untuk
+                                <a href="{{ route('dashboard.district.index') }}">Klik di sini</a> untuk
                                 menambahkan data Desa
                             </div>
                         @endforelse
@@ -95,7 +95,7 @@
             @error('divisions')
                 <div class="mb-2 alert alert-danger">{{ $message }}</div>
             @enderror
-            @error('villages')
+            @error('districts')
                 <div class="mb-2 alert alert-danger">{{ $message }}</div>
             @enderror
 
@@ -111,9 +111,9 @@
         // Get the checkboxes
         var rolesCheckboxes = document.querySelectorAll('[id^="roles_"]');
         var divisionsForm = document.getElementById('divisions-form');
-        var villagesForm = document.getElementById('villages-form');
+        var districtsForm = document.getElementById('districts-form');
         var userForm = document.getElementById('user-form');
-        var villageFilterInput = document.getElementById('village-filter');
+        var districtFilterInput = document.getElementById('district-filter');
 
         // Function to check if specific checkboxes are checked
         function areSpecificCheckboxesChecked(checkboxIds) {
@@ -126,9 +126,9 @@
         // Function to show or hide the forms based on checkbox state
         function toggleForms() {
             var divisionsFormVisible = areSpecificCheckboxesChecked(['roles_3']);
-            var villagesFormVisible = areSpecificCheckboxesChecked(['roles_4']);
+            var districtsFormVisible = areSpecificCheckboxesChecked(['roles_4']);
             divisionsForm.style.display = divisionsFormVisible ? 'block' : 'none';
-            villagesForm.style.display = villagesFormVisible ? 'block' : 'none';
+            districtsForm.style.display = districtsFormVisible ? 'block' : 'none';
 
             // Disable or enable divisions checkboxes based on roles 1, 2, and 3
             var divisionsCheckboxes = divisionsForm.querySelectorAll('[id^="divisions_"]');
@@ -136,17 +136,17 @@
                 checkbox.disabled = !divisionsFormVisible;
             });
 
-            // Disable or enable villages checkboxes based on roles 1, 2, and 4
-            var villagesCheckboxes = villagesForm.querySelectorAll('[id^="villages_"]');
-            villagesCheckboxes.forEach(function(checkbox) {
-                checkbox.disabled = !villagesFormVisible;
+            // Disable or enable districts checkboxes based on roles 1, 2, and 4
+            var districtsCheckboxes = districtsForm.querySelectorAll('[id^="districts_"]');
+            districtsCheckboxes.forEach(function(checkbox) {
+                checkbox.disabled = !districtsFormVisible;
             });
         }
 
-        // Function to filter the villages based on the input value
-        function filterVillages() {
-            var filter = villageFilterInput.value.toLowerCase();
-            var checkboxes = villagesForm.querySelectorAll('[id^="villages_"]');
+        // Function to filter the districts based on the input value
+        function filterdistricts() {
+            var filter = districtFilterInput.value.toLowerCase();
+            var checkboxes = districtsForm.querySelectorAll('[id^="districts_"]');
 
             checkboxes.forEach(function(checkbox) {
                 var title = checkbox.nextElementSibling.innerText.toLowerCase();
@@ -163,12 +163,12 @@
             checkbox.addEventListener('change', toggleForms);
         });
 
-        // Add event listener to the village filter input
-        villageFilterInput.addEventListener('input', filterVillages);
+        // Add event listener to the district filter input
+        districtFilterInput.addEventListener('input', filterdistricts);
 
         userForm.addEventListener('submit', function(event) {
             var divisionsCheckboxes = divisionsForm.querySelectorAll('[id^="divisions_"]:checked');
-            var villagesCheckboxes = villagesForm.querySelectorAll('[id^="villages_"]:checked');
+            var districtsCheckboxes = districtsForm.querySelectorAll('[id^="districts_"]:checked');
 
             // Remove unchecked divisions checkboxes from form data if roles 1, 2, and 3 are not checked
             if (!areSpecificCheckboxesChecked(['roles_3'])) {
@@ -178,9 +178,9 @@
                 });
             }
 
-            // Remove unchecked villages checkboxes from form data if roles 1, 2, and 4 are not checked
+            // Remove unchecked districts checkboxes from form data if roles 1, 2, and 4 are not checked
             if (!areSpecificCheckboxesChecked(['roles_4'])) {
-                villagesCheckboxes.forEach(function(checkbox) {
+                districtsCheckboxes.forEach(function(checkbox) {
                     checkbox.disabled = true;
                     checkbox.removeAttribute('name');
                 });

@@ -12,6 +12,7 @@ use App\Repositories\User\UserRepository;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Interfaces\Repository\UserRepositoryInterface;
+use App\Models\District;
 
 class UserController extends Controller
 {
@@ -75,10 +76,10 @@ class UserController extends Controller
         $user = $this->repo->show($user);
 
         $divisions = Division::all();
-        $villages = Village::all();
+        $districts = District::all();
         $roles = Role::all();
 
-        return view('pages.dashboard.user.show', compact('user', 'divisions', 'villages', 'roles'));
+        return view('pages.dashboard.user.show', compact('user', 'divisions', 'districts', 'roles'));
     }
 
     /**

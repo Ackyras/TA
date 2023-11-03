@@ -60,13 +60,13 @@ class DistrictController extends Controller
         if ($this->repo->store($validated)) {
             return back()->with(
                 [
-                    'created'   =>  __('message.period.created')
+                    'created'   =>  __('message.district.created')
                 ]
             );
         }
         return back()->with(
             [
-                'failed'   =>  __('message.period.notCreated')
+                'failed'   =>  __('message.district.notCreated')
             ]
         );
     }

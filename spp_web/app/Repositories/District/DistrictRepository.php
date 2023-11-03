@@ -3,6 +3,7 @@
 namespace App\Repositories\District;
 
 use App\Models\District;
+use Illuminate\Support\Facades\DB;
 use App\Repositories\Village\VillageRepository;
 use App\Repositories\District\BaseDistrictRepository;
 
@@ -56,9 +57,33 @@ class DistrictRepository extends BaseDistrictRepository
         ;
     }
 
-    public function store(array $data)
+    public function store(array $datas)
     {
-        return District::create($data);
+        DB::beginTransaction();
+        try {
+            $district = District::create($datas);
+            if ($datas['with_user']) {
+                $new_user = $district->users()->create(
+                    [
+                        'name'      =>  'Koordinator Kecamatan ' . str()->title($district->name),
+                        'email'     =>  'koor.' . str($district->name)->lower()->snake() . '@sppbt.toba.gov.id',
+                        'password'  =>  bcrypt('password')
+                    ]
+                );
+                $new_user->assignRole('koor');
+            }
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            if (env('APP_DEBUG', true)) {
+                throw $th;
+            }
+            // if ($th instanceof \Exception) {
+            //     $errorMessage = $th->getMessage();
+            // }
+            return false;
+        }
+        return true;
     }
 
     public function show(District $district)

@@ -26,20 +26,20 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            @if ($districts->count() == 1)
+                            @if ($districts->count() > 0)
                                 <form action="{{ route('dashboard.village.store') }}" method="post">
                                     @csrf
                                     <div class="modal-body">
                                         <x-form.input.option name="district_id" title="Kecamatan" :options="$districts" />
                                         <x-form.input.text name="name" title="Nama Desa" />
-                                        <div class="form-group">
+                                        {{-- <div class="form-group">
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input" name="with_user"
                                                     id="with_user" @checked(old('with_user')) value="true">
                                                 <label class="custom-control-label" for="with_user">Buat akun Koor
                                                     Baru untuk desa ini.</label>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         @error('with_user')
                                             <div class="alert alert-danger">{{ $message }}</div>
                                         @enderror

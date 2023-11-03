@@ -19,7 +19,7 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="createVillageModalLabel">Tambah Desa</h5>
+                                <h5 class="modal-title" id="createVillageModalLabel">Tambah Kelompok Tani</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -27,7 +27,7 @@
                             <form action="{{ route('dashboard.farmer.store') }}" method="post">
                                 @csrf
                                 <div class="modal-body">
-                                    <p>Tambah desa untuk Kecamatan {{ $village->name }}</p>
+                                    <p>Tambah Kelompok Tani untuk Desa {{ $village->name }}</p>
                                     <x-form.input.text name="name" title="Nama Kelompok Tani" />
                                     <x-form.input.text name="address" title="Alamat" />
                                     <x-form.input.text name="pic" title="Kepala Kelompok Tani" />
@@ -71,7 +71,7 @@
         <div class="card-body">
             {{--
         <x-table.datatable :table="$villageTable" /> --}}
-            <table class="table table-sm w-auto table-borderless">
+            <table class="table w-auto table-sm table-borderless">
                 <tr scope="row">
                     <th class="w-auto" scope="col">Nama Desa</th>
                     <th class="w-auto" scope="col">:</th>
