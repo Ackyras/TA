@@ -125,8 +125,8 @@
 
         // Function to show or hide the forms based on checkbox state
         function toggleForms() {
-            var divisionsFormVisible = areSpecificCheckboxesChecked(['roles_3']);
-            var districtsFormVisible = areSpecificCheckboxesChecked(['roles_4']);
+            var divisionsFormVisible = areSpecificCheckboxesChecked(['roles_2']);
+            var districtsFormVisible = areSpecificCheckboxesChecked(['roles_3']);
             divisionsForm.style.display = divisionsFormVisible ? 'block' : 'none';
             districtsForm.style.display = districtsFormVisible ? 'block' : 'none';
 
@@ -171,7 +171,7 @@
             var districtsCheckboxes = districtsForm.querySelectorAll('[id^="districts_"]:checked');
 
             // Remove unchecked divisions checkboxes from form data if roles 1, 2, and 3 are not checked
-            if (!areSpecificCheckboxesChecked(['roles_3'])) {
+            if (!areSpecificCheckboxesChecked(['roles_2'])) {
                 divisionsCheckboxes.forEach(function(checkbox) {
                     checkbox.disabled = true;
                     checkbox.removeAttribute('name');
@@ -179,7 +179,7 @@
             }
 
             // Remove unchecked districts checkboxes from form data if roles 1, 2, and 4 are not checked
-            if (!areSpecificCheckboxesChecked(['roles_4'])) {
+            if (!areSpecificCheckboxesChecked(['roles_3'])) {
                 districtsCheckboxes.forEach(function(checkbox) {
                     checkbox.disabled = true;
                     checkbox.removeAttribute('name');
