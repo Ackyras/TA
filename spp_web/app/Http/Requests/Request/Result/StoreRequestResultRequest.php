@@ -13,7 +13,7 @@ class StoreRequestResultRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +25,8 @@ class StoreRequestResultRequest extends FormRequest
     {
         return [
             //
+            'request_id'    =>  'required',
+            'volume' => 'required',
         ];
     }
 }

@@ -130,7 +130,7 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
         Route::put('/{instructorRequest}', [RequestController::class, 'update'])->name('update');
         Route::delete('/{request}', [RequestController::class, 'destroy'])->name('destroy');
         Route::match(['GET', 'DELETE'], '/dashboard/requests/{request}/attachment/{attachment}', [RequestController::class, 'destroyAttachment'])->name('attachment.destroy');
-        Route::controller(ResultController::class)->prefix('result')->as('result.')->group(function () {
+        Route::controller(ResultController::class)->prefix('{request}/result')->as('result.')->group(function () {
             Route::post('/', 'store')->name('store');
         });
     });
@@ -156,7 +156,7 @@ Route::middleware(['auth.storage'])->prefix('secured-storage')->as('storage.')->
     Route::get('{requestResultAttachment}', 'getRequestResultAttachment')->name('request-result-attachment');
 });
 
-Route::get('test',function(){
+Route::get('test', function () {
     return abort(404);
 });
 

@@ -22,7 +22,15 @@ class ResultController extends Controller
     public function store(StoreRequestResultRequest $httpRequest, ModelsRequest $request)
     {
         $validated = $httpRequest->validated();
-        if ($request->results()->create($validated)) {
+        // dd($request);
+        if ($result = $request->results()->create(
+            [
+                'request_id'    =>  $request->id,
+                'unit_id'       =>  $request->unit_id,
+                'volume'        =>  $validated['volume']
+            ]
+        )) {
+
             return back()->with(
                 [
                     'created'   =>  __('message.requestResult.created')

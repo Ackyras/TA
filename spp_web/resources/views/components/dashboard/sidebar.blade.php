@@ -35,61 +35,69 @@
                 data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                 with font-awesome or any other icon font library -->
-                <li class="nav-header">Settings</li>
+                @canany(['periods', 'users', 'divisions', 'programs', 'supports'])
+                    <li class="nav-header">Settings</li>
 
-                <li class="nav-item">
-                    <a href="{{ route('dashboard.setting.period.index') }}"
-                        class="nav-link {{ request()->routeIs('dashboard.setting.period.*') ? 'active' : '' }}">
-                        <i class="fas fa-clock nav-icon"></i>
-                        <p>List Periode</p>
-                    </a>
-                </li>
+                    @can('periods')
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard.setting.period.index') }}"
+                                class="nav-link {{ request()->routeIs('dashboard.setting.period.*') ? 'active' : '' }}">
+                                <i class="fas fa-clock nav-icon"></i>
+                                <p>List Periode</p>
+                            </a>
+                        </li>
+                    @endcan
+                    @role('kadis')
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard.setting.seeding.index') }}"
+                                class="nav-link {{ request()->routeIs('dashboard.setting.seeding.*') ? 'active' : '' }}">
+                                <i class="fas fa-upload nav-icon"></i>
+                                <p>Mass Upload</p>
+                            </a>
+                        </li>
+                    @endrole
 
-                <li class="nav-item">
-                    <a href="{{ route('dashboard.setting.seeding.index') }}"
-                        class="nav-link {{ request()->routeIs('dashboard.setting.seeding.*') ? 'active' : '' }}">
-                        <i class="fas fa-upload nav-icon"></i>
-                        <p>Mass Upload</p>
-                    </a>
-                </li>
-
-                <!-- Repeat the pattern for other menu items -->
-
-                <!-- Users -->
-                <li class="nav-item">
-                    <a href="{{ route('dashboard.setting.user.index') }}"
-                        class="nav-link {{ request()->routeIs('dashboard.setting.user.*') ? 'active' : '' }}">
-                        <i class="fas fa-users nav-icon"></i>
-                        <p>List User</p>
-                    </a>
-                </li>
-
-                <!-- Divisions -->
-                <li class="nav-item">
-                    <a href="{{ route('dashboard.setting.division.index') }}"
-                        class="nav-link {{ request()->routeIs('dashboard.setting.division.*') ? 'active' : '' }}">
-                        <i class="fas fa-user-tie nav-icon"></i>
-                        <p>Bidang</p>
-                    </a>
-                </li>
-
-                <!-- Programs -->
-                <li class="nav-item">
-                    <a href="{{ route('dashboard.setting.program.index') }}"
-                        class="nav-link {{ request()->routeIs('dashboard.setting.program.*') ? 'active' : '' }}">
-                        <i class="fas fa-scroll nav-icon"></i>
-                        <p>Program Pengadaan</p>
-                    </a>
-                </li>
-
-                <!-- Proposal Dictionary -->
-                <li class="nav-item">
-                    <a href="{{ route('dashboard.setting.proposalDictionary.index') }}"
-                        class="nav-link {{ request()->routeIs('dashboard.setting.proposalDictionary.*') ? 'active' : '' }}">
-                        <i class="fas fa-scroll nav-icon"></i>
-                        <p>Kamus Usulan</p>
-                    </a>
-                </li>
+                    @can('users')
+                        <!-- Users -->
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard.setting.user.index') }}"
+                                class="nav-link {{ request()->routeIs('dashboard.setting.user.*') ? 'active' : '' }}">
+                                <i class="fas fa-users nav-icon"></i>
+                                <p>List User</p>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('divisions')
+                        <!-- Divisions -->
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard.setting.division.index') }}"
+                                class="nav-link {{ request()->routeIs('dashboard.setting.division.*') ? 'active' : '' }}">
+                                <i class="fas fa-user-tie nav-icon"></i>
+                                <p>Bidang</p>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('programs')
+                        <!-- Programs -->
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard.setting.program.index') }}"
+                                class="nav-link {{ request()->routeIs('dashboard.setting.program.*') ? 'active' : '' }}">
+                                <i class="fas fa-scroll nav-icon"></i>
+                                <p>Program Pengadaan</p>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('supports')
+                        <!-- Proposal Dictionary -->
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard.setting.proposalDictionary.index') }}"
+                                class="nav-link {{ request()->routeIs('dashboard.setting.proposalDictionary.*') ? 'active' : '' }}">
+                                <i class="fas fa-scroll nav-icon"></i>
+                                <p>Kamus Usulan</p>
+                            </a>
+                        </li>
+                    @endcan
+                @endcanany
 
                 @canany(['districts', 'villages', 'farmers'])
                     <li class="nav-header">Daerah</li>

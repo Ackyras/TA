@@ -47,7 +47,8 @@
                 <div class="card">
                     <div class="justify-center card-header">
                         <div class="card-title">
-                            Test
+                            Hasil Pengaduan
+
                         </div>
                         <div class="card-tools">
                             <button type="button" class="btn btn-success" data-toggle="modal"
@@ -68,44 +69,42 @@
                                         <form action="{{ route('dashboard.request.result.store', $datas['request']->id) }}"
                                             method="POST" enctype="multipart/form-data">
                                             @csrf
-                                            @method('PUT')
                                             <div class="modal-body">
-                                                <form>
-                                                    <x-form.input.number name="volume" title="Volume" :value="old('volume')" />
-                                                    <div class="form-group">
-                                                        <label for="attachments" class="col-form-label">Attachments</label>
-                                                        <div id="attachments_container">
-                                                            <div class="attachment-group row">
-                                                                <div class="attachment-name col">
-                                                                    <input type="text" name="attachments[0][name]"
-                                                                        class="form-control" placeholder="Attachment Name">
-                                                                </div>
-                                                                <div class="attachment-file col">
-                                                                    <div class="custom-file">
-                                                                        <input type="file" name="attachments[0][file]"
-                                                                            class="custom-file-input"
-                                                                            accept=".png, .jpg, .jpeg, .pdf">
-                                                                        <label class="custom-file-label"
-                                                                            for="attachments[0][file]">Choose
-                                                                            file</label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="attachment-remove">
-                                                                    <button type="button"
-                                                                        class="btn btn-danger remove-attachment">Remove</button>
+                                                <x-form.input.hidden name="request_id" :value="$datas['request']->id" />
+                                                <x-form.input.number name="volume" title="Volume" :value="old('volume')" />
+                                                {{-- <div class="form-group">
+                                                    <label for="attachments" class="col-form-label">Attachments</label>
+                                                    <div id="attachments_container">
+                                                        <div class="attachment-group row">
+                                                            <div class="attachment-name col">
+                                                                <input type="text" name="attachments[0][name]"
+                                                                    class="form-control" placeholder="Attachment Name">
+                                                            </div>
+                                                            <div class="attachment-file col">
+                                                                <div class="custom-file">
+                                                                    <input type="file" name="attachments[0][file]"
+                                                                        class="custom-file-input"
+                                                                        accept=".png, .jpg, .jpeg, .pdf">
+                                                                    <label class="custom-file-label"
+                                                                        for="attachments[0][file]">Choose
+                                                                        file</label>
                                                                 </div>
                                                             </div>
+                                                            <div class="attachment-remove">
+                                                                <button type="button"
+                                                                    class="btn btn-danger remove-attachment">Remove</button>
+                                                            </div>
                                                         </div>
-                                                        <button type="button" class="mt-2 btn btn-secondary"
-                                                            id="add_attachment">Add
-                                                            Attachment</button>
                                                     </div>
-                                                </form>
+                                                    <button type="button" class="mt-2 btn btn-secondary"
+                                                        id="add_attachment">Add
+                                                        Attachment</button>
+                                                </div> --}}
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary">Save Changes</button>
+                                                <button type="submit" class="btn btn-primary">Save Changes</button>
                                             </div>
                                         </form>
                                     </div>
@@ -118,19 +117,15 @@
                             id="datatable-request-result">
                             <thead>
                                 <tr>
-                                    <th>Status</th>
                                     <th>Volume</th>
                                     <th>Satuan</th>
                                     <th>Dokumentasi Realisasi</th>
-                                    <th>Aksi</th>
+                                    {{-- <th>Aksi</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($datas['request']->results as $result)
                                     <tr>
-                                        <td>
-                                            {{ $result->status }}
-                                        </td>
                                         <td>{{ $result->volume }}</td>
                                         <td>
                                             {{ $result->unit->name }}
@@ -148,10 +143,10 @@
                                                 @endforelse
                                             </ul>
                                         </td>
-                                        <td>
-                                            <x-button text="Lihat" type="redirect" :route="route('dashboard.request.show', $request)" color="primary" />
-                                            <x-button text="Hapus" type="delete" :route="route('dashboard.request.destroy', $request)" color="danger" />
-                                        </td>
+                                        {{-- <td>
+                                            <x-button text="Lihat" type="redirect" :route="route('dashboard.request.show', $result)" color="primary" />
+                                            <x-button text="Hapus" type="delete" :route="route('dashboard.request.destroy', $result)" color="danger" />
+                                        </td> --}}
                                     </tr>
                                 @endforeach
                             </tbody>
