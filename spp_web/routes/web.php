@@ -31,7 +31,7 @@ use App\Http\Middleware\ScopePeriod;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return to_route('dashboard.index');
 });
 
 Route::impersonate();
@@ -132,6 +132,7 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
         Route::match(['GET', 'DELETE'], '/dashboard/requests/{request}/attachment/{attachment}', [RequestController::class, 'destroyAttachment'])->name('attachment.destroy');
         Route::controller(ResultController::class)->prefix('{request}/result')->as('result.')->group(function () {
             Route::post('/', 'store')->name('store');
+            Route::delete('{result}/destroy', 'destroy')->name('destroy');
         });
     });
     Route::middleware([ArchiveMiddleware::class, ScopePeriod::class])->prefix('archive')->as('archive.')->group(function () {

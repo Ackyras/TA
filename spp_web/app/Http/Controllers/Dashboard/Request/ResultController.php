@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Request\Result\StoreRequestResultRequest;
 use App\Models\Request as ModelsRequest;
+use App\Models\RequestResult;
 use App\Repositories\Request\RequestRepository;
 use Illuminate\Http\Request;
 
@@ -40,6 +41,23 @@ class ResultController extends Controller
         return back()->with(
             [
                 'failed'   =>  __('message.requestResult.notCreated')
+            ]
+        );
+    }
+
+    public function destroy(ModelsRequest $request, RequestResult $result)
+    {
+        // dd($result);
+        if ($result->delete()) {
+            return back()->with(
+                [
+                    'failed'   =>  __('message.requestResult.deleted')
+                ]
+            );
+        }
+        return back()->with(
+            [
+                'failed'   =>  __('message.requestResult.notDeleted')
             ]
         );
     }

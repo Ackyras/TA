@@ -120,7 +120,7 @@
                                     <th>Volume</th>
                                     <th>Satuan</th>
                                     <th>Dokumentasi Realisasi</th>
-                                    {{-- <th>Aksi</th> --}}
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -143,10 +143,13 @@
                                                 @endforelse
                                             </ul>
                                         </td>
-                                        {{-- <td>
-                                            <x-button text="Lihat" type="redirect" :route="route('dashboard.request.show', $result)" color="primary" />
-                                            <x-button text="Hapus" type="delete" :route="route('dashboard.request.destroy', $result)" color="danger" />
-                                        </td> --}}
+                                        <td>
+                                            {{-- <x-button text="Lihat" type="redirect" :route="route('dashboard.request.show', $result)" color="primary" /> --}}
+                                            <x-button text="Hapus" type="delete" :route="route('dashboard.request.result.destroy', [
+                                                'request' => $datas['request'],
+                                                'result' => $result,
+                                            ])" color="danger" />
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

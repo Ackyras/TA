@@ -64,15 +64,12 @@
                         <th scope="col" rowspan="2">Kelompok Tani</th>
                         <th scope="col" rowspan="2">Usulan</th>
                         <th scope="col" colspan="2">Target</th>
-                        <th scope="col" colspan="2">Realisasi</th>
-                        <th scope="col" rowspan="2">Proposal & Data Pendukung Lainnya
-                        </th>
+                        <th scope="col" rowspan="2">Realisasi</th>
+                        <th scope="col" rowspan="2">Proposal & Data Pendukung Lainnya</th>
                         <th scope="col" rowspan="2">Status</th>
                         <th scope="col" rowspan="2">Aksi</th>
                     </tr>
                     <tr class="text-center">
-                        <th scope="col">volume</th>
-                        <th scope="col">Satuan</th>
                         <th scope="col">volume</th>
                         <th scope="col">Satuan</th>
 
@@ -89,17 +86,19 @@
                                 <td>{{ $request->volume }}</td>
                                 <td>{{ $request->unit->name }}({{ $request->unit->code }})</td>
                                 <td>
-                                    @isset($request->result)
-                                        {{ $request->result->volume }}</td>
-                                @else
-                                    -
-                                @endisset
-                                <td>
-                                    @isset($request->result)
-                                        {{ $request->result->unit->name }}</td>
-                                @else
-                                    -
-                                @endisset
+                                    @isset($request->results)
+                                        <ul>
+                                            @foreach ($request->results as $result)
+                                                <li>
+                                                    {{ $result->volume }} {{ $result->unit->name }}
+                                                    ({{ $result->created_at }})
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        -
+                                    @endisset
+                                </td>
                                 <td>
                                     @if ($request->attachments)
                                         <ul>

@@ -26,10 +26,20 @@ class StoreUserRequest extends FormRequest
         return [
             //
             'name'      =>  'required',
+            'password'  =>  ['required', 'string'],
             'email'     =>  'required',
             'roles'     =>  'required',
             'divisions' =>  'required_if:roles,3',
             'villages'  =>  'required_if:roles,4',
         ];
+    }
+
+    protected function passedValidation()
+    {
+        $this->replace(
+            [
+                'password' => bcrypt($this->password)
+            ]
+        );
     }
 }

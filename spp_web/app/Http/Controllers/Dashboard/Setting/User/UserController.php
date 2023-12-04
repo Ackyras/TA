@@ -61,7 +61,18 @@ class UserController extends Controller
     {
         //
         $validated = $request->validated();
-        dd($validated);
+        if ($this->repo->store($validated)) {
+            return back()->with(
+                [
+                    'created'   =>  __('message.user.created')
+                ]
+            );
+        }
+        return back()->with(
+            [
+                'created'   =>  __('message.user.notCreated')
+            ]
+        );
     }
 
     /**
@@ -126,5 +137,17 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+        if ($user->delete()) {
+            return back()->with(
+                [
+                    'created'   =>  __('message.user.deleted')
+                ]
+            );
+        }
+        return back()->with(
+            [
+                'created'   =>  __('message.user.notDeleted')
+            ]
+        );
     }
 }

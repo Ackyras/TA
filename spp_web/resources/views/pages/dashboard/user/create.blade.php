@@ -12,6 +12,7 @@
             <div class="card-body">
                 <x-form.input.text name="name" title="Name" :in-line="true" />
                 <x-form.input.text name="email" title="Email" :in-line="true" />
+                <x-form.input.password name="password" title="Password" :in-line="true" />
             </div>
 
             <div class="card-body">
@@ -43,7 +44,7 @@
                         @forelse ($divisions as $division)
                             <div class="col-md-3">
                                 <x-form.input.checkbox name="divisions[]" :title="$division->name" :value="$division->id"
-                                    id="{{ 'divisions_' . $division->id }}" :checked="$user->divisions->contains('id', $division->id)" />
+                                    id="{{ 'divisions_' . $division->id }}" :checked="in_array($division->id, old('divisions', []))" />
                             </div>
                         @empty
                             <div class="col-md-3">
@@ -77,7 +78,7 @@
                         @forelse ($villages as $village)
                             <div class="col-md-3">
                                 <x-form.input.checkbox name="villages[]" :title="$village->name" :value="$village->id"
-                                    id="{{ 'villages_' . $village->id }}" :checked="$user->villages->contains('id', $village->id)" />
+                                    id="{{ 'villages_' . $village->id }}" :checked="in_array($division->id, old('villages', []))" />
                             </div>
                         @empty
                             <div class="col-md-3">
@@ -122,8 +123,8 @@
 
         // Function to show or hide the forms based on checkbox state
         function toggleForms() {
-            var divisionsFormVisible = areSpecificCheckboxesChecked(['roles_3']);
-            var villagesFormVisible = areSpecificCheckboxesChecked(['roles_4']);
+            var divisionsFormVisible = areSpecificCheckboxesChecked(['roles_2']);
+            var villagesFormVisible = areSpecificCheckboxesChecked(['roles_3']);
             divisionsForm.style.display = divisionsFormVisible ? 'block' : 'none';
             villagesForm.style.display = villagesFormVisible ? 'block' : 'none';
 
@@ -168,7 +169,7 @@
             var villagesCheckboxes = villagesForm.querySelectorAll('[id^="villages_"]:checked');
 
             // Remove unchecked divisions checkboxes from form data if roles 1, 2, and 3 are not checked
-            if (!areSpecificCheckboxesChecked(['roles_3'])) {
+            if (!areSpecificCheckboxesChecked(['roles_2'])) {
                 divisionsCheckboxes.forEach(function(checkbox) {
                     checkbox.disabled = true;
                     checkbox.removeAttribute('name');
@@ -176,7 +177,7 @@
             }
 
             // Remove unchecked villages checkboxes from form data if roles 1, 2, and 4 are not checked
-            if (!areSpecificCheckboxesChecked(['roles_4'])) {
+            if (!areSpecificCheckboxesChecked(['roles_3'])) {
                 villagesCheckboxes.forEach(function(checkbox) {
                     checkbox.disabled = true;
                     checkbox.removeAttribute('name');

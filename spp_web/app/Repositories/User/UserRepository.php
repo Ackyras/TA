@@ -43,6 +43,33 @@ class UserRepository extends BaseUserRepository
         return $user;
     }
 
+    public function store(array $datas)
+    {
+        $userCreated = false;
+        $roleAssigned = false;
+        $responsibilityAssigned = false;
+        if ($user = User::create(
+            [
+                'name'  =>  $datas['name'],
+                'email'  =>  $datas['email'],
+                'password'  =>  bcrypt($datas['password']),
+            ]
+        )) {
+            $userCreated = true;
+        }
+        if ($user->assignRole($datas['roles'])) {
+            $roleAssigned = true;
+        }
+        if ($datas['roles'] == 2) {
+            $user->divisions()->attach($datas['divisions']);
+            $responsibilityAssigned = true;
+        } else if ($datas['roles'] == 3) {
+            $user->districts()->attach($datas['villages']);
+            $responsibilityAssigned = true;
+        }
+        return $userCreated && $roleAssigned && $responsibilityAssigned;
+    }
+
     public function update(array $datas, User $user)
     {
         $userChanged = false;

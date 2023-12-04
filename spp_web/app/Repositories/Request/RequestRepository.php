@@ -117,7 +117,8 @@ class RequestRepository extends BaseRequestRepository
                     'attachments',
                     'farmer',
                     'program',
-                    'unit'
+                    'unit',
+                    'results.unit'
                 ]
             );
         $datas['paginator'] = $this->filter($query, $request, false, true, 10)->withQueryString();
@@ -176,7 +177,11 @@ class RequestRepository extends BaseRequestRepository
             [
                 'farmer',
                 'attachments',
-                'program.division'
+                'program.division',
+                'results' => [
+                    'unit',
+                    'attachments'
+                ]
             ]
         );
         $datas['proposalDictionaries'] = ProposalDictionary::query()
