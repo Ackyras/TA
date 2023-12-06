@@ -64,7 +64,7 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="editSubProgram_{{ $parent['id'] }}Label">Perbarui Sub
+                                    <h5 class="modal-title" id="editSubProgram_{{ $parent['id'] }}Label">Ubah Sub
                                         Program
                                     </h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -82,7 +82,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-info">Perbarui</button>
+                                        <button type="submit" class="btn btn-info">Ubah</button>
                                     </div>
                                 </form>
                             </div>

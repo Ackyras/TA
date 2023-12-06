@@ -4,7 +4,7 @@
         @isset($parent->parent_id)
             <i class="mr-2 fas fa-level-up-alt" style="transform: rotate(90deg);"></i>
         @endisset
-        @if (isset($parent->lowerProgramTree) || isset($parent->proposalDictionaries))
+        @if (isset($parent->lowerProgramTreeAndDictionaries) || isset($parent->proposalDictionaries))
             <strong>
                 {{ $parent['code'] }}:{{ $parent['name'] }}
             </strong>
@@ -47,17 +47,21 @@
                                         <div class="modal-body">
                                             <x-form.input.hidden name='parent_id' :value="$parent['id']" />
                                             <x-form.input.text name="name" title="Nama Kamus Usulan" />
+
                                             <div class="form-group">
                                                 <label for="division_id" class="col-sm-2 col-form-label">Bidang</label>
                                                 <div class="custom-select-wrapper">
-                                                    <select class="custom-select select2bs4" id="division_id"
-                                                        name="division_id">
-                                                        @foreach ($divisions as $division)
-                                                            <option value="{{ $division->id }}"
-                                                                @if (old('division_id') == $division->id) selected @endif>
-                                                                {{ $division->name }}</option>
-                                                        @endforeach
-                                                    </select>
+                                                    @if (auth()->user()->roles()->first()->id !== 2)
+                                                        <select class="custom-select select2bs4" id="division_id"
+                                                            name="division_id">
+                                                            @foreach ($divisions as $division)
+                                                                <option value="{{ $division->id }}"
+                                                                    @if (old('division_id') == $division->id) selected @endif>
+                                                                    {{ $division->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    @endif
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -129,10 +133,10 @@
     </div>
 </div>
 
-<!-- Recursively display lowerProgramTree -->
+<!-- Recursively display lowerProgramTreeAndDictionaries -->
 <div class="pl-4">
-    @isset($parent->lowerProgramTree)
-        @foreach ($parent->lowerProgramTree as $childProgram)
+    @isset($parent->lowerProgramTreeAndDictionaries)
+        @foreach ($parent->lowerProgramTreeAndDictionaries as $childProgram)
             @include('partials.dictionary_tree', ['parent' => $childProgram])
         @endforeach
     @endisset

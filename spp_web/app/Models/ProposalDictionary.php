@@ -16,6 +16,16 @@ class ProposalDictionary extends Model
         'parent_id'
     ];
 
+    public function __boot()
+    {
+        parent::boot();
+
+        // static::addGlobalScope('current_period', function ($query) use ($periodId) {
+        //     $query->where('period_id', $periodId)
+        //         ->with(['program']); // Eager load the "program" relationship
+        // });
+    }
+
     public function program()
     {
         return $this->belongsTo(Program::class);

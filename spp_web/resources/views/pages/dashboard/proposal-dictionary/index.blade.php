@@ -21,11 +21,6 @@
                 <div class="col">
                     <h3 class="card-title">List Kamus Usulan</h3>
                 </div>
-                <div class="col-auto">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createProgramModal">
-                        Tambah Program
-                    </button>
-                </div>
             </div>
         </div>
         <div class="card-body">

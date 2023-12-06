@@ -7,9 +7,9 @@
         <form action="{{ route('dashboard.setting.division.update', $division) }}" method="POST">
             <div class="card-header">
                 <h3 class="card-title">Detail Bidang {{ $division->name }}</h3>
-                <div class="card-tools">
+                {{-- <div class="card-tools">
                     <span class="badge badge-primary">Label</span>
-                </div>
+                </div> --}}
             </div>
             @csrf
             @method('PUT')

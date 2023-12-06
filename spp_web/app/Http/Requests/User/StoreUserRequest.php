@@ -26,11 +26,11 @@ class StoreUserRequest extends FormRequest
         return [
             //
             'name'      =>  'required',
-            'password'  =>  ['required', 'string'],
-            'email'     =>  'required',
+            'password'  =>  ['required', 'string', 'min:6', 'max:12'],
+            'email'     =>  ['required', 'email'],
             'roles'     =>  'required',
-            'divisions' =>  'required_if:roles,3',
-            'villages'  =>  'required_if:roles,4',
+            'divisions' =>  'required_if:roles,2',
+            'villages'  =>  'required_if:roles,3',
         ];
     }
 

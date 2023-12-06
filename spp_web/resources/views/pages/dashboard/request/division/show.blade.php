@@ -47,20 +47,20 @@
                 <div class="card">
                     <div class="justify-center card-header">
                         <div class="card-title">
-                            Hasil Pengaduan
+                            Hasil Pengadaan
 
                         </div>
                         <div class="card-tools">
                             <button type="button" class="btn btn-success" data-toggle="modal"
                                 data-target="#createResultModal">
-                                Create New Request Result
+                                Tambahkan data hasil pengadaan
                             </button>
                             <div class="modal fade" id="createResultModal" tabindex="-1" role="dialog"
                                 aria-labelledby="createResultModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="createResultModalLabel">Create New Request Result
+                                            <h5 class="modal-title" id="createResultModalLabel">Tambah data pengadaan
                                             </h5>
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                 <span aria-hidden="true">&times;</span>
@@ -72,7 +72,7 @@
                                             <div class="modal-body">
                                                 <x-form.input.hidden name="request_id" :value="$datas['request']->id" />
                                                 <x-form.input.number name="volume" title="Volume" :value="old('volume')" />
-                                                {{-- <div class="form-group">
+                                                <div class="form-group">
                                                     <label for="attachments" class="col-form-label">Attachments</label>
                                                     <div id="attachments_container">
                                                         <div class="attachment-group row">
@@ -99,7 +99,7 @@
                                                     <button type="button" class="mt-2 btn btn-secondary"
                                                         id="add_attachment">Add
                                                         Attachment</button>
-                                                </div> --}}
+                                                </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
@@ -135,8 +135,7 @@
                                                 @forelse ($result->attachments as $index => $attachment)
                                                     <li>
                                                         <a href="{{ route('storage.request-result-attachment', ['requestResultAttachment' => $attachment]) }}"
-                                                            class="mr-1 btn btn-primary col-1"
-                                                            target="_blank">{{ $attachment->name }}</a>
+                                                            class="mr-1 col-1" target="_blank">{{ $attachment->name }}</a>
                                                     </li>
                                                 @empty
                                                     -

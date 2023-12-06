@@ -94,6 +94,41 @@
                     </div>
                 </fieldset>
             </div>
+            <div class="card-body">
+                <table class="table table-bordered table-hover dataTable dtr-inline collapsed"
+                    id="datatable-request-result">
+                    <caption>Table of result</caption>
+                    <thead>
+                        <tr>
+                            <th>Volume</th>
+                            <th>Satuan</th>
+                            <th>Dokumentasi Realisasi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($datas['request']->results as $result)
+                            <tr>
+                                <td>{{ $result->volume }}</td>
+                                <td>
+                                    {{ $result->unit->name }}
+                                </td>
+                                <td>
+                                    <ul>
+                                        @forelse ($result->attachments as $index => $attachment)
+                                            <li>
+                                                <a href="{{ route('storage.request-result-attachment', ['requestResultAttachment' => $attachment]) }}"
+                                                    class="mr-1 col-1" target="_blank">{{ $attachment->name }}</a>
+                                            </li>
+                                        @empty
+                                            -
+                                        @endforelse
+                                    </ul>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
             @if ($datas['request']->status == 'pending')
                 <div class="card-footer d-flex justify-content-end">
                     <button type="submit" class="btn btn-primary">Save</button>

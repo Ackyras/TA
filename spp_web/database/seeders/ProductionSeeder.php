@@ -46,6 +46,8 @@ class ProductionSeeder extends Seeder
             DivisionSeeder::class,
             UserSeeder::class,
             ProgramSeeder::class,
+            RequestSeeder::class,
+            RequestResultSeeder::class,
         ]);
     }
 }

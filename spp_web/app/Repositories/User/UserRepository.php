@@ -63,8 +63,10 @@ class UserRepository extends BaseUserRepository
         if ($datas['roles'] == 2) {
             $user->divisions()->attach($datas['divisions']);
             $responsibilityAssigned = true;
-        } else if ($datas['roles'] == 3) {
+        } elseif ($datas['roles'] == 3) {
             $user->districts()->attach($datas['villages']);
+            $responsibilityAssigned = true;
+        } elseif ($datas['roles'] == 1) {
             $responsibilityAssigned = true;
         }
         return $userCreated && $roleAssigned && $responsibilityAssigned;
@@ -93,9 +95,9 @@ class UserRepository extends BaseUserRepository
 
         if (!isset($datas['villages'])) {
             // Remove all relationships between the user and villages
-            $user->villages()->detach();
+            $user->districts()->detach();
         } else {
-            $user->villages()->sync($datas['villages']);
+            $user->districts()->sync($datas['villages']);
         }
 
         return $userChanged && $roleChanged;

@@ -57,6 +57,16 @@
                     <td class="w-auto">{{ $datas['farmer']->name }}</td>
                 </tr>
                 <tr scope="row">
+                    <th class="w-auto" scope="col">Alamat</th>
+                    <th class="w-auto" scope="col">:</th>
+                    <td class="w-auto">{{ $datas['farmer']->address }}</td>
+                </tr>
+                <tr scope="row">
+                    <th class="w-auto" scope="col">Penanggung jawab</th>
+                    <th class="w-auto" scope="col">:</th>
+                    <td class="w-auto">{{ $datas['farmer']->pic }}</td>
+                </tr>
+                <tr scope="row">
                     <th class="w-auto" scope="col">Jumlah Proposal Bantuan Tani</th>
                     <th class="w-auto" scope="col">:</th>
                     <td class="w-auto">{{ $datas['farmer']->requests_count }}</td>

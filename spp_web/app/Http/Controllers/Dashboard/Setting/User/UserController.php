@@ -45,7 +45,7 @@ class UserController extends Controller
     {
         //
         $divisions = Division::all();
-        $villages = Village::all();
+        $villages = District::all();
         $roles = Role::all();
 
         return view('pages.dashboard.user.create', compact('divisions', 'villages', 'roles'));
@@ -70,7 +70,7 @@ class UserController extends Controller
         }
         return back()->with(
             [
-                'created'   =>  __('message.user.notCreated')
+                'failed'   =>  __('message.user.notCreated')
             ]
         );
     }

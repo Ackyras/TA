@@ -52,9 +52,7 @@ class DistrictRepository extends BaseDistrictRepository
                     'villages'
                 ]
             )
-            ->get()
-            //
-        ;
+            ->get();
     }
 
     public function store(array $datas)
@@ -78,9 +76,6 @@ class DistrictRepository extends BaseDistrictRepository
             if (env('APP_DEBUG', true)) {
                 throw $th;
             }
-            // if ($th instanceof \Exception) {
-            //     $errorMessage = $th->getMessage();
-            // }
             return false;
         }
         return true;

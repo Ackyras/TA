@@ -6,6 +6,40 @@
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">List Kelompok Tani</h3>
+            <div class="card-tools">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createFarmerModal">
+                    Tambah Kelompok Tani
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="createFarmerModal" tabindex="-1" role="dialog"
+                    aria-labelledby="createFarmerModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="createFarmerModalLabel">Tambah Kelompok Tani</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <form action="{{ route('dashboard.farmer.store') }}" method="post">
+                                @csrf
+                                <div class="modal-body">
+                                    <x-form.input.text name="name" title="Nama Kelompok Tani" />
+                                    <x-form.input.text name="address" title="Alamat" />
+                                    <x-form.input.text name="pic" title="PIC" />
+                                    <x-form.input.option name="village_id" title="Desa" :options="$villages"
+                                        :selected="old('village_id')" />
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Create</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="card-body">
             <form action="{{ route('dashboard.farmer.index') }}" method="GET" class="mb-3">

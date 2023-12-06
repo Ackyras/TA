@@ -31,7 +31,7 @@ class RequestSeeder extends Seeder
                 $pivotData = [
                     'volume' => rand(1, 20),
                     'unit_id' => $unit->id,
-                    'period_id' => $period->id,
+                    // 'period_id' => $period->id,
                 ];
 
                 $farmer->programs()->attach($program, $pivotData);

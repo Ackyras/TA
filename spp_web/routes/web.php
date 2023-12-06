@@ -153,8 +153,8 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
 });
 
 Route::middleware(['auth.storage'])->prefix('secured-storage')->as('storage.')->controller(StorageController::class)->group(function () {
-    Route::get('{requestAttachment}', 'getRequestAttachment')->name('request-attachment');
-    Route::get('{requestResultAttachment}', 'getRequestResultAttachment')->name('request-result-attachment');
+    Route::get('request/{requestAttachment}', 'getRequestAttachment')->name('request-attachment');
+    Route::get('request-result/{requestResultAttachment}', 'getRequestResultAttachment')->name('request-result-attachment');
 });
 
 Route::get('test', function () {

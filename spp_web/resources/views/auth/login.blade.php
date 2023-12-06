@@ -10,7 +10,7 @@
             @csrf
             <div class="input-group mb-3">
                 <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
-                    placeholder="{{ __('Email') }}" required autofocus>
+                    placeholder="{{ __('Email') }}" autofocus>
                 <div class="input-group-append">
                     <div class="input-group-text">
                         <span class="fas fa-envelope"></span>
@@ -25,7 +25,7 @@
 
             <div class="input-group mb-3">
                 <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
-                    placeholder="{{ __('Password') }}" required>
+                    placeholder="{{ __('Password') }}">
                 <div class="input-group-append">
                     <div class="input-group-text">
                         <span class="fas fa-lock"></span>

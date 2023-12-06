@@ -6,6 +6,7 @@ use App\Models\Farmer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Farmer\StoreFarmerRequest;
+use App\Models\Village;
 use App\Repositories\Farmer\FarmerRepository;
 
 class FarmerController extends Controller
@@ -25,7 +26,18 @@ class FarmerController extends Controller
     public function index(Request $request)
     {
         $farmers = $this->repo->index($request);
-        return view('pages.dashboard.farmer.index', compact('farmers'));
+        $villages = Village::query()
+            ->when(
+                auth()->user()->hasRole(3),
+                function ($query) {
+                    $query->whereHas('district', function ($query) {
+                        $query->whereHas('users', function ($query) {
+                            $query->where('user_id', auth()->user()->id);
+                        });
+                    });
+                }
+            )->get();
+        return view('pages.dashboard.farmer.index', compact('farmers', 'villages'));
     }
 
     /**

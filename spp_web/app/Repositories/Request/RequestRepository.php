@@ -32,7 +32,7 @@ class RequestRepository extends BaseRequestRepository
 
     protected $allowedFilters = [
         'status',
-        'program_id'
+        'proposal_dictionary_id'
     ];
 
     public function index(HttpRequest $request)
@@ -278,5 +278,62 @@ class RequestRepository extends BaseRequestRepository
         $config = $this->datatableConfig;
         $config['actions'] = $this->indexTableAction;
         return parent::prepareDatatable($datas, $config);
+    }
+
+    public function koor(HttpRequest $request)
+    {
+        $datas = [];
+        $query = Request::query()
+            ->when(
+                auth()->user()->hasRole('koor'),
+                function ($query) {
+                    $query->whereHas('farmer', function ($query) {
+                        $query->whereHas('village', function ($query) {
+                            $query->whereHas('district', function ($query) {
+                                $query->whereHas('users', function ($query) {
+                                    $query->where('users.id', auth()->id());
+                                });
+                            });
+                        });
+                    })->orderByRaw(
+                        "CASE
+                            WHEN status = 'approved' THEN 0
+                            WHEN status = 'requested' THEN 1
+                            WHEN status = 'pending' THEN 2
+                            WHEN status = 'done' THEN 3
+                            WHEN status = 'declined' THEN 4
+                            ELSE 3
+                        END"
+                    );
+                }
+            )
+            ->with(
+                [
+                    'attachments',
+                    'farmer',
+                    'program',
+                    'unit',
+                    'results.unit'
+                ]
+            );
+        $datas['paginator'] = $this->filter($query, $request, false, true, 10)->withQueryString();
+        $datas['items'] = $datas['paginator']->groupBy('farmer');
+        $datas['items']->map(function ($requests) {
+            foreach ($requests as $request) {
+                $request->totalVolume = 0;
+                foreach ($request->results as $result) {
+                    $request->totalVolume += $result->volume;
+                }
+            }
+        });
+        // dd($datas['items']);
+        $datas['proposalDictionaries'] = ProposalDictionary::query()
+            ->with(
+                [
+                    'division',
+                ],
+            )
+            ->get();
+        return $datas;
     }
 }

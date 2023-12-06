@@ -20,14 +20,6 @@ class Program extends Model
     public function __boot()
     {
         parent::boot();
-        $periodId = request()->route()->hasParameter('period')
-            ? (int) request()->route()->parameter('period')
-            : getCurrentPeriodId();
-
-        static::addGlobalScope('current_period', function ($query) use ($periodId) {
-            $query->where('period_id', $periodId)
-                ->with(['program']); // Eager load the "program" relationship
-        });
     }
 
     public function subPrograms()
@@ -57,14 +49,20 @@ class Program extends Model
 
     public function lowerProgramTreeAndDictionaries()
     {
-        return $this->subPrograms()
-            ->with(
-                [
-                    'lowerProgramTreeAndDictionaries',
-                    'proposalDictionaries'
-                ]
-            );
+        return $this->subPrograms()->with([
+            'lowerProgramTreeAndDictionaries',
+            'proposalDictionaries' => function ($query) {
+                if (auth()->user()->roles()->first()->id == 2) {
+                    $userDivisions = auth()->user()->divisions->pluck('id');
+                    $query->whereHas('division', function ($subQuery) use ($userDivisions) {
+                        $subQuery->whereIn('id', $userDivisions);
+                    });
+                }
+            },
+        ]);
     }
+
+
 
     public function proposalDictionaries()
     {

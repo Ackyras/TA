@@ -27,6 +27,9 @@ class StoreRequestResultRequest extends FormRequest
             //
             'request_id'    =>  'required',
             'volume' => 'required',
+            'attachments'               => ['nullable', 'array'],
+            'attachments.*.name'        => ['required_with:attachments.*.file'],
+            'attachments.*.file'        => ['filled', 'file', 'mimes:png,jpg,pdf', 'required_with:attachments.*.name'],
         ];
     }
 }

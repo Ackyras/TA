@@ -65,16 +65,20 @@ class ProgramRepository extends BaseProgramRepository
             ->whereNull('parent_id')
             ->with(
                 [
-                    'lowerProgramTreeAndDictionaries'
+                    'lowerProgramTreeAndDictionaries',
+                    'proposalDictionaries'
                 ]
             )->get();
+
+        // Debugging statement
         // dd($programs);
+
         return $programs;
     }
 
+
     public function dictionaryStore(array $datas)
     {
-        // dd($datas);
         if ($dictionary = ProposalDictionary::create($datas)) {
             return true;
         }

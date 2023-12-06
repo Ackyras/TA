@@ -31,7 +31,7 @@ class RequestResultSeeder extends Seeder
                             'status'    =>  'approved',
                         ]
                     );
-                    $result = $request->result()->create(
+                    $result = $request->results()->create(
                         [
                             'volume'    =>  $request->volume - rand(0, $request->volume),
                             'unit_id'   =>  $request->unit_id,
@@ -45,19 +45,7 @@ class RequestResultSeeder extends Seeder
                         );
                         RequestResultAttachment::factory(rand(0, 2))->for($result, 'requestResult')->create();
                     }
-                } else {
-                    $request->update(
-                        [
-                            'status'    =>  'declined'
-                        ]
-                    );
                 }
-            } else {
-                $request->update(
-                    [
-                        'status'    =>  'declined'
-                    ]
-                );
             }
         }
     }

@@ -10,7 +10,8 @@ class RequestResultAttachment extends Model
     use HasFactory;
 
     protected $fillable = [
-        'request_id',
+        'name',
+        'request_result_id',
         'url',
     ];
 
