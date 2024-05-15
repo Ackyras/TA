@@ -30,7 +30,7 @@
                                     <div class="form-group">
                                         <div class="custom-control custom-checkbox">
                                             <input type="checkbox" class="custom-control-input" name="with_user"
-                                                id="with_user" @checked(old('with_user')) value="true">
+                                                id="with_user" @checked(old('with_user')) value=1>
                                             <label class="custom-control-label" for="with_user">Buat akun Koor
                                                 Baru untuk desa ini.</label>
                                         </div>

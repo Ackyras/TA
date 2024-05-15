@@ -6,6 +6,16 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreDistrictRequest extends FormRequest
 {
+    protected function prepareForValidation(): void
+    {
+        if (empty($this->input('with_user'))) {
+            $this->merge([
+                'with_user' => false,
+            ]);
+        }
+    }
+
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -26,7 +36,7 @@ class StoreDistrictRequest extends FormRequest
         return [
             //
             'name'  =>  ['required'],
-            'with_user'     =>  ['nullable']
+            'with_user' =>  ['nullable', 'boolean']
         ];
     }
 }
