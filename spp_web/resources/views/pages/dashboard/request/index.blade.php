@@ -1,14 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'List Of Request Kadis')
+@section('title', 'List Of Request')
 
 @section('content')
     <div class="card">
         <div class="card-header">
-            <div class="row align-items-center">
-                <div class="col">
-                    <h3 class="card-title">List Proposal Bantuan</h3>
-                </div>
+            <h3 class="card-title">List Proposal Bantuan</h3>
+            <div class="card-tools">
+                <a href="{{ route('dashboard.request.create') }}" class="btn btn-primary">Tambah</a>
             </div>
         </div>
         <div class="card-body">
@@ -65,7 +64,7 @@
                         <th scope="col" rowspan="2">Kelompok Tani</th>
                         <th scope="col" rowspan="2">Usulan</th>
                         <th scope="col" colspan="2">Target</th>
-                        <th scope="col" colspan="2">Realisasi</th>
+                        <th scope="col" rowspan="2">Realisasi</th>
                         <th scope="col" rowspan="2">Proposal & Data Pendukung Lainnya
                         </th>
                         <th scope="col" rowspan="2">Status</th>
@@ -74,9 +73,6 @@
                     <tr class="text-center">
                         <th scope="col">volume</th>
                         <th scope="col">Satuan</th>
-                        <th scope="col">volume</th>
-                        <th scope="col">Satuan</th>
-
                     </tr>
                 </thead>
                 <tbody>
@@ -89,17 +85,19 @@
                             <td>{{ $request->volume }}</td>
                             <td>{{ $request->unit->name }}({{ $request->unit->code }})</td>
                             <td>
-                                @isset($request->result)
-                                    {{ $request->result->volume }}</td>
-                            @else
-                                -
-                            @endisset
-                            <td>
-                                @isset($request->result)
-                                    {{ $request->result->unit->name }}({{ $request->unit->code }})</td>
-                            @else
-                                -
-                            @endisset
+                                @isset($request->results)
+                                    <ul>
+                                        @foreach ($request->results as $result)
+                                            <li>
+                                                {{ $result->volume }} {{ $result->unit->name }}
+                                                ({{ \Carbon\Carbon::parse($result->created_at)->diffForHumans() }})
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @else
+                                    -
+                                @endisset
+                            </td>
                             <td>
                                 @if ($request->attachments)
                                     <ul>
