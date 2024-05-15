@@ -34,7 +34,7 @@ class RequestRepository extends BaseRequestRepository
         'status',
         'proposal_dictionary_id'
     ];
-
+    
     public function index(HttpRequest $request)
     {
         $datas = [];
@@ -50,16 +50,7 @@ class RequestRepository extends BaseRequestRepository
                                 });
                             });
                         });
-                    })->orderByRaw(
-                        "CASE
-                            WHEN status = 'approved' THEN 0
-                            WHEN status = 'requested' THEN 1
-                            WHEN status = 'pending' THEN 2
-                            WHEN status = 'done' THEN 3
-                            WHEN status = 'declined' THEN 4
-                            ELSE 3
-                        END"
-                    );
+                    });
                 }
             )
             ->when(
@@ -78,15 +69,6 @@ class RequestRepository extends BaseRequestRepository
                                 'unit',
                             ]
                         ]
-                    )->orderByRaw(
-                        "CASE
-                            WHEN status = 'pending' THEN 0
-                            WHEN status = 'requested' THEN 1
-                            WHEN status = 'approved' THEN 2
-                            WHEN status = 'done' THEN 3
-                            WHEN status = 'declined' THEN 4
-                            ELSE 3
-                        END"
                     );
                 }
             )
@@ -100,15 +82,6 @@ class RequestRepository extends BaseRequestRepository
                                 'unit',
                             ],
                         ]
-                    )->orderByRaw(
-                        "CASE
-                            WHEN status = 'requested' THEN 0
-                            WHEN status = 'approved' THEN 1
-                            WHEN status = 'pending' THEN 2
-                            WHEN status = 'done' THEN 3
-                            WHEN status = 'declined' THEN 4
-                            ELSE 3
-                        END"
                     );
                 }
             )
@@ -120,25 +93,44 @@ class RequestRepository extends BaseRequestRepository
                     'unit',
                     'results.unit'
                 ]
-            );
+            )->orderBy('updated_at', 'desc');
         $datas['paginator'] = $this->filter($query, $request, false, true, 10)->withQueryString();
-        $datas['items'] = $datas['paginator']->groupBy('farmer');
-        $datas['items']->map(function ($requests) {
-            foreach ($requests as $request) {
-                $request->totalVolume = 0;
-                foreach ($request->results as $result) {
-                    $request->totalVolume += $result->volume;
+        $datas['items'] = $datas['paginator']->items();
+        // dd($datas);
+        foreach ($datas['items'] as $request) {
+            $request->totalVolume = 0;
+            foreach ($request->results as $result) {
+                $request->totalVolume += $result->volume;
+            }
+        }
+        // $datas['items'] = $datas['paginator']->groupBy('farmer');
+        // $datas['items']->map(function ($requests) {
+        //     foreach ($requests as $request) {
+        //         $request->totalVolume = 0;
+        //         foreach ($request->results as $result) {
+        //             $request->totalVolume += $result->volume;
+        //         }
+        //     }
+        // });
+        if (auth()->user()->hasRole('kabid')) {
+            $user = auth()->user();
+            $user->load('divisions.proposalDictionaries');
+            foreach ($user->divisions as $division) {
+                foreach ($division->proposalDictionaries as $proposalDictionary) {
+                    $cleanDivision = $division->newInstance()->setRawAttributes($division->getAttributes());
+                    $proposalDictionary['division'] = $cleanDivision;
+                    $datas['proposalDictionaries'][] = $proposalDictionary;
                 }
             }
-        });
-        // dd($datas['items']);
-        $datas['proposalDictionaries'] = ProposalDictionary::query()
-            ->with(
-                [
-                    'division',
-                ],
-            )
-            ->get();
+        } else {
+            $datas['proposalDictionaries'] = ProposalDictionary::query()
+                ->with(
+                    [
+                        'division',
+                    ],
+                )
+                ->get();
+        }
         return $datas;
     }
 
