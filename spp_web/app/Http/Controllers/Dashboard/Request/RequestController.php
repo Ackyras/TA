@@ -23,13 +23,14 @@ class RequestController extends Controller
     public function index(Request $request)
     {
         $datas = $this->repo->index($request);
-        if (auth()->user()->hasRole('koor')) {
-            return view('pages.dashboard.request.instructor.index', compact('datas'));
-        } elseif (auth()->user()->hasRole('kabid')) {
-            return view('pages.dashboard.request.division.index', compact('datas'));
-        } elseif (auth()->user()->hasRole('kadis')) {
-            return view('pages.dashboard.request.coordinator.index', compact('datas'));
-        }
+        // if (auth()->user()->hasRole('koor')) {
+        //     return view('pages.dashboard.request.instructor.index', compact('datas'));
+        // } elseif (auth()->user()->hasRole('kabid')) {
+        //     return view('pages.dashboard.request.division.index', compact('datas'));
+        // } elseif (auth()->user()->hasRole('kadis')) {
+        //     return view('pages.dashboard.request.coordinator.index', compact('datas'));
+        // }
+        return view('pages.dashboard.request.index', compact('datas'));
     }
 
     public function create()
