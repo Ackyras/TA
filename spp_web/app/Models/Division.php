@@ -23,4 +23,9 @@ class Division extends Model
     {
         return $this->hasMany(Program::class);
     }
+
+    public function proposalDictionaries()
+    {
+        return $this->hasMany(ProposalDictionary::class);
+    }
 }
