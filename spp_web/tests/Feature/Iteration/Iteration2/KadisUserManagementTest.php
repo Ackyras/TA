@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Iteration\Iteration1;
+namespace Tests\Feature\Iteration\Iteration2;
 
 use Mockery;
 use Tests\TestCase;
@@ -11,7 +11,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class US1Test extends TestCase
+class KadisUserManagementTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -288,5 +288,31 @@ class US1Test extends TestCase
         $authResponse = $this->actingAs($userToUpdate);
 
         $authResponse->assertAuthenticated();
+    }
+
+    public function test_kepala_dinas_can_delete_user()
+    {
+        // Get a user to delete (excluding the role "Kadis")
+        $userToDelete = User::whereHas('roles', function ($query) {
+            $query->where('name', '!=', 'Kadis');
+        })->inRandomOrder()->first();
+
+        // Check if there's a user to delete, otherwise skip the test
+        if (!$userToDelete) {
+            $this->markTestSkipped('No user found for the delete test.');
+        }
+
+        // Perform the delete
+        $response = $this->delete("/dashboard/settings/users/{$userToDelete->id}");
+
+        // Assert the response status
+        $response->assertStatus(302); // Adjust as needed
+
+        // Assert that the user has been deleted from the database
+        $this->assertNull(
+            User::where('name', $userToDelete->name)
+                ->where('email', $userToDelete->email)
+                ->first()
+        );
     }
 }

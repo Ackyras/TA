@@ -28,9 +28,9 @@ class UpdateRequestRequest extends FormRequest
             'program_id' => 'filled',
             'volume' => 'filled',
             'unit_id' => 'filled',
-            'attachments' => 'filled|array',
-            'attachments.*.name' => 'filled',
-            'attachments.*.file' => ['filled', 'file', 'mimes:png,jpg,pdf'],
+            'attachments' => 'nullable|array',
+            'attachments.*.name' => 'nullable',
+            'attachments.*.file' => ['nullable', 'file', 'mimes:png,jpg,pdf'],
             'status'    =>  'filled',
         ];
     }

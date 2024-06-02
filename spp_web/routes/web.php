@@ -48,14 +48,14 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
             [
                 'names'    =>  'user',
             ]
-        );
+        )->middleware(['can:users']);
         Route::resource(
             'divisions',
             DivisionController::class,
             [
                 'names'    =>  'division',
             ]
-        );
+        )->middleware(['can:divisions']);
 
         Route::resource(
             'programs',

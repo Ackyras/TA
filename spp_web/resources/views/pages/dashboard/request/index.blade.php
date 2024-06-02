@@ -63,16 +63,13 @@
                     <tr class="text-center">
                         <th scope="col" rowspan="2">Kelompok Tani</th>
                         <th scope="col" rowspan="2">Usulan</th>
-                        <th scope="col" colspan="2">Target</th>
+                        <th scope="col" rowspan="2">Target</th>
                         <th scope="col" rowspan="2">Realisasi</th>
                         <th scope="col" rowspan="2">Proposal & Data Pendukung Lainnya
                         </th>
+                        <th scope="col" rowspan="2">Waktu Pengajuan</th>
                         <th scope="col" rowspan="2">Status</th>
                         <th scope="col" rowspan="2">Aksi</th>
-                    </tr>
-                    <tr class="text-center">
-                        <th scope="col">volume</th>
-                        <th scope="col">Satuan</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -82,10 +79,9 @@
                             <td>
                                 {{ $request->program->name }}
                             </td>
-                            <td>{{ $request->volume }}</td>
-                            <td>{{ $request->unit->name }}({{ $request->unit->code }})</td>
+                            <td>{{ $request->volume }} {{ $request->unit->name }}({{ $request->unit->code }})</td>
                             <td>
-                                @isset($request->results)
+                                @if ($request->results->count() != 0)
                                     <ul>
                                         @foreach ($request->results as $result)
                                             <li>
@@ -96,7 +92,7 @@
                                     </ul>
                                 @else
                                     -
-                                @endisset
+                                @endif
                             </td>
                             <td>
                                 @if ($request->attachments)
@@ -111,9 +107,13 @@
                                         @empty
                                         @endforelse
                                     </ul>
+                                @else
+                                    -
                                 @endif
                             </td>
-                            <td>{{ str($request->status)->ucfirst() }}</td>
+                            <td>{{ \Carbon\Carbon::parse($request->created_at)->diffForHumans() }}</td>
+                            <td>{{ __('status.' . $request->status) }}</td>
+                            {{-- <td>{{ str($request->status)->ucfirst() }}</td> --}}
                             <td>
                                 <div class="d-flex d-inline-block">
                                     <x-button text="Lihat" type="redirect" :route="route('dashboard.request.show', $request)" color="primary" />

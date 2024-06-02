@@ -34,7 +34,7 @@ class RequestRepository extends BaseRequestRepository
         'status',
         'proposal_dictionary_id'
     ];
-    
+
     public function index(HttpRequest $request)
     {
         $datas = [];
@@ -51,37 +51,26 @@ class RequestRepository extends BaseRequestRepository
                             });
                         });
                     });
-                }
-            )
-            ->when(
-                auth()->user()->hasRole('kabid'),
-                function ($query) {
-                    $query->whereHas('program', function ($query) {
-                        $query->whereHas('division', function ($query) {
-                            $query->whereHas('users', function ($query) {
-                                $query->where('users.id', auth()->id());
-                            });
-                        });
-                    })->with(
-                        [
-                            'results'    =>  [
-                                'attachments',
-                                'unit',
-                            ]
-                        ]
-                    );
-                }
-            )
-            ->when(
-                auth()->user()->hasRole('kadis'),
+                },
                 function ($query) {
                     $query->with(
                         [
                             'results'    =>  [
                                 'attachments',
                                 'unit',
-                            ],
+                            ]
                         ]
+                    )->when(
+                        auth()->user()->hasRole('kabid'),
+                        function ($query) {
+                            $query->whereHas('program', function ($query) {
+                                $query->whereHas('division', function ($query) {
+                                    $query->whereHas('users', function ($query) {
+                                        $query->where('users.id', auth()->id());
+                                    });
+                                });
+                            });
+                        }
                     );
                 }
             )
@@ -96,22 +85,12 @@ class RequestRepository extends BaseRequestRepository
             )->orderBy('updated_at', 'desc');
         $datas['paginator'] = $this->filter($query, $request, false, true, 10)->withQueryString();
         $datas['items'] = $datas['paginator']->items();
-        // dd($datas);
         foreach ($datas['items'] as $request) {
             $request->totalVolume = 0;
             foreach ($request->results as $result) {
                 $request->totalVolume += $result->volume;
             }
         }
-        // $datas['items'] = $datas['paginator']->groupBy('farmer');
-        // $datas['items']->map(function ($requests) {
-        //     foreach ($requests as $request) {
-        //         $request->totalVolume = 0;
-        //         foreach ($request->results as $result) {
-        //             $request->totalVolume += $result->volume;
-        //         }
-        //     }
-        // });
         if (auth()->user()->hasRole('kabid')) {
             $user = auth()->user();
             $user->load('divisions.proposalDictionaries');
@@ -223,7 +202,6 @@ class RequestRepository extends BaseRequestRepository
             $fileName
         );
 
-        // Create the attachment record with name and URL
         return RequestAttachment::create([
             'name' => $attachmentData['name'],
             'url' => $storeFile,

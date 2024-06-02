@@ -73,7 +73,7 @@
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Tambah data pendukung</label>
-                        <div class="col-sm-10" id="attachment_names_container">
+                        {{-- <div class="col-sm-10" id="attachment_names_container">
                             <div class="mb-2 attachment-name-group d-flex align-items-center row">
                                 <div class="col-5 form-group">
                                     <input type="text" name="attachments[][name]" class="form-control"
@@ -87,48 +87,51 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-2 offset-sm-2">
                             <button type="button" class="btn btn-secondary" id="add_attachment">Tambah file</button>
                         </div>
                     </div>
                 </fieldset>
             </div>
-            <div class="card-body">
-                <table class="table table-bordered table-hover dataTable dtr-inline collapsed"
-                    id="datatable-request-result">
-                    <caption>Table of result</caption>
-                    <thead>
-                        <tr>
-                            <th>Volume</th>
-                            <th>Satuan</th>
-                            <th>Dokumentasi Realisasi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($datas['request']->results as $result)
+            @if ($datas['request']->results->count() > 0)
+                <div class="card-body">
+                    <table class="table table-bordered table-hover dataTable dtr-inline collapsed"
+                        id="datatable-request-result">
+                        <caption>Table of result</caption>
+                        <thead>
                             <tr>
-                                <td>{{ $result->volume }}</td>
-                                <td>
-                                    {{ $result->unit->name }}
-                                </td>
-                                <td>
-                                    <ul>
-                                        @forelse ($result->attachments as $index => $attachment)
-                                            <li>
-                                                <a href="{{ route('storage.request-result-attachment', ['requestResultAttachment' => $attachment]) }}"
-                                                    class="mr-1 col-1" target="_blank">{{ $attachment->name }}</a>
-                                            </li>
-                                        @empty
-                                            -
-                                        @endforelse
-                                    </ul>
-                                </td>
+                                <th>Volume</th>
+                                <th>Satuan</th>
+                                <th>Dokumentasi Realisasi</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+                        </thead>
+                        <tbody>
+                            @foreach ($datas['request']->results as $result)
+                                <tr>
+                                    <td>{{ $result->volume }}</td>
+                                    <td>
+                                        {{ $result->unit->name }}
+                                    </td>
+                                    <td>
+                                        <ul>
+                                            @forelse ($result->attachments as $index => $attachment)
+                                                <li>
+                                                    <a href="{{ route('storage.request-result-attachment', ['requestResultAttachment' => $attachment]) }}"
+                                                        class="mr-1 col-1" target="_blank">{{ $attachment->name }}</a>
+                                                </li>
+                                            @empty
+                                                -
+                                            @endforelse
+                                        </ul>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @endif
+
             @if ($datas['request']->status == 'pending')
                 <div class="card-footer d-flex justify-content-end">
                     <button type="submit" class="btn btn-primary">Save</button>

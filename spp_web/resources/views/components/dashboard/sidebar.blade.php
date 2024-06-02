@@ -38,7 +38,7 @@
                 @canany(['periods', 'users', 'divisions', 'programs', 'supports'])
                     <li class="nav-header">Settings</li>
 
-                    @can('periods')
+                    {{-- @can('periods')
                         <li class="nav-item">
                             <a href="{{ route('dashboard.setting.period.index') }}"
                                 class="nav-link {{ request()->routeIs('dashboard.setting.period.*') ? 'active' : '' }}">
@@ -46,7 +46,7 @@
                                 <p>List Periode</p>
                             </a>
                         </li>
-                    @endcan
+                    @endcan --}}
                     @role('kadis')
                         <li class="nav-item">
                             <a href="{{ route('dashboard.setting.seeding.index') }}"
@@ -67,7 +67,7 @@
                             </a>
                         </li>
                     @endcan
-                    @can('divisions')
+                    @canany('divisions.index')
                         <!-- Divisions -->
                         <li class="nav-item">
                             <a href="{{ route('dashboard.setting.division.index') }}"

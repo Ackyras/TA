@@ -43,6 +43,7 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->middleware('can:users.create');
         //
         $divisions = Division::all();
         $villages = District::all();
