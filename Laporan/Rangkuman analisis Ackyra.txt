@@ -1,0 +1,30 @@
+Tahapan analisis sistem keseluruhan:
+
+Requirement  & Analysis :
+1. Mengumpulkan data dari Din.Pertanian melalui wawancara dan beberapa dokumen pendukung
+2. dan menuangkan hasil analisis kebutuhan ke dalam user story
+3. User story dibagi menjadi 4 iterasi, pembagiannya berdasarkan prioritas yang paling tinggi.
+
+Design
+1. Setiap iterasi dilakukan pengembangan design seperti use case diagaram, activity diagram, rancangan database (ER diagram), rancangan low fidelity, hingga high fidelity.
+
+Development
+1. Development dilakukan per setiap iterasi.
+2. Misal: iterasi 1 akan melalui 3 fase ditahap development yaitu : unit testing, coding, dan refaktor
+3. Lakukan ke -3 fase itu untuk setiap iterasi hingga iterasi ke 4.
+
+Testing
+1. Pengujian yang digunakan adalah UAT (user acceptance test). Pengujian ini adalah pengujian fungsionalitas untuk sistem keseluruhan.
+2. Pengujian dilakukan oleh setiap user terkait yang ada di dinas pertanian.
+3. Berdasarkan hasil pengujian, sistem yang dikembangkan sudah memenuhi kebutuhan fungsionalitas dan sudah menjawab kebutuhan yang ada di dinas pertanian saat ini.
+
+
+Deployment:
+1. Saat ini sudah dalam tahap deployment ke dinas pertanian namun apabila ingin di demokan sudah saya siapkan di local host.
+
+
+METODE yang digunakan:
+1. Metode yang digunakan adalah Personal Extreme Programming (PXP) yang merupakan salah satu framework Agile
+2. PXP dipilih karena paling cocok untuk saya karna tidak memiliki tim pengembang lainnya melainkan pengerjaannya sendiri.
+3. Saya memilih agile ini karna lebih adaptif sehingga bisa lebih fleksible apabila klien ada meminta perubahan pada saat pengembangan sedang berjalan.
+
