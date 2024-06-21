@@ -7,12 +7,19 @@ use Illuminate\View\Component;
 class Option extends Component
 {
     public $name;
+
     public $options;
+
     public $selected;
+
     public $title;
+
     public $inLine;
+
     public $id;
+
     public $disabled;
+
     public $selectedById;
 
     /**

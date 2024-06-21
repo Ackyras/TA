@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Farmer;
 use App\Models\Village;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class FarmerSeeder extends Seeder
 {

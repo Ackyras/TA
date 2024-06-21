@@ -3,9 +3,8 @@
 namespace Tests\Browser\Iteration\Iteration1;
 
 use App\Models\User;
-use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\DuskTestCase;
 
 class US1Test extends DuskTestCase
 {
@@ -60,21 +59,21 @@ class US1Test extends DuskTestCase
     public function test_us_01_ts_01(): void
     {
         $credentials = [
-            'name'  =>  'ackyra',
-            'email' =>  'ackyra@gmail.com',
-            'password'  =>  'password',
-            'roles' =>  1
+            'name' => 'ackyra',
+            'email' => 'ackyra@gmail.com',
+            'password' => 'password',
+            'roles' => 1,
         ];
         $addUserConfigs = [
-            'assertSee' =>  [
-                __('message.user.created')
+            'assertSee' => [
+                __('message.user.created'),
             ],
-            'shouldLogout'  =>  true
+            'shouldLogout' => true,
         ];
         $loginConfigs = [
-            'assertSee' =>  [
-                $credentials['name']
-            ]
+            'assertSee' => [
+                $credentials['name'],
+            ],
         ];
 
         $this->addUser($credentials, $addUserConfigs);
@@ -85,22 +84,22 @@ class US1Test extends DuskTestCase
     public function test_us_01_ts_02(): void
     {
         $credentials = [
-            'name'  =>  'ackyra',
-            'email' =>  'ackyra',
-            'password'  =>  'password',
-            'roles' =>  1
+            'name' => 'ackyra',
+            'email' => 'ackyra',
+            'password' => 'password',
+            'roles' => 1,
         ];
         $addUserConfigs = [
-            'assertSee' =>  [
-                __('message.validation.error')
+            'assertSee' => [
+                __('message.validation.error'),
             ],
-            'shouldLogout'  =>  true
+            'shouldLogout' => true,
         ];
 
         $loginConfigs = [
-            'assertPath' =>  [
-                'login'
-            ]
+            'assertPath' => [
+                'login',
+            ],
         ];
 
         $this->addUser($credentials, $addUserConfigs);
@@ -108,16 +107,16 @@ class US1Test extends DuskTestCase
         $this->attemptLogin($credentials, $loginConfigs);
 
         $credentials = [
-            'name'  =>  'ackyra',
-            'email' =>  'ackyra',
-            'password'  =>  'passwordpassword',
-            'roles' =>  1
+            'name' => 'ackyra',
+            'email' => 'ackyra',
+            'password' => 'passwordpassword',
+            'roles' => 1,
         ];
 
         $loginConfigs = [
-            'assertSee' =>  [
-                'These credentials do not match our records.'
-            ]
+            'assertSee' => [
+                'These credentials do not match our records.',
+            ],
         ];
 
         $this->addUser($credentials, $addUserConfigs);
@@ -128,22 +127,22 @@ class US1Test extends DuskTestCase
     public function test_us_01_ts_03()
     {
         $credentials = [
-            'name'  =>  'ackyra',
-            'email' =>  'ackyra@gmail.com',
-            'password'  =>  'password',
-            'roles' =>  2,
-            'responsibility'    =>  '#divisions_1',
+            'name' => 'ackyra',
+            'email' => 'ackyra@gmail.com',
+            'password' => 'password',
+            'roles' => 2,
+            'responsibility' => '#divisions_1',
         ];
         $addUserConfigs = [
-            'assertSee' =>  [
-                __('message.user.created')
+            'assertSee' => [
+                __('message.user.created'),
             ],
-            'shouldLogout'  =>  true
+            'shouldLogout' => true,
         ];
         $loginConfigs = [
-            'assertSee' =>  [
-                $credentials['name']
-            ]
+            'assertSee' => [
+                $credentials['name'],
+            ],
         ];
 
         $this->addUser($credentials, $addUserConfigs);
@@ -154,23 +153,23 @@ class US1Test extends DuskTestCase
     public function test_us_01_ts_04(): void
     {
         $credentials = [
-            'name'  =>  'ackyra',
-            'email' =>  'ackyra',
-            'password'  =>  'password',
-            'roles' =>  2,
-            'responsibility'    =>  '#divisions_1',
+            'name' => 'ackyra',
+            'email' => 'ackyra',
+            'password' => 'password',
+            'roles' => 2,
+            'responsibility' => '#divisions_1',
         ];
         $addUserConfigs = [
-            'assertSee' =>  [
-                __('message.validation.error')
+            'assertSee' => [
+                __('message.validation.error'),
             ],
-            'shouldLogout'  =>  true
+            'shouldLogout' => true,
         ];
 
         $loginConfigs = [
-            'assertSee' =>  [
-                'Please include an \'@\' in the email address.'
-            ]
+            'assertSee' => [
+                'Please include an \'@\' in the email address.',
+            ],
         ];
 
         $this->addUser($credentials, $addUserConfigs);
@@ -178,17 +177,17 @@ class US1Test extends DuskTestCase
         $this->attemptLogin($credentials, $loginConfigs);
 
         $credentials = [
-            'name'  =>  'ackyra',
-            'email' =>  'ackyra',
-            'password'  =>  'passwordpassword',
-            'roles' =>  1,
-            'responsibility'    =>  '#divisions_1',
+            'name' => 'ackyra',
+            'email' => 'ackyra',
+            'password' => 'passwordpassword',
+            'roles' => 1,
+            'responsibility' => '#divisions_1',
         ];
 
         $loginConfigs = [
-            'assertSee' =>  [
-                'These credentials do not match our records.'
-            ]
+            'assertSee' => [
+                'These credentials do not match our records.',
+            ],
         ];
 
         $this->addUser($credentials, $addUserConfigs);
@@ -199,22 +198,22 @@ class US1Test extends DuskTestCase
     public function test_us_01_ts_05()
     {
         $credentials = [
-            'name'  =>  'ackyra',
-            'email' =>  'ackyra@gmail.com',
-            'password'  =>  'password',
-            'roles' =>  2,
-            'responsibility'    =>  '#villages_1',
+            'name' => 'ackyra',
+            'email' => 'ackyra@gmail.com',
+            'password' => 'password',
+            'roles' => 2,
+            'responsibility' => '#villages_1',
         ];
         $addUserConfigs = [
-            'assertSee' =>  [
-                __('message.user.created')
+            'assertSee' => [
+                __('message.user.created'),
             ],
-            'shouldLogout'  =>  true
+            'shouldLogout' => true,
         ];
         $loginConfigs = [
-            'assertSee' =>  [
-                $credentials['name']
-            ]
+            'assertSee' => [
+                $credentials['name'],
+            ],
         ];
 
         $this->addUser($credentials, $addUserConfigs);
@@ -225,23 +224,23 @@ class US1Test extends DuskTestCase
     public function test_us_01_ts_06(): void
     {
         $credentials = [
-            'name'  =>  'ackyra',
-            'email' =>  'ackyra',
-            'password'  =>  'password',
-            'roles' =>  2,
-            'responsibility'    =>  '#villages_1',
+            'name' => 'ackyra',
+            'email' => 'ackyra',
+            'password' => 'password',
+            'roles' => 2,
+            'responsibility' => '#villages_1',
         ];
         $addUserConfigs = [
-            'assertSee' =>  [
-                __('message.validation.error')
+            'assertSee' => [
+                __('message.validation.error'),
             ],
-            'shouldLogout'  =>  true
+            'shouldLogout' => true,
         ];
 
         $loginConfigs = [
-            'assertPath' =>  [
-                'login'
-            ]
+            'assertPath' => [
+                'login',
+            ],
         ];
 
         $this->addUser($credentials, $addUserConfigs);
@@ -249,17 +248,17 @@ class US1Test extends DuskTestCase
         $this->attemptLogin($credentials, $loginConfigs);
 
         $credentials = [
-            'name'  =>  'ackyra',
-            'email' =>  'ackyra',
-            'password'  =>  'passwordpassword',
-            'roles' =>  1,
-            'responsibility'    =>  '#villages_1',
+            'name' => 'ackyra',
+            'email' => 'ackyra',
+            'password' => 'passwordpassword',
+            'roles' => 1,
+            'responsibility' => '#villages_1',
         ];
 
         $loginConfigs = [
-            'assertSee' =>  [
-                'These credentials do not match our records.'
-            ]
+            'assertSee' => [
+                'These credentials do not match our records.',
+            ],
         ];
 
         $this->addUser($credentials, $addUserConfigs);

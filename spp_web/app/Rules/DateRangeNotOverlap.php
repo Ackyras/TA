@@ -26,14 +26,13 @@ class DateRangeNotOverlap implements Rule
      */
     public function passes($attribute, $value)
     {
-
         // Check if the current period overlaps with any existing periods
         $overlappingPeriods = Period::where(function ($query) use ($value) {
             $query->where('start_date', '<=', $value)
                 ->where('end_date', '>=', $value);
         })->exists();
 
-        return !$overlappingPeriods;
+        return ! $overlappingPeriods;
     }
 
     public function message()

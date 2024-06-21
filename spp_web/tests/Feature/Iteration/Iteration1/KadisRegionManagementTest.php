@@ -2,12 +2,11 @@
 
 namespace Tests\Feature\Iteration\Iteration1;
 
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\District;
+use App\Models\User;
 use App\Models\Village;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class KadisRegionManagementTest extends TestCase
 {
@@ -38,7 +37,6 @@ class KadisRegionManagementTest extends TestCase
         dump($response->getContent());
     }
 
-
     public function test_kepala_dinas_can_add_village()
     {
         $villageData = [
@@ -64,8 +62,6 @@ class KadisRegionManagementTest extends TestCase
 
         $response = $this->put(route('dashboard.district.update', $districtToUpdate->id), $updatedDistrictData);
 
-
-
         $this->assertDatabaseHas('districts', $updatedDistrictData);
     }
 
@@ -87,8 +83,6 @@ class KadisRegionManagementTest extends TestCase
         $districtToDelete = District::first();
 
         $response = $this->delete(route('dashboard.district.destroy', $districtToDelete->id));
-
-
 
         $this->assertNull(
             District::find($districtToDelete->id)

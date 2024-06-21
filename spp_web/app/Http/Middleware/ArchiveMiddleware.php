@@ -3,8 +3,6 @@
 namespace App\Http\Middleware;
 
 use App\Models\Period;
-use App\Models\Program;
-use App\Models\Request as ModelsRequest;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -21,10 +19,11 @@ class ArchiveMiddleware
     {
         if (Period::where('is_active', false)->exists() && activePeriodIsExists()) {
             return $next($request);
-        };
+        }
+
         return to_route('dashboard.index')->with(
             [
-                'warning'   =>  'Belum ada arsip pengadaan bantuan'
+                'warning' => 'Belum ada arsip pengadaan bantuan',
             ]
         );
     }

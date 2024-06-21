@@ -2,35 +2,33 @@
 
 namespace App\Repositories\Village;
 
-use App\Models\District;
 use App\Models\Village;
 use App\Repositories\Farmer\FarmerRepository;
-use App\Repositories\Village\BaseVillageRepository;
 use DB;
 
 class VillageRepository extends BaseVillageRepository
 {
     protected $indexTableAction = [
         'show' => [
-            'text'  =>  'Lihat',
-            'type'  =>  'redirect',
-            'route' =>  'dashboard.district.village.show',
-            'routeParameter'    =>  [
-                'district'  =>  'district_id',
-                'village'   =>  'id',
+            'text' => 'Lihat',
+            'type' => 'redirect',
+            'route' => 'dashboard.district.village.show',
+            'routeParameter' => [
+                'district' => 'district_id',
+                'village' => 'id',
             ],
-            'color' =>  'primary',
+            'color' => 'primary',
         ],
         'destroy' => [
-            'text'  =>  'Hapus',
-            'type'  =>  'delete',
-            'route' =>  'dashboard.district.village.destroy',
-            'routeParameter'    =>  [
-                'district'  =>  'district_id',
-                'village'   =>  'id',
+            'text' => 'Hapus',
+            'type' => 'delete',
+            'route' => 'dashboard.district.village.destroy',
+            'routeParameter' => [
+                'district' => 'district_id',
+                'village' => 'id',
             ],
-            'color' =>  'danger',
-        ]
+            'color' => 'danger',
+        ],
     ];
 
     public $farmerRepository;
@@ -55,12 +53,12 @@ class VillageRepository extends BaseVillageRepository
             )
             ->withCount(
                 [
-                    'farmers'
+                    'farmers',
                 ]
             )
             ->get()
             //
-        ;
+;
     }
 
     public function show(Village $village)
@@ -71,10 +69,11 @@ class VillageRepository extends BaseVillageRepository
             ],
         )->loadCount(
             [
-                'farmers'
+                'farmers',
             ]
         );
         $datas['table'] = $this->farmersDatatable($village->farmers->toArray());
+
         return $datas;
     }
 
@@ -90,14 +89,17 @@ class VillageRepository extends BaseVillageRepository
             if ($th instanceof \Exception) {
                 $errorMessage = $th->getMessage();
             }
+
             return false;
         }
+
         return true;
     }
 
     public function update(Village $village, array $data)
     {
         $village->update($data);
+
         return $village->wasChanged();
     }
 
@@ -105,14 +107,16 @@ class VillageRepository extends BaseVillageRepository
     {
         $config = $this->datatableConfig;
         $config['actions'] = $this->indexTableAction;
+
         return parent::prepareDatatable($datas, $config);
     }
 
     public function farmersDatatable($datas)
     {
-        if (!is_array($datas)) {
+        if (! is_array($datas)) {
             $datas->toArray();
         }
+
         return $this->farmerRepository->prepareDatatable($datas);
     }
 }

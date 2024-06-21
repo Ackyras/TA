@@ -3,25 +3,24 @@
 namespace App\Repositories\District;
 
 use App\Models\District;
-use Illuminate\Support\Facades\DB;
 use App\Repositories\Village\VillageRepository;
-use App\Repositories\District\BaseDistrictRepository;
+use Illuminate\Support\Facades\DB;
 
 class DistrictRepository extends BaseDistrictRepository
 {
     protected $indexTableAction = [
         'show' => [
-            'text'  =>  'Lihat',
-            'type'  =>  'redirect',
-            'route' =>  'dashboard.district.show',
-            'color' =>  'primary',
+            'text' => 'Lihat',
+            'type' => 'redirect',
+            'route' => 'dashboard.district.show',
+            'color' => 'primary',
         ],
         'destroy' => [
-            'text'  =>  'Hapus',
-            'type'  =>  'delete',
-            'route' =>  'dashboard.district.destroy',
-            'color' =>  'danger',
-        ]
+            'text' => 'Hapus',
+            'type' => 'delete',
+            'route' => 'dashboard.district.destroy',
+            'color' => 'danger',
+        ],
     ];
 
     public $villageRepository;
@@ -44,12 +43,12 @@ class DistrictRepository extends BaseDistrictRepository
             )
             ->with(
                 [
-                    'villages'
+                    'villages',
                 ]
             )
             ->withCount(
                 [
-                    'villages'
+                    'villages',
                 ]
             )
             ->get();
@@ -63,9 +62,9 @@ class DistrictRepository extends BaseDistrictRepository
             if ($datas['with_user']) {
                 $new_user = $district->users()->create(
                     [
-                        'name'      =>  'Koordinator Kecamatan ' . str()->title($district->name),
-                        'email'     =>  'koor.' . str($district->name)->lower()->snake() . '@sppbt.toba.gov.id',
-                        'password'  =>  bcrypt('password')
+                        'name' => 'Koordinator Kecamatan '.str()->title($district->name),
+                        'email' => 'koor.'.str($district->name)->lower()->snake().'@sppbt.toba.gov.id',
+                        'password' => bcrypt('password'),
                     ]
                 );
                 $new_user->assignRole('koor');
@@ -76,8 +75,10 @@ class DistrictRepository extends BaseDistrictRepository
             if (env('APP_DEBUG', true)) {
                 throw $th;
             }
+
             return false;
         }
+
         return true;
     }
 
@@ -85,24 +86,26 @@ class DistrictRepository extends BaseDistrictRepository
     {
         $district->load(
             [
-                'villages'  =>  function ($query) {
+                'villages' => function ($query) {
                     $query->withCount('farmers');
-                }
+                },
             ]
         )->loadCount(
             [
                 'villages',
-                'farmers'
+                'farmers',
             ]
         );
         $datas['district'] = $district;
         $datas['table'] = $this->villagesDatatable($district->villages->toArray());
+
         return District::create($datas);
     }
 
     public function update(District $district, array $data)
     {
         $district->update($data);
+
         return $district->wasChanged();
     }
 
@@ -110,14 +113,16 @@ class DistrictRepository extends BaseDistrictRepository
     {
         $config = $this->datatableConfig;
         $config['actions'] = $this->indexTableAction;
+
         return parent::prepareDatatable($datas, $config);
     }
 
     public function villagesDatatable($datas)
     {
-        if (!is_array($datas)) {
+        if (! is_array($datas)) {
             $datas->toArray();
         }
+
         return $this->villageRepository->prepareDatatable($datas);
     }
 }

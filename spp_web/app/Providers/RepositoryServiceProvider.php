@@ -2,11 +2,11 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use App\Interfaces\Repository\UserRepositoryInterface;
-use App\Interfaces\Repository\VillageRepositoryInterface;
 use App\Interfaces\Repository\DistrictRepositoryInterface;
 use App\Interfaces\Repository\FarmerRepositoryInterface;
+use App\Interfaces\Repository\UserRepositoryInterface;
+use App\Interfaces\Repository\VillageRepositoryInterface;
+use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
 {

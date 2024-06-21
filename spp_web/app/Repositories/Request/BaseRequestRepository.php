@@ -7,10 +7,10 @@ use App\Repositories\BaseRepository;
 class BaseRequestRepository extends BaseRepository
 {
     protected $datatableConfig = [
-        'headers'   => [
-            'kode'  =>  'code',
-            'Judul Kegiatan' =>  'name',
+        'headers' => [
+            'kode' => 'code',
+            'Judul Kegiatan' => 'name',
         ],
-        'caption'   => 'Table of Request'
+        'caption' => 'Table of Request',
     ];
 }

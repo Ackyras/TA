@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Program;
 
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreProgramRequest extends FormRequest
@@ -10,6 +9,7 @@ class StoreProgramRequest extends FormRequest
     public function prepareForValidation()
     {
     }
+
     /**
      * Determine if the user is authorized to make this request.
      *

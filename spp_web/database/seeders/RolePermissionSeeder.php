@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -26,39 +25,39 @@ class RolePermissionSeeder extends Seeder
 
         $allPermissions = [
             [
-                'users' =>  $allCruds
+                'users' => $allCruds,
             ],
             [
-                'divisions' =>  $allCruds
+                'divisions' => $allCruds,
             ],
             [
-                'periods' =>  $allCruds
+                'periods' => $allCruds,
             ],
             [
-                'supports' =>  $allCruds
+                'supports' => $allCruds,
             ],
             [
-                'districts' =>  $allCruds
+                'districts' => $allCruds,
             ],
             [
-                'villages' =>  $allCruds
+                'villages' => $allCruds,
             ],
             [
-                'farmers' =>  $allCruds
+                'farmers' => $allCruds,
             ],
             [
-                'requests' =>  $allCruds
+                'requests' => $allCruds,
             ],
             [
-                'programs' =>  $allCruds
+                'programs' => $allCruds,
             ],
             [
-                'archives'  =>  [
+                'archives' => [
                     'divisions',
                     'villages',
                     'farmers',
-                ]
-            ]
+                ],
+            ],
         ];
         // $dev = Role::where('name', 'dev')->first();
         $kadis = Role::where('name', 'kadis')->first();
@@ -68,14 +67,14 @@ class RolePermissionSeeder extends Seeder
             foreach ($permissions as $key => $cruds) {
                 $parentPermission = Permission::create(
                     [
-                        'name'  =>  $key,
+                        'name' => $key,
                     ]
                 );
                 // $parentPermission->assignRole($dev);
                 foreach ($cruds as $crud) {
                     $childPermissions = Permission::create(
                         [
-                            'name'  =>  $key . '.' . $crud,
+                            'name' => $key.'.'.$crud,
                         ]
                     );
                     // $childPermissions->assignRole($dev);
@@ -94,7 +93,7 @@ class RolePermissionSeeder extends Seeder
                 'requests.update',
                 'farmers',
                 'programs',
-                'archives'
+                'archives',
             ]
         );
         $kabid->syncPermissions(

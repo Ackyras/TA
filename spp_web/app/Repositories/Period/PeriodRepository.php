@@ -2,33 +2,33 @@
 
 namespace App\Repositories\Period;
 
-use App\Repositories\Period\BasePeriodRepository;
 use App\Models\Period;
 
 class PeriodRepository extends BasePeriodRepository
 {
     protected $indexTableAction = [
         'destroy' => [
-            'text'  =>  'Hapus',
-            'type'  =>  'delete',
-            'route' =>  'dashboard.setting.period.destroy',
-            'color' =>  'danger',
-        ]
+            'text' => 'Hapus',
+            'type' => 'delete',
+            'route' => 'dashboard.setting.period.destroy',
+            'color' => 'danger',
+        ],
     ];
 
     protected $archiveTableAction = [
         'show' => [
-            'text'  =>  'Lihat',
-            'type'  =>  'redirect',
-            'route' =>  'dashboard.archive.period.show',
-            'color' =>  'primary',
-        ]
+            'text' => 'Lihat',
+            'type' => 'redirect',
+            'route' => 'dashboard.archive.period.show',
+            'color' => 'primary',
+        ],
     ];
 
     public function index()
     {
         $periods = Period::query()
             ->get();
+
         return Period::all();
     }
 
@@ -39,16 +39,18 @@ class PeriodRepository extends BasePeriodRepository
         if ($datas['deactivate_active_period']) {
             if ($oldPeriod) {
                 $oldPeriod->update([
-                    'is_active' =>  false,
+                    'is_active' => false,
                 ]);
             }
             $period->update(
                 [
-                    'is_active' =>  true,
+                    'is_active' => true,
                 ]
             );
+
             return true;
         }
+
         return false;
     }
 
@@ -69,6 +71,7 @@ class PeriodRepository extends BasePeriodRepository
                 $datas[$key]['is_active'] = 'Inactive';
             }
         }
+
         return parent::prepareDatatable($datas, $configs);
     }
 }

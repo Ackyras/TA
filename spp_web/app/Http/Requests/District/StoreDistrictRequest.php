@@ -15,7 +15,6 @@ class StoreDistrictRequest extends FormRequest
         }
     }
 
-
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -35,8 +34,8 @@ class StoreDistrictRequest extends FormRequest
     {
         return [
             //
-            'name'  =>  ['required'],
-            'with_user' =>  ['nullable', 'boolean']
+            'name' => ['required'],
+            'with_user' => ['nullable', 'boolean'],
         ];
     }
 }

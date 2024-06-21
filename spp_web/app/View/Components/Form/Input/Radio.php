@@ -3,7 +3,6 @@
 namespace App\View\Components\Form\Input;
 
 use Illuminate\View\Component;
-use App\View\Components\Form\Input\Input;
 
 class Radio extends Input
 {

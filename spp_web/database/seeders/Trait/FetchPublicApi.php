@@ -3,22 +3,23 @@
 namespace Database\Seeders\Trait;
 
 use App\Models\District;
-use App\Models\Village;
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Http;
 
 trait FetchPublicApi
 {
     protected $url = 'https://dev.farizdotid.com/api/daerahindonesia/';
+
     protected $client;
+
     protected $city_id = 1206;
+
     protected $province_id = 12;
 
     public function __construct()
     {
         $this->client = new Client(
             [
-                'base_url'  =>  $this->url,
+                'base_url' => $this->url,
             ]
         );
     }
@@ -33,8 +34,9 @@ trait FetchPublicApi
     {
         $query = '?';
         foreach ($queries as $key => $value) {
-            $query .= $key . '=' . $value . '&';
+            $query .= $key.'='.$value.'&';
         }
+
         return $query;
     }
 
@@ -49,12 +51,12 @@ trait FetchPublicApi
 
         $query = $this->prepareQuery(
             [
-                'id_kota'       =>  $city_id,
-                'id_provinsi'   =>  $province_id,
+                'id_kota' => $city_id,
+                'id_provinsi' => $province_id,
             ]
         );
 
-        $request = $this->client->request('GET', $this->url . 'kecamatan' . $query);
+        $request = $this->client->request('GET', $this->url.'kecamatan'.$query);
 
         $response = $request ? $request->getBody()->getContents() : null;
         $status = $request ? $request->getStatusCode() : 500;
@@ -70,7 +72,7 @@ trait FetchPublicApi
                 );
                 $newDistrict = District::create(
                     [
-                        'name'  =>  $district['nama']
+                        'name' => $district['nama'],
                     ]
                 );
                 $villages = $newDistrict->villages()->createMany(
@@ -92,11 +94,11 @@ trait FetchPublicApi
 
         $query = $this->prepareQuery(
             [
-                'id_kecamatan'  =>  $district_id
+                'id_kecamatan' => $district_id,
             ]
         );
 
-        $request = $this->client->request('GET', $this->url . 'kelurahan' . $query);
+        $request = $this->client->request('GET', $this->url.'kelurahan'.$query);
 
         $response = $request ? $request->getBody()->getContents() : null;
         $status = $request ? $request->getStatusCode() : 500;
@@ -107,8 +109,10 @@ trait FetchPublicApi
             foreach ($json['kelurahan'] as $village) {
                 $villages[] = ['name' => $village['nama']];
             }
+
             return $villages;
         }
+
         return null;
     }
 }

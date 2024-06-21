@@ -2,29 +2,28 @@
 
 namespace App\Repositories\Request;
 
-use App\Models\Unit;
 use App\Models\Farmer;
 use App\Models\Period;
 use App\Models\Program;
 use App\Models\Request;
-use App\Models\Division;
 use App\Models\RequestAttachment;
+use App\Models\Unit;
 use Illuminate\Support\Facades\Storage;
 
 class DivisionRequestRepository extends BaseRequestRepository
 {
     protected $indexTableAction = [
         'show' => [
-            'text'  =>  'Lihat',
-            'type'  =>  'redirect',
-            'route' =>  'dashboard.setting.program.show',
-            'color' =>  'primary',
+            'text' => 'Lihat',
+            'type' => 'redirect',
+            'route' => 'dashboard.setting.program.show',
+            'color' => 'primary',
         ],
         'destroy' => [
-            'text'  =>  'Hapus',
-            'type'  =>  'delete',
-            'route' =>  'dashboard.setting.program.destroy',
-            'color' =>  'danger',
+            'text' => 'Hapus',
+            'type' => 'delete',
+            'route' => 'dashboard.setting.program.destroy',
+            'color' => 'danger',
         ],
     ];
 
@@ -43,12 +42,12 @@ class DivisionRequestRepository extends BaseRequestRepository
                 'attachments',
                 'farmer',
                 'program',
-                'unit'
+                'unit',
             ])
             ->get()
             ->groupBy('farmer') // Group the result by the farmer
             //
-        ;
+;
         // dd($datas);
         return $datas;
     }
@@ -66,7 +65,7 @@ class DivisionRequestRepository extends BaseRequestRepository
                 },
                 'village.district' => function ($query) {
                     $query->select(['id', 'name']);
-                }
+                },
             ])
             ->get();
         $datas['programs'] = $this->getPrograms(true);
@@ -81,7 +80,7 @@ class DivisionRequestRepository extends BaseRequestRepository
             [
                 'farmer',
                 'attachments',
-                'program.division'
+                'program.division',
             ]
         );
         $datas['programs'] = $this->getPrograms(true);
@@ -110,6 +109,7 @@ class DivisionRequestRepository extends BaseRequestRepository
                 // Attach the attachment to the request
                 $request->attachments()->save($attachment);
             }
+
             return true;
         }
 
@@ -131,9 +131,10 @@ class DivisionRequestRepository extends BaseRequestRepository
                 $attachment = RequestAttachment::create([
                     'name' => $attachmentData['name'],
                     'url' => str(Storage::url($filePath)),
-                    'request_id' => $request->id
+                    'request_id' => $request->id,
                 ]);
             }
+
             return true;
         }
 
@@ -147,13 +148,14 @@ class DivisionRequestRepository extends BaseRequestRepository
             ->with(
                 [
                     'lowerProgramTree',
-                    'division'
+                    'division',
                 ]
             )
             ->get();
         if ($asArray) {
             return $programs->toArray();
         }
+
         return $programs;
     }
 
@@ -161,6 +163,7 @@ class DivisionRequestRepository extends BaseRequestRepository
     {
         $config = $this->datatableConfig;
         $config['actions'] = $this->indexTableAction;
+
         return parent::prepareDatatable($datas, $config);
     }
 }

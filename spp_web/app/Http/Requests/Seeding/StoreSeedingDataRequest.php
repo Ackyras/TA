@@ -25,8 +25,8 @@ class StoreSeedingDataRequest extends FormRequest
     {
         // dd(request()->input());
         return [
-            'file'              => ['required', 'mimes:xlsx'],
-            'with_village_user' =>  ['nullable']
+            'file' => ['required', 'mimes:xlsx'],
+            'with_village_user' => ['nullable'],
         ];
     }
 }

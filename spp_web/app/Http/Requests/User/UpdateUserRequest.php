@@ -24,19 +24,19 @@ class UpdateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'      => 'required',
-            'email'     => 'required',
-            'roles'     => 'required',
+            'name' => 'required',
+            'email' => 'required',
+            'roles' => 'required',
             'divisions' => ['nullable', function ($attribute, $value, $fail) {
-                if (empty($value) && request()->has('roles') &&  !in_array('3', request()->input('roles'))) {
-                    return $fail('The ' . $attribute . ' field is required.');
+                if (empty($value) && request()->has('roles') && ! in_array('3', request()->input('roles'))) {
+                    return $fail('The '.$attribute.' field is required.');
                 }
             }],
-            'villages'  => ['nullable', function ($attribute, $value, $fail) {
-                if (empty($value) && request()->has('roles') &&  !in_array('4', request()->input('roles'))) {
-                    return $fail('The ' . $attribute . ' field is required.');
+            'villages' => ['nullable', function ($attribute, $value, $fail) {
+                if (empty($value) && request()->has('roles') && ! in_array('4', request()->input('roles'))) {
+                    return $fail('The '.$attribute.' field is required.');
                 }
-            }]
+            }],
         ];
     }
 }

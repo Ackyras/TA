@@ -25,7 +25,7 @@ class UpdateVillageRequest extends FormRequest
     {
         return [
             //
-            'name'  =>  ['required', 'unique:villages,name,except,id']
+            'name' => ['required', 'unique:villages,name,except,id'],
         ];
     }
 }

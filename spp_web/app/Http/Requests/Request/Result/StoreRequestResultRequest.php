@@ -25,11 +25,11 @@ class StoreRequestResultRequest extends FormRequest
     {
         return [
             //
-            'request_id'    =>  'required',
+            'request_id' => 'required',
             'volume' => 'required',
-            'attachments'               => ['nullable', 'array'],
-            'attachments.*.name'        => ['required_with:attachments.*.file'],
-            'attachments.*.file'        => ['filled', 'file', 'mimes:png,jpg,pdf', 'required_with:attachments.*.name'],
+            'attachments' => ['nullable', 'array'],
+            'attachments.*.name' => ['required_with:attachments.*.file'],
+            'attachments.*.file' => ['filled', 'file', 'mimes:png,jpg,pdf', 'required_with:attachments.*.name'],
         ];
     }
 }

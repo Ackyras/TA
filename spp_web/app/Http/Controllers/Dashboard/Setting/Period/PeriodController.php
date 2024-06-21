@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Dashboard\Setting\Period;
 
-use App\Models\Period;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Period\StorePeriodRequest;
+use App\Models\Period;
 use App\Repositories\Period\PeriodRepository;
 
 class PeriodController extends Controller
@@ -22,6 +21,7 @@ class PeriodController extends Controller
     {
         $periods = $this->repo->index();
         $periods = $this->repo->prepareDatatable($periods->toArray());
+
         return view('pages.dashboard.period.index', compact('periods'));
     }
 
@@ -31,13 +31,14 @@ class PeriodController extends Controller
         if ($this->repo->store($validated)) {
             return back()->with(
                 [
-                    'created'   =>  __('message.period.created')
+                    'created' => __('message.period.created'),
                 ]
             );
         }
+
         return back()->with(
             [
-                'failed'   =>  __('message.period.notCreated')
+                'failed' => __('message.period.notCreated'),
             ]
         );
         dd($validated);
@@ -49,14 +50,14 @@ class PeriodController extends Controller
         if ($period->delete()) {
             return back()->with(
                 [
-                    'destroyed'   =>  __('message.period.deleted')
+                    'destroyed' => __('message.period.deleted'),
                 ]
             );
         }
 
         return back()->with(
             [
-                'failed'    =>  __('message.period.notDeleted')
+                'failed' => __('message.period.notDeleted'),
             ]
         );
     }

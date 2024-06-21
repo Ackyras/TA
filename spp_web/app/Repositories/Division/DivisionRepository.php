@@ -3,22 +3,21 @@
 namespace App\Repositories\Division;
 
 use App\Models\Division;
-use App\Repositories\Division\BaseDivisionRepository;
 
 class DivisionRepository extends BaseDivisionRepository
 {
     protected $indexTableAction = [
         'show' => [
-            'text'  =>  'Detail',
-            'type'  =>  'redirect',
-            'route' =>  'dashboard.setting.division.show',
-            'color' =>  'primary',
+            'text' => 'Detail',
+            'type' => 'redirect',
+            'route' => 'dashboard.setting.division.show',
+            'color' => 'primary',
         ],
         'destroy' => [
-            'text'  =>  'Hapus',
-            'type'  =>  'delete',
-            'route' =>  'dashboard.setting.division.destroy',
-            'color' =>  'danger',
+            'text' => 'Hapus',
+            'type' => 'delete',
+            'route' => 'dashboard.setting.division.destroy',
+            'color' => 'danger',
         ],
     ];
 
@@ -41,6 +40,7 @@ class DivisionRepository extends BaseDivisionRepository
         if ($division->update($datas)) {
             return true;
         }
+
         return false;
     }
 
@@ -53,6 +53,7 @@ class DivisionRepository extends BaseDivisionRepository
     {
         $config = $this->datatableConfig;
         $config['actions'] = $this->indexTableAction;
+
         return parent::prepareDatatable($datas, $config);
     }
 }

@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\Dashboard\Setting;
 
-use App\Models\Farmer;
-use App\Models\Village;
-use App\Models\District;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Seeding\StoreSeedingDataRequest;
+use App\Models\District;
+use App\Models\Farmer;
+use App\Models\User;
+use App\Models\Village;
+use Illuminate\Support\Facades\DB;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
-use App\Http\Requests\Seeding\StoreSeedingDataRequest;
-use App\Models\User;
 
 class SeedingController extends Controller
 {
@@ -43,6 +42,7 @@ class SeedingController extends Controller
         foreach ($sheet->getRowIterator() as $row) {
             if ($isFirstRow) {
                 $isFirstRow = false;
+
                 continue; // Skip the first row (header row)
             }
 
@@ -54,16 +54,16 @@ class SeedingController extends Controller
                 $data[] = $cell->getValue();
             }
 
-            if (!empty($data[1])) {
+            if (! empty($data[1])) {
                 $currentDistrict = $data[1];
             }
 
-            if (!empty($data[2])) {
+            if (! empty($data[2])) {
                 // Remove the unwanted string from the village name
                 $currentVillage = $data[2];
             }
 
-            if (!(empty($data[1]) && empty($data[2]) && empty($data[3]) && empty($data[4]) && empty($data[5]))) {
+            if (! (empty($data[1]) && empty($data[2]) && empty($data[3]) && empty($data[4]) && empty($data[5]))) {
                 $datas[$currentDistrict][$currentVillage][] = [
                     'name' => $data[3],
                     'pic' => $data[4],
@@ -75,21 +75,21 @@ class SeedingController extends Controller
         try {
             foreach ($datas as $districtName => $villages) {
                 $district = District::create([
-                    'name'  =>  $districtName
+                    'name' => $districtName,
                 ]);
                 foreach ($villages as $villageName => $farmers) {
                     $village = Village::create(
                         [
-                            'name'          =>  $villageName,
-                            'district_id'   =>  $district->id
+                            'name' => $villageName,
+                            'district_id' => $district->id,
                         ],
                     );
                     if ($validated['with_village_user']) {
                         $user = User::create(
                             [
-                                'name'      =>  'Desa ' . str()->title($village->name),
-                                'email'     =>  str()->snake($district->name) . '.' . str()->snake($village->name) . '@sppbt.toba.gov.id',
-                                'password'  =>  bcrypt('password')
+                                'name' => 'Desa '.str()->title($village->name),
+                                'email' => str()->snake($district->name).'.'.str()->snake($village->name).'@sppbt.toba.gov.id',
+                                'password' => bcrypt('password'),
                             ]
                         );
                     }
@@ -105,16 +105,18 @@ class SeedingController extends Controller
             if ($th instanceof \Exception) {
                 $errorMessage = $th->getMessage();
             }
+
             return back()->with(
                 [
-                    'failed'            =>  'Upload massal gagal dilakukan. Periksa kembali format file yang ande upload!',
-                    'additionalMessage' =>  $errorMessage,
+                    'failed' => 'Upload massal gagal dilakukan. Periksa kembali format file yang ande upload!',
+                    'additionalMessage' => $errorMessage,
                 ]
             );
         }
+
         return back()->with(
             [
-                'success'   =>  'Upload massal berhasil dilakukan!'
+                'success' => 'Upload massal berhasil dilakukan!',
             ],
         );
     }
@@ -128,6 +130,7 @@ class SeedingController extends Controller
         foreach ($sheet->getRowIterator() as $row) {
             if ($rowIndex === 1) {
                 $rowIndex++;
+
                 continue; // Skip the first row (header row)
             }
 
@@ -145,7 +148,7 @@ class SeedingController extends Controller
                     'Komoditas yang diusahakan',
                     'Input Jenis Kelompok',
                     'Ubah',
-                    'Hapus'
+                    'Hapus',
                 ], '', $cellValue);
                 $cell->setValue($cellValue);
 

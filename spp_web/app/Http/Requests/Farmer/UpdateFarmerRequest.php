@@ -25,10 +25,10 @@ class UpdateFarmerRequest extends FormRequest
     {
         return [
             //
-            'name'          =>  ['required'],
-            'village_id'    =>  ['required', 'exists:villages,id'],
-            'pic'       =>  ['required'],
-            'address'   =>  ['required'],
+            'name' => ['required'],
+            'village_id' => ['required', 'exists:villages,id'],
+            'pic' => ['required'],
+            'address' => ['required'],
         ];
     }
 }

@@ -1,8 +1,6 @@
 <?php
 
 use App\Models\Farmer;
-use App\Models\Period;
-use App\Models\Program;
 use App\Models\ProposalDictionary;
 use App\Models\Unit;
 use Illuminate\Database\Migrations\Migration;

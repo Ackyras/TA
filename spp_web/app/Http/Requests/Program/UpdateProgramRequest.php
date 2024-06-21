@@ -25,8 +25,8 @@ class UpdateProgramRequest extends FormRequest
     {
         return [
             //
-            'code'          =>  'required',
-            'name'          =>  'required',
+            'code' => 'required',
+            'name' => 'required',
         ];
     }
 }

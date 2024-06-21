@@ -2,8 +2,6 @@
 
 namespace App\Traits\Datatables\V1;
 
-use App\Exceptions\Datatable\DatatableConfigurationFormatException;
-
 trait DatatableTrait
 {
     public function prepare(array $config, array $datas, bool $isShowOnlyRequiredData = false)

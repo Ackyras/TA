@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Period;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class PeriodSeeder extends Seeder
@@ -18,11 +17,11 @@ class PeriodSeeder extends Seeder
         //
         $periods = [
             [
-                'name'          =>  'Dev period',
-                'start_date'    =>  now()->startOfYear(),
-                'end_date'      =>  now()->endOfYear(),
-                'is_active'     =>  true
-            ]
+                'name' => 'Dev period',
+                'start_date' => now()->startOfYear(),
+                'end_date' => now()->endOfYear(),
+                'is_active' => true,
+            ],
         ];
 
         foreach ($periods as $period) {

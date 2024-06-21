@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Period;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class NewPeriodSeeder extends Seeder
@@ -22,12 +21,11 @@ class NewPeriodSeeder extends Seeder
         }
         $newPeriod = Period::create(
             [
-                'name'          =>  'Manual Period',
-                'start_date'    =>  now()->startOfYear(),
-                'end_date'      =>  now()->endOfYear(),
-                'is_active'     =>  true
+                'name' => 'Manual Period',
+                'start_date' => now()->startOfYear(),
+                'end_date' => now()->endOfYear(),
+                'is_active' => true,
             ]
         );
-        
     }
 }

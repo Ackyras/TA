@@ -13,7 +13,7 @@ class ProposalDictionary extends Model
         'name',
         'division_id',
         'program_id',
-        'parent_id'
+        'parent_id',
     ];
 
     public function __boot()

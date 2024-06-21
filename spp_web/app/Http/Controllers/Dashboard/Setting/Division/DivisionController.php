@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers\Dashboard\Setting\Division;
 
-use App\Models\User;
-use App\Models\Division;
 use App\Http\Controllers\Controller;
-use App\Repositories\Division\DivisionRepository;
 use App\Http\Requests\Division\StoreDivisionRequest;
 use App\Http\Requests\Division\UpdateDivisionRequest;
+use App\Models\Division;
+use App\Repositories\Division\DivisionRepository;
 
 class DivisionController extends Controller
 {
@@ -24,7 +23,7 @@ class DivisionController extends Controller
         if ($divisions->count() == 1 && auth()->user()->hasRole('kabid')) {
             return view('pages.dashboard.division.show')->with(
                 [
-                    'division'  =>  $divisions->first()
+                    'division' => $divisions->first(),
                 ]
             );
         }
@@ -32,6 +31,7 @@ class DivisionController extends Controller
 
         return view('pages.dashboard.division.index', compact('divisionTable'));
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -56,13 +56,14 @@ class DivisionController extends Controller
         if ($this->repo->store($validated)) {
             return back()->with(
                 [
-                    'created'   =>  __('message.division.created')
+                    'created' => __('message.division.created'),
                 ]
             );
         }
+
         return back()->with(
             [
-                'failed'   =>  __('message.division.notCreated')
+                'failed' => __('message.division.notCreated'),
             ]
         );
     }
@@ -103,13 +104,14 @@ class DivisionController extends Controller
         if ($this->repo->update($request->validated(), $division)) {
             return back()->with(
                 [
-                    'updated'   =>  __('message.division.updated')
+                    'updated' => __('message.division.updated'),
                 ]
             );
         }
+
         return back()->with(
             [
-                'failed'   =>  __('message.division.notUpdated')
+                'failed' => __('message.division.notUpdated'),
             ]
         );
     }
@@ -126,14 +128,14 @@ class DivisionController extends Controller
         if ($division->delete()) {
             return back()->with(
                 [
-                    'destroyed'   =>  __('message.division.deleted')
+                    'destroyed' => __('message.division.deleted'),
                 ]
             );
         }
 
         return back()->with(
             [
-                'failed'    =>  __('message.division.notDeleted')
+                'failed' => __('message.division.notDeleted'),
             ]
         );
     }

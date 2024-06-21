@@ -2,12 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\Village;
 use App\Models\District;
 use App\Models\Division;
+use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class UserSeeder extends Seeder
 {
@@ -30,19 +28,19 @@ class UserSeeder extends Seeder
         // $dev->assignRole('dev', 'kadis');
         $kadis = User::create(
             [
-                'name'          =>  'kadis',
-                'email'         =>  'kadis@' . $domain,
-                'password'      =>  bcrypt('password'),
+                'name' => 'kadis',
+                'email' => 'kadis@'.$domain,
+                'password' => bcrypt('password'),
             ]
         );
         $kadis->assignRole('kadis');
         $divisions = Division::all();
         foreach ($divisions as $key => $division) {
-            $kabid  =   User::create(
+            $kabid = User::create(
                 [
-                    'name'      =>  'Kabid ' . str()->title($division->name),
-                    'email'     =>  'kabid.' . str()->lower($division->nickname) . '@' . $domain,
-                    'password'      =>  bcrypt('password'),
+                    'name' => 'Kabid '.str()->title($division->name),
+                    'email' => 'kabid.'.str()->lower($division->nickname).'@'.$domain,
+                    'password' => bcrypt('password'),
                 ],
             );
             $kabid->assignRole('kabid');
@@ -52,13 +50,13 @@ class UserSeeder extends Seeder
         foreach ($districts as $district) {
             $koor = User::create(
                 [
-                    'name'      =>  'Koordinator Kecamatan ' . str()->title($district->name),
-                    'email'     =>  'koor.' . str()->lower($district->name) . '@' . $domain,
-                    'password'      =>  bcrypt('password'),
+                    'name' => 'Koordinator Kecamatan '.str()->title($district->name),
+                    'email' => 'koor.'.str()->lower($district->name).'@'.$domain,
+                    'password' => bcrypt('password'),
                 ],
             );
             $koor->assignRole('koor');
             $koor->districts()->attach($district);
-        };
+        }
     }
 }

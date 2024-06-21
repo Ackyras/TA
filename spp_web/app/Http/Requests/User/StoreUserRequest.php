@@ -25,12 +25,12 @@ class StoreUserRequest extends FormRequest
     {
         return [
             //
-            'name'      =>  'required',
-            'password'  =>  ['required', 'string', 'min:6', 'max:12'],
-            'email'     =>  ['required', 'email'],
-            'roles'     =>  'required',
-            'divisions' =>  'required_if:roles,2',
-            'villages'  =>  'required_if:roles,3',
+            'name' => 'required',
+            'password' => ['required', 'string', 'min:6', 'max:12'],
+            'email' => ['required', 'email'],
+            'roles' => 'required',
+            'divisions' => 'required_if:roles,2',
+            'villages' => 'required_if:roles,3',
         ];
     }
 
@@ -38,7 +38,7 @@ class StoreUserRequest extends FormRequest
     {
         $this->replace(
             [
-                'password' => bcrypt($this->password)
+                'password' => bcrypt($this->password),
             ]
         );
     }

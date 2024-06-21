@@ -7,9 +7,13 @@ use Illuminate\View\Component;
 class Button extends Component
 {
     public $text;
+
     public $type;
+
     public $route;
+
     public $color;
+
     public $class;
 
     /**
@@ -24,7 +28,7 @@ class Button extends Component
         $this->type = $type;
         $this->route = $route;
         $this->color = $color;
-        $this->class = $class . 'btn-' . $color;
+        $this->class = $class.'btn-'.$color;
     }
 
     /**

@@ -2,22 +2,22 @@
 
 use App\Http\Controllers\Dashboard\Archive\RequestController as ArchiveRequestController;
 use App\Http\Controllers\Dashboard\ArchiveController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Dashboard\FarmerController;
-use App\Http\Controllers\Dashboard\VillageController;
-use App\Http\Controllers\Dashboard\DistrictController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\DistrictController;
+use App\Http\Controllers\Dashboard\FarmerController;
 use App\Http\Controllers\Dashboard\Request\RequestController;
 use App\Http\Controllers\Dashboard\Request\ResultController;
-use App\Http\Controllers\Dashboard\Setting\User\UserController;
-use App\Http\Controllers\Dashboard\Setting\Program\ProgramController;
 use App\Http\Controllers\Dashboard\Setting\Division\DivisionController;
 use App\Http\Controllers\Dashboard\Setting\Period\PeriodController;
+use App\Http\Controllers\Dashboard\Setting\Program\ProgramController;
 use App\Http\Controllers\Dashboard\Setting\ProposalDictionaryController;
 use App\Http\Controllers\Dashboard\Setting\SeedingController;
+use App\Http\Controllers\Dashboard\Setting\User\UserController;
+use App\Http\Controllers\Dashboard\VillageController;
 use App\Http\Controllers\StorageController;
 use App\Http\Middleware\ArchiveMiddleware;
 use App\Http\Middleware\ScopePeriod;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,14 +46,14 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
             'users',
             UserController::class,
             [
-                'names'    =>  'user',
+                'names' => 'user',
             ]
         )->middleware(['can:users']);
         Route::resource(
             'divisions',
             DivisionController::class,
             [
-                'names'    =>  'division',
+                'names' => 'division',
             ]
         )->middleware(['can:divisions']);
 
@@ -61,7 +61,7 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
             'programs',
             ProgramController::class,
             [
-                'names' =>  'program'
+                'names' => 'program',
             ]
         );
 
@@ -69,7 +69,7 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
             'proposalDictionaries',
             ProposalDictionaryController::class,
             [
-                'names' =>  'proposalDictionary'
+                'names' => 'proposalDictionary',
             ]
         );
 
@@ -77,7 +77,7 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
             'periods',
             PeriodController::class,
             [
-                'names' =>  'period'
+                'names' => 'period',
             ]
         );
         Route::controller(SeedingController::class)->prefix('seeding')->as('seeding.')->group(function () {
@@ -90,7 +90,7 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
         'districts',
         DistrictController::class,
         [
-            'names' =>  'district',
+            'names' => 'district',
         ]
     );
 
@@ -98,14 +98,14 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
         'villages',
         VillageController::class,
         [
-            'names' =>  'village',
+            'names' => 'village',
         ]
     );
     Route::resource(
         'farmers',
         FarmerController::class,
         [
-            'names' =>  'farmer',
+            'names' => 'farmer',
         ],
     );
 
@@ -157,9 +157,13 @@ Route::middleware(['auth.storage'])->prefix('secured-storage')->as('storage.')->
     Route::get('request-result/{requestResultAttachment}', 'getRequestResultAttachment')->name('request-result-attachment');
 });
 
-Route::get('test', function () {
-    return abort(404);
+Route::prefix('tests')->group(function () {
+    Route::get('/', function () {
+        return abort(404);
+    });
+    Route::get('heatmap', function () {
+        return view('heatmap');
+    });
 });
 
-
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

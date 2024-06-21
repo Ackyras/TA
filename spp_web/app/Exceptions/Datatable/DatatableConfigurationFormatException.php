@@ -10,7 +10,7 @@ class DatatableConfigurationFormatException extends Exception
     /**
      * Generating report when exception found
      *
-     * @param  mixed $exception
+     * @param  mixed  $exception
      * @return void
      */
     public function report(Exception $exception)
@@ -21,8 +21,8 @@ class DatatableConfigurationFormatException extends Exception
     /**
      * Render the error message
      *
-     * @param  mixed $request
-     * @param  mixed $exception
+     * @param  mixed  $request
+     * @param  mixed  $exception
      * @return void
      */
     public function render($request)
@@ -30,7 +30,7 @@ class DatatableConfigurationFormatException extends Exception
         if ($request->is('api/*')) {
             return response()->json(
                 [
-                    'message'   =>  `Configuration didn't meet requirement.`
+                    'message' => `Configuration didn't meet requirement.`,
                 ],
             );
         } else {

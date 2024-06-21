@@ -18,8 +18,8 @@ class RequestResultAttachmentFactory extends Factory
     {
         return [
             //
-            'name'  =>  $this->faker->word(),
-            'url'   =>  'dummy/spasi-light.pdf'
+            'name' => $this->faker->word(),
+            'url' => 'dummy/spasi-light.pdf',
         ];
     }
 }

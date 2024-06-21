@@ -2,37 +2,35 @@
 
 namespace App\Repositories\Request;
 
-use App\Models\Unit;
 use App\Models\Farmer;
-use App\Models\Period;
 use App\Models\Program;
-use App\Models\Request;
-use App\Models\Division;
-use App\Models\RequestAttachment;
 use App\Models\ProposalDictionary;
-use Illuminate\Support\Facades\Storage;
+use App\Models\Request;
+use App\Models\RequestAttachment;
+use App\Models\Unit;
 use Illuminate\Http\Request as HttpRequest;
+use Illuminate\Support\Facades\Storage;
 
 class RequestRepository extends BaseRequestRepository
 {
     protected $indexTableAction = [
         'show' => [
-            'text'  =>  'Lihat',
-            'type'  =>  'redirect',
-            'route' =>  'dashboard.setting.program.show',
-            'color' =>  'primary',
+            'text' => 'Lihat',
+            'type' => 'redirect',
+            'route' => 'dashboard.setting.program.show',
+            'color' => 'primary',
         ],
         'destroy' => [
-            'text'  =>  'Hapus',
-            'type'  =>  'delete',
-            'route' =>  'dashboard.setting.program.destroy',
-            'color' =>  'danger',
+            'text' => 'Hapus',
+            'type' => 'delete',
+            'route' => 'dashboard.setting.program.destroy',
+            'color' => 'danger',
         ],
     ];
 
     protected $allowedFilters = [
         'status',
-        'proposal_dictionary_id'
+        'proposal_dictionary_id',
     ];
 
     public function index(HttpRequest $request)
@@ -55,10 +53,10 @@ class RequestRepository extends BaseRequestRepository
                 function ($query) {
                     $query->with(
                         [
-                            'results'    =>  [
+                            'results' => [
                                 'attachments',
                                 'unit',
-                            ]
+                            ],
                         ]
                     )->when(
                         auth()->user()->hasRole('kabid'),
@@ -80,7 +78,7 @@ class RequestRepository extends BaseRequestRepository
                     'farmer',
                     'program',
                     'unit',
-                    'results.unit'
+                    'results.unit',
                 ]
             )->orderBy('updated_at', 'desc');
         $datas['paginator'] = $this->filter($query, $request, false, true, 10)->withQueryString();
@@ -110,6 +108,7 @@ class RequestRepository extends BaseRequestRepository
                 )
                 ->get();
         }
+
         return $datas;
     }
 
@@ -126,7 +125,7 @@ class RequestRepository extends BaseRequestRepository
                 },
                 'village.district' => function ($query) {
                     $query->select(['id', 'name']);
-                }
+                },
             ])
             ->get();
         $datas['divisionProposalDictionaries'] =
@@ -137,7 +136,8 @@ class RequestRepository extends BaseRequestRepository
                 return $item->division->nickname;
             })
             // ->dd()
-        ;
+;
+
         return $datas;
     }
 
@@ -151,8 +151,8 @@ class RequestRepository extends BaseRequestRepository
                 'program.division',
                 'results' => [
                     'unit',
-                    'attachments'
-                ]
+                    'attachments',
+                ],
             ]
         );
         $datas['proposalDictionaries'] = ProposalDictionary::query()
@@ -163,6 +163,7 @@ class RequestRepository extends BaseRequestRepository
             )
             ->get();
         $datas['units'] = Unit::all();
+
         return $datas;
     }
 
@@ -174,8 +175,10 @@ class RequestRepository extends BaseRequestRepository
             foreach ($data['attachments'] as $attachmentData) {
                 $this->storeAttachment($request, $attachmentData);
             }
+
             return true;
         }
+
         return false;
     }
 
@@ -188,6 +191,7 @@ class RequestRepository extends BaseRequestRepository
                 $this->storeAttachment($request, $attachmentData);
             }
         }
+
         return true;
     }
 
@@ -232,6 +236,7 @@ class RequestRepository extends BaseRequestRepository
         if ($asArray) {
             return $programs->toArray();
         }
+
         return $programs;
     }
 
@@ -240,6 +245,7 @@ class RequestRepository extends BaseRequestRepository
         if ($attachment->delete() && Storage::disk('local')->delete($attachment->url)) {
             return true;
         }
+
         return false;
     }
 
@@ -247,6 +253,7 @@ class RequestRepository extends BaseRequestRepository
     {
         $config = $this->datatableConfig;
         $config['actions'] = $this->indexTableAction;
+
         return parent::prepareDatatable($datas, $config);
     }
 
@@ -283,7 +290,7 @@ class RequestRepository extends BaseRequestRepository
                     'farmer',
                     'program',
                     'unit',
-                    'results.unit'
+                    'results.unit',
                 ]
             );
         $datas['paginator'] = $this->filter($query, $request, false, true, 10)->withQueryString();
@@ -304,6 +311,7 @@ class RequestRepository extends BaseRequestRepository
                 ],
             )
             ->get();
+
         return $datas;
     }
 }

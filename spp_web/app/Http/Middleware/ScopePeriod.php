@@ -2,20 +2,20 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
 use App\Models\Period;
 use App\Models\Program;
-use Illuminate\Http\Request;
 use App\Models\Request as ModelsRequest;
+use Closure;
+use Illuminate\Http\Request;
 
 class ScopePeriod
 {
     public function handle(Request $request, Closure $next)
     {
-        if (!activePeriodIsExists()) {
+        if (! activePeriodIsExists()) {
             return to_route('dashboard.setting.period.index')->with(
                 [
-                    'failed'    =>  'Buat periode baru terlebih dahulu'
+                    'failed' => 'Buat periode baru terlebih dahulu',
                 ]
             );
         }

@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class VillageSeeder extends Seeder
@@ -15,6 +14,5 @@ class VillageSeeder extends Seeder
     public function run()
     {
         //
-        
     }
 }

@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Period;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class MultiPeriodSeeder extends Seeder
 {
@@ -22,22 +21,22 @@ class MultiPeriodSeeder extends Seeder
         //
         $periods = [
             [
-                'name'          =>  'Last 2 year period',
-                'start_date'    =>  now()->subYears(2)->startOfYear(),
-                'end_date'      =>  now()->subYears(2)->endOfYear(),
-                'is_active'     =>  true
+                'name' => 'Last 2 year period',
+                'start_date' => now()->subYears(2)->startOfYear(),
+                'end_date' => now()->subYears(2)->endOfYear(),
+                'is_active' => true,
             ],
             [
-                'name'          =>  'Last 1 year period',
-                'start_date'    =>  now()->subYear()->startOfYear(),
-                'end_date'      =>  now()->subYear()->endOfYear(),
-                'is_active'     =>  true
+                'name' => 'Last 1 year period',
+                'start_date' => now()->subYear()->startOfYear(),
+                'end_date' => now()->subYear()->endOfYear(),
+                'is_active' => true,
             ],
             [
-                'name'          =>  'Current period',
-                'start_date'    =>  now()->startOfYear(),
-                'end_date'      =>  now()->endOfYear(),
-                'is_active'     =>  true
+                'name' => 'Current period',
+                'start_date' => now()->startOfYear(),
+                'end_date' => now()->endOfYear(),
+                'is_active' => true,
             ],
         ];
 
@@ -56,10 +55,10 @@ class MultiPeriodSeeder extends Seeder
         foreach ($periods as $key => $period) {
             $tempPeriod = Period::create($period);
             $this->runSeeder();
-            if ($key + 1 < sizeof($periods)) {
+            if ($key + 1 < count($periods)) {
                 $tempPeriod->update(
                     [
-                        'is_active' =>  false
+                        'is_active' => false,
                     ]
                 );
             }
@@ -67,7 +66,7 @@ class MultiPeriodSeeder extends Seeder
         if (env('APP_ENV') != 'production') {
             $queries = DB::getQueryLog();
             $queryCount = count($queries);
-            echo "Total queries executed: " . $queryCount . PHP_EOL;
+            echo 'Total queries executed: '.$queryCount.PHP_EOL;
         }
     }
 

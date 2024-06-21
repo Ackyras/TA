@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Dashboard\Request;
 
-use Illuminate\Http\Request;
-use App\Models\RequestAttachment;
 use App\Http\Controllers\Controller;
-use App\Repositories\Request\RequestRepository;
 use App\Http\Requests\Request\StoreRequestRequest;
 use App\Http\Requests\Request\UpdateRequestRequest;
 use App\Models\Request as ModelsRequest;
+use App\Models\RequestAttachment;
+use App\Repositories\Request\RequestRepository;
+use Illuminate\Http\Request;
 
 class RequestController extends Controller
 {
@@ -36,6 +36,7 @@ class RequestController extends Controller
     public function create()
     {
         $datas = $this->repo->create();
+
         return view('pages.dashboard.request.instructor.create', compact('datas'));
     }
 
@@ -45,13 +46,14 @@ class RequestController extends Controller
         if ($this->repo->store($validated)) {
             return to_route('dashboard.request.index')->with(
                 [
-                    'created'   =>  __('message.request.created')
+                    'created' => __('message.request.created'),
                 ]
             );
         }
+
         return to_route('dashboard.request.index')->with(
             [
-                'failed'   =>  __('message.request.notCreated')
+                'failed' => __('message.request.notCreated'),
             ]
         );
     }
@@ -62,13 +64,14 @@ class RequestController extends Controller
         if ($this->repo->update($validated, $instructorRequest)) {
             return back()->with(
                 [
-                    'created'   =>  __('message.request.updated')
+                    'created' => __('message.request.updated'),
                 ]
             );
         }
+
         return back()->with(
             [
-                'failed'   =>  __('message.request.notUpdated')
+                'failed' => __('message.request.notUpdated'),
             ]
         );
     }
@@ -90,14 +93,14 @@ class RequestController extends Controller
         if ($request->delete()) {
             return back()->with(
                 [
-                    'destroyed'   =>  __('message.request.deleted')
+                    'destroyed' => __('message.request.deleted'),
                 ]
             );
         }
 
         return back()->with(
             [
-                'failed'    =>  __('message.request.notDeleted')
+                'failed' => __('message.request.notDeleted'),
             ]
         );
     }
@@ -107,14 +110,14 @@ class RequestController extends Controller
         if ($this->repo->destroyAttachment($attachment)) {
             return back()->with(
                 [
-                    'destroyed'   =>  __('message.attachment.deleted')
+                    'destroyed' => __('message.attachment.deleted'),
                 ]
             );
         }
 
         return back()->with(
             [
-                'failed'    =>  __('message.attachment.notDeleted')
+                'failed' => __('message.attachment.notDeleted'),
             ]
         );
     }

@@ -7,10 +7,15 @@ use Illuminate\View\Component;
 class Text extends Component
 {
     public $name;
+
     public $title;
+
     public $value;
+
     public $hidden;
+
     public $disabled;
+
     public $inLine;
 
     /**

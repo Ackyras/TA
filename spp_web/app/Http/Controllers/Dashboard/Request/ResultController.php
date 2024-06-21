@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Dashboard\Request;
 
-use Illuminate\Http\Request;
-use App\Models\RequestResult;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
-use App\Models\Request as ModelsRequest;
-use App\Repositories\Request\RequestRepository;
 use App\Http\Requests\Request\Result\StoreRequestResultRequest;
+use App\Models\Request as ModelsRequest;
+use App\Models\RequestResult;
 use App\Models\RequestResultAttachment;
+use App\Repositories\Request\RequestRepository;
+use Illuminate\Support\Facades\Storage;
 
 class ResultController extends Controller
 {
@@ -28,18 +27,17 @@ class ResultController extends Controller
         $validated = $httpRequest->validated();
         $result = $request->results()->create(
             [
-                'request_id'    =>  $request->id,
-                'unit_id'       =>  $request->unit_id,
-                'volume'        =>  $validated['volume']
+                'request_id' => $request->id,
+                'unit_id' => $request->unit_id,
+                'volume' => $validated['volume'],
             ]
         );
         if ($result) {
             $resultCreated = true;
         }
-        if (!$validated['attachments']) {
+        if (! $validated['attachments']) {
             $attachmentsCreated = true;
         } else {
-
             foreach ($validated['attachments'] as $attachment) {
                 $this->storeAttachment($result, $attachment);
             }
@@ -48,13 +46,14 @@ class ResultController extends Controller
         if ($resultCreated && $attachmentsCreated) {
             return back()->with(
                 [
-                    'created'   =>  __('message.requestResult.created')
+                    'created' => __('message.requestResult.created'),
                 ]
             );
         }
+
         return back()->with(
             [
-                'failed'   =>  __('message.requestResult.notCreated')
+                'failed' => __('message.requestResult.notCreated'),
             ]
         );
     }
@@ -64,13 +63,14 @@ class ResultController extends Controller
         if ($result->delete()) {
             return back()->with(
                 [
-                    'destroyed'   =>  __('message.requestResult.deleted')
+                    'destroyed' => __('message.requestResult.deleted'),
                 ]
             );
         }
+
         return back()->with(
             [
-                'failed'   =>  __('message.requestResult.notDeleted')
+                'failed' => __('message.requestResult.notDeleted'),
             ]
         );
     }

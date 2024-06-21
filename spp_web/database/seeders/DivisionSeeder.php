@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Division;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DivisionSeeder extends Seeder
 {
@@ -18,20 +17,20 @@ class DivisionSeeder extends Seeder
         //
         $divisions = [
             [
-                'name'  =>  'Prasarana dan Saranan Pertanian',
-                'nickname'  =>  'PSP',
+                'name' => 'Prasarana dan Saranan Pertanian',
+                'nickname' => 'PSP',
             ],
             [
-                'name'  =>  'Perkebunan',
-                'nickname'  =>  'KBN',
+                'name' => 'Perkebunan',
+                'nickname' => 'KBN',
             ],
             [
-                'name'  =>  'Tanaman Pangan dan Hortikultura',
-                'nickname'  =>  'TPH',
+                'name' => 'Tanaman Pangan dan Hortikultura',
+                'nickname' => 'TPH',
             ],
             [
-                'name'  =>  'Peternakan',
-                'nickname'  =>  'TNK',
+                'name' => 'Peternakan',
+                'nickname' => 'TNK',
             ],
         ];
 

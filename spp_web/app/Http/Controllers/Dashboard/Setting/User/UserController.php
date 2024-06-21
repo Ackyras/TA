@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers\Dashboard\Setting\User;
 
-use App\Models\User;
-use App\Models\Village;
-use App\Models\Division;
-use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
-use App\Http\Middleware\ScopePeriod;
-use App\Repositories\User\UserRepository;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
-use App\Interfaces\Repository\UserRepositoryInterface;
 use App\Models\District;
+use App\Models\Division;
+use App\Models\User;
+use App\Repositories\User\UserRepository;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -25,21 +22,18 @@ class UserController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     *
      */
     public function index()
     {
         //
         $users = $this->repo->index();
         $userTable = $this->repo->prepareDatatable($users->toArray());
+
         return view('pages.dashboard.user.index', compact('userTable'));
     }
 
     /**
      * Show the form for creating a new resource.
-     *
-     *
      */
     public function create()
     {
@@ -56,7 +50,6 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\User\StoreUserRequest  $request
-     *
      */
     public function store(StoreUserRequest $request)
     {
@@ -65,13 +58,14 @@ class UserController extends Controller
         if ($this->repo->store($validated)) {
             return back()->with(
                 [
-                    'created'   =>  __('message.user.created')
+                    'created' => __('message.user.created'),
                 ]
             );
         }
+
         return back()->with(
             [
-                'failed'   =>  __('message.user.notCreated')
+                'failed' => __('message.user.notCreated'),
             ]
         );
     }
@@ -80,7 +74,6 @@ class UserController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\User  $user
-     *
      */
     public function show(User $user)
     {
@@ -98,7 +91,6 @@ class UserController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\User  $user
-     *
      */
     public function edit(User $user)
     {
@@ -110,7 +102,6 @@ class UserController extends Controller
      *
      * @param  \App\Http\Requests\User\UpdateUserRequest  $request
      * @param  \App\Models\User  $user
-     *
      */
     public function update(UpdateUserRequest $request, User $user)
     {
@@ -118,13 +109,14 @@ class UserController extends Controller
         if ($this->repo->update($request->validated(), $user)) {
             return back()->with(
                 [
-                    'created'   =>  __('message.user.updated')
+                    'created' => __('message.user.updated'),
                 ]
             );
         }
+
         return back()->with(
             [
-                'failed'   =>  __('message.user.notUpdated')
+                'failed' => __('message.user.notUpdated'),
             ]
         );
     }
@@ -133,7 +125,6 @@ class UserController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\User  $user
-     *
      */
     public function destroy(User $user)
     {
@@ -141,13 +132,14 @@ class UserController extends Controller
         if ($user->delete()) {
             return back()->with(
                 [
-                    'created'   =>  __('message.user.deleted')
+                    'created' => __('message.user.deleted'),
                 ]
             );
         }
+
         return back()->with(
             [
-                'created'   =>  __('message.user.notDeleted')
+                'created' => __('message.user.notDeleted'),
             ]
         );
     }

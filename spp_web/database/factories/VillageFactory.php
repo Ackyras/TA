@@ -18,7 +18,7 @@ class VillageFactory extends Factory
     {
         return [
             //
-            'name'  =>  $this->faker->words(rand(1, 2), true),
+            'name' => $this->faker->words(rand(1, 2), true),
         ];
     }
 }

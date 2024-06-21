@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Period;
 use App\Repositories\Period\PeriodRepository;
@@ -20,6 +19,7 @@ class ArchiveController extends Controller
     {
         $periods = $this->repo->index();
         $periods = $this->repo->prepareDatatable($periods->toArray(), 'archive');
+
         return view('pages.dashboard.archive.index', compact('periods'));
     }
 

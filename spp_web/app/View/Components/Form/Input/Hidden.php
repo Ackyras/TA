@@ -7,6 +7,7 @@ use Illuminate\View\Component;
 class Hidden extends Component
 {
     public $name;
+
     public $value;
 
     /**
@@ -14,7 +15,7 @@ class Hidden extends Component
      *
      * @return void
      */
-    public function __construct($name,  $value)
+    public function __construct($name, $value)
     {
         //
         $this->name = $name;

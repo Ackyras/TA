@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Models\Farmer;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Farmer\StoreFarmerRequest;
+use App\Models\Farmer;
 use App\Models\Village;
 use App\Repositories\Farmer\FarmerRepository;
+use Illuminate\Http\Request;
 
 class FarmerController extends Controller
 {
@@ -37,6 +37,7 @@ class FarmerController extends Controller
                     });
                 }
             )->get();
+
         return view('pages.dashboard.farmer.index', compact('farmers', 'villages'));
     }
 
@@ -63,13 +64,14 @@ class FarmerController extends Controller
         if ($this->repo->store($validated)) {
             return back()->with(
                 [
-                    'created'   =>  __('message.farmer.updated')
+                    'created' => __('message.farmer.updated'),
                 ]
             );
         }
+
         return back()->with(
             [
-                'failed'   =>  __('message.farmer.notUpdated')
+                'failed' => __('message.farmer.notUpdated'),
             ]
         );
     }
@@ -84,6 +86,7 @@ class FarmerController extends Controller
     {
         //
         $datas = $this->repo->show($farmer);
+
         return view('pages.dashboard.farmer.show', compact('datas'));
     }
 
@@ -122,14 +125,14 @@ class FarmerController extends Controller
         if ($farmer->delete()) {
             return back()->with(
                 [
-                    'destroyed'   =>  __('message.farmer.deleted')
+                    'destroyed' => __('message.farmer.deleted'),
                 ]
             );
         }
 
         return back()->with(
             [
-                'failed'    =>  __('message.farmer.notDeleted')
+                'failed' => __('message.farmer.notDeleted'),
             ]
         );
     }

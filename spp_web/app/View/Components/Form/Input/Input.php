@@ -7,12 +7,19 @@ use Illuminate\View\Component;
 abstract class Input extends Component
 {
     public $name;
+
     public $title;
+
     public $value;
+
     public $hidden;
+
     public $inLine;
+
     public $checked;
+
     public $id;
+
     public $disabled;
 
     /**

@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Models\Village;
-use App\Models\District;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Repositories\Village\VillageRepository;
-use App\Repositories\District\DistrictRepository;
 use App\Http\Requests\Village\StoreVillageRequest;
 use App\Http\Requests\Village\UpdateVillageRequest;
+use App\Models\District;
+use App\Models\Village;
+use App\Repositories\District\DistrictRepository;
+use App\Repositories\Village\VillageRepository;
 
 class VillageController extends Controller
 {
     protected VillageRepository $repo;
+
     protected DistrictRepository $districtRepo;
 
     public function __construct(VillageRepository $villageRepository, DistrictRepository $districtRepository)
@@ -33,16 +33,18 @@ class VillageController extends Controller
         $villages = $this->repo->index();
         if ($villages->count() == 1 && auth()->user()->hasRole('koor')) {
             $datas = $this->repo->show($villages->first());
+
             return view('pages.dashboard.village.show')->with(
                 [
-                    'village'   =>  $datas['village'],
-                    'table'     =>  $datas['table']
+                    'village' => $datas['village'],
+                    'table' => $datas['table'],
                 ],
             );
         }
         $villageTable = $this->repo->prepareDatatable($villages->toArray());
         // dd($villageTable);
         $districts = $this->districtRepo->index();
+
         return view('pages.dashboard.village.index', compact('villages', 'villageTable', 'districts'));
     }
 
@@ -70,13 +72,14 @@ class VillageController extends Controller
         if ($this->repo->store($validated)) {
             return back()->with(
                 [
-                    'created'   =>  __('message.village.created')
+                    'created' => __('message.village.created'),
                 ]
             );
         }
+
         return back()->with(
             [
-                'failed'   =>  __('message.village.notCreated')
+                'failed' => __('message.village.notCreated'),
             ]
         );
     }
@@ -91,12 +94,13 @@ class VillageController extends Controller
     {
         //
         $datas = $this->repo->show($village);
+
         return view(
             'pages.dashboard.village.show',
         )->with(
             [
-                'village'  =>  $datas['village'],
-                'table'    =>  $datas['table']
+                'village' => $datas['village'],
+                'table' => $datas['table'],
             ]
         );
     }
@@ -126,13 +130,14 @@ class VillageController extends Controller
         if ($this->repo->update($village, $validated)) {
             return back()->with(
                 [
-                    'created'   =>  __('message.village.updated')
+                    'created' => __('message.village.updated'),
                 ]
             );
         }
+
         return back()->with(
             [
-                'failed'   =>  __('message.village.notUpdated')
+                'failed' => __('message.village.notUpdated'),
             ]
         );
     }
@@ -149,14 +154,14 @@ class VillageController extends Controller
         if ($village->delete()) {
             return back()->with(
                 [
-                    'destroyed'   =>  __('message.village.deleted')
+                    'destroyed' => __('message.village.deleted'),
                 ]
             );
         }
 
         return back()->with(
             [
-                'failed'    =>  __('message.village.notDeleted')
+                'failed' => __('message.village.notDeleted'),
             ]
         );
     }

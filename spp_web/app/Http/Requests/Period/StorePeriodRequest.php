@@ -30,15 +30,15 @@ class StorePeriodRequest extends FormRequest
                 'required',
                 'date',
                 'before_or_equal:end_date', // Ensure start_date is before or equal to end_date
-                new DateRangeNotOverlap($this->end_date)
+                new DateRangeNotOverlap($this->end_date),
             ],
             'end_date' => [
                 'required',
                 'date',
                 'after_or_equal:start_date', // Ensure end_date is after or equal to start_date
-                new DateRangeNotOverlap($this->start_date)
+                new DateRangeNotOverlap($this->start_date),
             ],
-            'deactivate_active_period' => 'accepted'
+            'deactivate_active_period' => 'accepted',
         ];
     }
 }

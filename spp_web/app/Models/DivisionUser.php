@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class DivisionUser extends Pivot
@@ -14,7 +13,7 @@ class DivisionUser extends Pivot
 
     protected $fillable = [
         'user_id',
-        'division_id'
+        'division_id',
     ];
 
     public function division()

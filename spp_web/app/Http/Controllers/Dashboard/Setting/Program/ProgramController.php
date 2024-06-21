@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Dashboard\Setting\Program;
 
-use App\Models\Program;
-use App\Models\Division;
 use App\Http\Controllers\Controller;
-use App\Repositories\Program\ProgramRepository;
 use App\Http\Requests\Program\StoreProgramRequest;
 use App\Http\Requests\Program\UpdateProgramRequest;
+use App\Models\Division;
+use App\Models\Program;
+use App\Repositories\Program\ProgramRepository;
 
 class ProgramController extends Controller
 {
@@ -55,13 +55,14 @@ class ProgramController extends Controller
         if ($this->repo->store($request->validated())) {
             return back()->with(
                 [
-                    'created'   =>  __('message.program.created')
+                    'created' => __('message.program.created'),
                 ]
             );
         }
+
         return back()->with(
             [
-                'failed'   =>  __('message.program.notCreated')
+                'failed' => __('message.program.notCreated'),
             ]
         );
     }
@@ -101,13 +102,14 @@ class ProgramController extends Controller
         if ($this->repo->update($program, $request->validated())) {
             return back()->with(
                 [
-                    'updated'   =>  __('message.program.updated')
+                    'updated' => __('message.program.updated'),
                 ]
             );
         }
+
         return back()->with(
             [
-                'failed'   =>  __('message.district.notUpdated')
+                'failed' => __('message.district.notUpdated'),
             ]
         );
     }
@@ -124,14 +126,14 @@ class ProgramController extends Controller
         if ($program->delete()) {
             return back()->with(
                 [
-                    'destroyed'   =>  __('message.program.deleted')
+                    'destroyed' => __('message.program.deleted'),
                 ]
             );
         }
 
         return back()->with(
             [
-                'failed'    =>  __('message.program.notDeleted')
+                'failed' => __('message.program.notDeleted'),
             ]
         );
     }

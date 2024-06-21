@@ -24,10 +24,11 @@ class UpdateDivisionRequest extends FormRequest
     public function rules()
     {
         $divisionId = $this->route('division')->id;
+
         return [
             //
-            'name'      =>  'required',
-            'nickname'  =>  ['required']
+            'name' => 'required',
+            'nickname' => ['required'],
         ];
     }
 }

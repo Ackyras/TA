@@ -2,14 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\Unit;
 use App\Models\Farmer;
 use App\Models\Period;
-use App\Models\Program;
 use App\Models\ProposalDictionary;
-use Illuminate\Database\Seeder;
 use App\Models\RequestAttachment;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Unit;
+use Illuminate\Database\Seeder;
 
 class RequestSeeder extends Seeder
 {

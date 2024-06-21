@@ -3,23 +3,22 @@
 namespace App\Repositories\Program;
 
 use App\Models\Program;
-use App\Models\Division;
 use App\Models\ProposalDictionary;
 
 class ProgramRepository extends BaseProgramRepository
 {
     protected $indexTableAction = [
         'show' => [
-            'text'  =>  'Lihat',
-            'type'  =>  'redirect',
-            'route' =>  'dashboard.setting.program.show',
-            'color' =>  'primary',
+            'text' => 'Lihat',
+            'type' => 'redirect',
+            'route' => 'dashboard.setting.program.show',
+            'color' => 'primary',
         ],
         'destroy' => [
-            'text'  =>  'Hapus',
-            'type'  =>  'delete',
-            'route' =>  'dashboard.setting.program.destroy',
-            'color' =>  'danger',
+            'text' => 'Hapus',
+            'type' => 'delete',
+            'route' => 'dashboard.setting.program.destroy',
+            'color' => 'danger',
         ],
     ];
 
@@ -29,7 +28,7 @@ class ProgramRepository extends BaseProgramRepository
             ->whereNull('parent_id')
             ->with(
                 [
-                    'lowerProgramTree'
+                    'lowerProgramTree',
                 ]
             )->get();
     }
@@ -39,6 +38,7 @@ class ProgramRepository extends BaseProgramRepository
         if ($program = Program::create($data)) {
             return true;
         }
+
         return false;
     }
 
@@ -48,6 +48,7 @@ class ProgramRepository extends BaseProgramRepository
         if ($program->update($data)) {
             return $program->update($data);
         }
+
         return false;
     }
 
@@ -55,6 +56,7 @@ class ProgramRepository extends BaseProgramRepository
     {
         $config = $this->datatableConfig;
         $config['actions'] = $this->indexTableAction;
+
         return parent::prepareDatatable($datas, $config);
     }
 
@@ -66,7 +68,7 @@ class ProgramRepository extends BaseProgramRepository
             ->with(
                 [
                     'lowerProgramTreeAndDictionaries',
-                    'proposalDictionaries'
+                    'proposalDictionaries',
                 ]
             )->get();
 
@@ -76,12 +78,12 @@ class ProgramRepository extends BaseProgramRepository
         return $programs;
     }
 
-
     public function dictionaryStore(array $datas)
     {
         if ($dictionary = ProposalDictionary::create($datas)) {
             return true;
         }
+
         return false;
     }
 
@@ -90,6 +92,7 @@ class ProgramRepository extends BaseProgramRepository
         if ($dictionary = $proposalDictionary->update($datas)) {
             return true;
         }
+
         return false;
     }
 }

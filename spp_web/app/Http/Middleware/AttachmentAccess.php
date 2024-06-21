@@ -9,7 +9,7 @@ class AttachmentAccess
 {
     public function handle(Request $request, Closure $next)
     {
-        if (!auth()->check()) {
+        if (! auth()->check()) {
             return response()->json(['message' => 'Unauthorized.'], 403);
         }
 

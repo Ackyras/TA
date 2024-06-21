@@ -5,14 +5,11 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\District\StoreDistrictRequest;
 use App\Http\Requests\District\UpdateDistrictRequest;
-use App\Interfaces\Repository\DistrictRepositoryInterface;
 use App\Models\District;
 use App\Repositories\District\DistrictRepository;
-use Illuminate\Http\Request;
 
 class DistrictController extends Controller
 {
-
     protected DistrictRepository $repo;
 
     public function __construct(DistrictRepository $repo)
@@ -34,6 +31,7 @@ class DistrictController extends Controller
             return $this->show($districts->first());
         }
         $districtTable = $this->repo->prepareDatatable($districts->toArray());
+
         return view('pages.dashboard.district.index', compact('districts', 'districtTable'));
     }
 
@@ -60,13 +58,14 @@ class DistrictController extends Controller
         if ($this->repo->store($validated)) {
             return back()->with(
                 [
-                    'created'   =>  __('message.district.created')
+                    'created' => __('message.district.created'),
                 ]
             );
         }
+
         return back()->with(
             [
-                'failed'   =>  __('message.district.notCreated')
+                'failed' => __('message.district.notCreated'),
             ]
         );
     }
@@ -82,14 +81,14 @@ class DistrictController extends Controller
         //
         $district->load(
             [
-                'villages'  =>  function ($query) {
+                'villages' => function ($query) {
                     $query->withCount('farmers');
-                }
+                },
             ]
         )->loadCount(
             [
                 'villages',
-                'farmers'
+                'farmers',
             ]
         );
         $table = $this->repo->villagesDatatable($district->villages->toArray());
@@ -122,13 +121,14 @@ class DistrictController extends Controller
         if ($this->repo->update($district, $validated)) {
             return back()->with(
                 [
-                    'created'   =>  __('message.district.updated')
+                    'created' => __('message.district.updated'),
                 ]
             );
         }
+
         return back()->with(
             [
-                'failed'   =>  __('message.district.notUpdated')
+                'failed' => __('message.district.notUpdated'),
             ]
         );
     }
@@ -145,14 +145,14 @@ class DistrictController extends Controller
         if ($district->delete()) {
             return back()->with(
                 [
-                    'destroyed'   =>  __('message.district.deleted')
+                    'destroyed' => __('message.district.deleted'),
                 ]
             );
         }
 
         return back()->with(
             [
-                'failed'    =>  __('message.district.notDeleted')
+                'failed' => __('message.district.notDeleted'),
             ]
         );
     }

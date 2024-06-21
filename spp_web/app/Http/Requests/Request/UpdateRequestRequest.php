@@ -31,7 +31,7 @@ class UpdateRequestRequest extends FormRequest
             'attachments' => 'nullable|array',
             'attachments.*.name' => 'nullable',
             'attachments.*.file' => ['nullable', 'file', 'mimes:png,jpg,pdf'],
-            'status'    =>  'filled',
+            'status' => 'filled',
         ];
     }
 }

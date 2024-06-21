@@ -2,24 +2,23 @@
 
 namespace App\Repositories\User;
 
-use App\Repositories\User\BaseUserRepository;
 use App\Models\User;
 
 class UserRepository extends BaseUserRepository
 {
     protected $indexTableAction = [
         'show' => [
-            'text'  =>  'Lihat',
-            'type'  =>  'redirect',
-            'route' =>  'dashboard.setting.user.show',
-            'color' =>  'primary',
+            'text' => 'Lihat',
+            'type' => 'redirect',
+            'route' => 'dashboard.setting.user.show',
+            'color' => 'primary',
         ],
         'destroy' => [
-            'text'  =>  'Hapus',
-            'type'  =>  'delete',
-            'route' =>  'dashboard.setting.user.destroy',
-            'color' =>  'danger',
-        ]
+            'text' => 'Hapus',
+            'type' => 'delete',
+            'route' => 'dashboard.setting.user.destroy',
+            'color' => 'danger',
+        ],
     ];
 
     public function index()
@@ -50,9 +49,9 @@ class UserRepository extends BaseUserRepository
         $responsibilityAssigned = false;
         if ($user = User::create(
             [
-                'name'  =>  $datas['name'],
-                'email'  =>  $datas['email'],
-                'password'  =>  bcrypt($datas['password']),
+                'name' => $datas['name'],
+                'email' => $datas['email'],
+                'password' => bcrypt($datas['password']),
             ]
         )) {
             $userCreated = true;
@@ -69,13 +68,14 @@ class UserRepository extends BaseUserRepository
         } elseif ($datas['roles'] == 1) {
             $responsibilityAssigned = true;
         }
+
         return $userCreated && $roleAssigned && $responsibilityAssigned;
     }
 
     public function update(array $datas, User $user)
     {
         $userChanged = false;
-        $roleChanged = false;;
+        $roleChanged = false;
 
         if ($user->update($datas)) {
             $userChanged = true;
@@ -86,14 +86,14 @@ class UserRepository extends BaseUserRepository
             $roleChanged = true;
         }
 
-        if (!isset($datas['divisions'])) {
+        if (! isset($datas['divisions'])) {
             // Remove all relationships between the user and divisions
             $user->divisions()->detach();
         } else {
             $user->divisions()->sync($datas['divisions']);
         }
 
-        if (!isset($datas['villages'])) {
+        if (! isset($datas['villages'])) {
             // Remove all relationships between the user and villages
             $user->districts()->detach();
         } else {
@@ -103,11 +103,11 @@ class UserRepository extends BaseUserRepository
         return $userChanged && $roleChanged;
     }
 
-
     public function prepareDatatable($datas, $config = null)
     {
         $config = $this->datatableConfig;
         $config['actions'] = $this->indexTableAction;
+
         return parent::prepareDatatable($datas, $config);
     }
 }

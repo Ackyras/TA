@@ -7,10 +7,10 @@ use App\Repositories\BaseRepository;
 class BaseDistrictRepository extends BaseRepository
 {
     protected $datatableConfig = [
-        'headers'   => [
-            'Nama'          =>  'name',
-            'Jumlah Desa'   =>  'villages_count',
+        'headers' => [
+            'Nama' => 'name',
+            'Jumlah Desa' => 'villages_count',
         ],
-        'caption'   => 'Table of User'
+        'caption' => 'Table of User',
     ];
 }

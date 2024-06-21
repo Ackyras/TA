@@ -27,7 +27,7 @@ class StoreProposalDictionaryRequest extends FormRequest
             //
             'name' => ['required', 'string'],
             'parent_id' => 'filled',
-            'division_id'   =>  'required',
+            'division_id' => 'required',
         ];
     }
 }

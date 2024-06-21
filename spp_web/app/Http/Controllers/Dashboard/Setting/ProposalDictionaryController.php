@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Dashboard\Setting;
 
 use App\Http\Controllers\Controller;
-use App\Models\ProposalDictionary;
 use App\Http\Requests\StoreProposalDictionaryRequest;
 use App\Http\Requests\UpdateProposalDictionaryRequest;
 use App\Models\Division;
+use App\Models\ProposalDictionary;
 use App\Repositories\Program\ProgramRepository;
 
 class ProposalDictionaryController extends Controller
@@ -28,6 +28,7 @@ class ProposalDictionaryController extends Controller
         //
         $programs = $this->repo->dictionaryIndex();
         $divisions = Division::all();
+
         return view('pages.dashboard.proposal-dictionary.index', compact('programs', 'divisions'));
     }
 
@@ -53,13 +54,14 @@ class ProposalDictionaryController extends Controller
         if ($this->repo->dictionaryStore($request->validated())) {
             return back()->with(
                 [
-                    'created'   =>  __('message.program.created')
+                    'created' => __('message.program.created'),
                 ]
             );
         }
+
         return back()->with(
             [
-                'failed'   =>  __('message.program.notCreated')
+                'failed' => __('message.program.notCreated'),
             ]
         );
     }
@@ -99,13 +101,14 @@ class ProposalDictionaryController extends Controller
         if ($this->repo->dictionaryUpdate($request->validated(), $proposalDictionary)) {
             return back()->with(
                 [
-                    'created'   =>  __('message.program.created')
+                    'created' => __('message.program.created'),
                 ]
             );
         }
+
         return back()->with(
             [
-                'failed'   =>  __('message.program.notCreated')
+                'failed' => __('message.program.notCreated'),
             ]
         );
     }
@@ -122,13 +125,14 @@ class ProposalDictionaryController extends Controller
         if ($proposalDictionary->delete()) {
             return back()->with(
                 [
-                    'destroyed'   =>  __('message.proposalDictionary.deleted')
+                    'destroyed' => __('message.proposalDictionary.deleted'),
                 ]
             );
         }
+
         return back()->with(
             [
-                'failed'   =>  __('message.proposalDictionary.notDeleted')
+                'failed' => __('message.proposalDictionary.notDeleted'),
             ]
         );
     }

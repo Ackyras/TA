@@ -2,14 +2,12 @@
 
 namespace Tests\Feature\Iteration\Iteration2;
 
-use Mockery;
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\District;
 use App\Models\Division;
-use Spatie\Permission\Models\Role;
-use Illuminate\Foundation\Testing\WithFaker;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Spatie\Permission\Models\Role;
+use Tests\TestCase;
 
 class KadisUserManagementTest extends TestCase
 {
@@ -35,6 +33,7 @@ class KadisUserManagementTest extends TestCase
         $authResponse = $this->actingAs($newUser);
 
         $authResponse->assertAuthenticated();
+
         return $newUser;
     }
 
@@ -67,7 +66,7 @@ class KadisUserManagementTest extends TestCase
                     'email' => 'newKabid@valid.com',
                     'password' => 'password',
                     'roles' => 2,
-                    'divisions' =>  1
+                    'divisions' => 1,
                 ],
             ],
             'valid_user_role_3' => [
@@ -76,7 +75,7 @@ class KadisUserManagementTest extends TestCase
                     'email' => 'newKoor@valid.com',
                     'password' => 'password',
                     'roles' => 3,
-                    'villages'  =>  1
+                    'villages' => 1,
                 ],
             ],
         ];
@@ -173,7 +172,7 @@ class KadisUserManagementTest extends TestCase
             // Prepare the updated user data
             $updatedUserData = [
                 'name' => 'Updated User',
-                'email' =>  $userToUpdate->email,
+                'email' => $userToUpdate->email,
                 'roles' => $newRole->id,
                 'divisions' => $newDivision->id,
             ];
@@ -196,6 +195,7 @@ class KadisUserManagementTest extends TestCase
             $this->markTestSkipped('No user with the specified role and divisions found for update test.');
         }
     }
+
     public function test_kepala_dinas_can_update_user_role_and_scope_for_koor()
     {
         // Get a user with the role to update
@@ -211,7 +211,7 @@ class KadisUserManagementTest extends TestCase
 
             $updatedUserData = [
                 'name' => 'Updated User',
-                'email' =>  $userToUpdate->email,
+                'email' => $userToUpdate->email,
                 'roles' => $newRole->id,
                 'villages' => $newDistrict->id,
             ];
@@ -243,7 +243,7 @@ class KadisUserManagementTest extends TestCase
         })->inRandomOrder()->first();
 
         // Check if there's a user to update, otherwise skip the test
-        if (!$userToUpdate) {
+        if (! $userToUpdate) {
             $this->markTestSkipped('No user found for the update test.');
         }
 
@@ -251,7 +251,7 @@ class KadisUserManagementTest extends TestCase
         $updatedUserData = [
             'name' => 'Updated User',
             'email' => 'updateduser@example.com',
-            'roles' =>  $userToUpdate->roles,
+            'roles' => $userToUpdate->roles,
         ];
 
         // Check the user's role and add additional data if it's role 2 or 3
@@ -298,7 +298,7 @@ class KadisUserManagementTest extends TestCase
         })->inRandomOrder()->first();
 
         // Check if there's a user to delete, otherwise skip the test
-        if (!$userToDelete) {
+        if (! $userToDelete) {
             $this->markTestSkipped('No user found for the delete test.');
         }
 

@@ -6,7 +6,9 @@ use Illuminate\View\Component;
 
 class Datatable extends Component
 {
-    public $table, $id;
+    public $table;
+
+    public $id;
 
     /**
      * Create a new component instance.
@@ -34,12 +36,13 @@ class Datatable extends Component
     {
         $actionParameters = [];
         if (isset($action['routeParameter'])) {
-            foreach ($action['routeParameter'] as $key =>   $value) {
-                $actionParameters[$key]  =  $row[$value];
+            foreach ($action['routeParameter'] as $key => $value) {
+                $actionParameters[$key] = $row[$value];
             }
         } else {
             $actionParameters = $row['id'];
         }
+
         return $actionParameters;
     }
 }

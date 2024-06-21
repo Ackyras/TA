@@ -25,8 +25,8 @@ class StoreDivisionRequest extends FormRequest
     {
         return [
             //
-            'name'      =>  'required',
-            'nickname'  =>  ['required']
+            'name' => 'required',
+            'nickname' => ['required'],
         ];
     }
 }

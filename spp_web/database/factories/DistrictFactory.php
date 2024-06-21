@@ -18,7 +18,7 @@ class DistrictFactory extends Factory
     {
         return [
             //
-            'name'  =>  $this->faker->city(),
+            'name' => $this->faker->city(),
         ];
     }
 }

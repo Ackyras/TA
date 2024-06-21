@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Models\Request;
 use App\Models\RequestResultAttachment;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class RequestResultSeeder extends Seeder
 {
@@ -22,25 +21,25 @@ class RequestResultSeeder extends Seeder
             if (rand(0, 1)) {
                 $request->update(
                     [
-                        'status'    =>  'requested'
+                        'status' => 'requested',
                     ]
                 );
                 if (rand(0, 1)) {
                     $request->update(
                         [
-                            'status'    =>  'approved',
+                            'status' => 'approved',
                         ]
                     );
                     $result = $request->results()->create(
                         [
-                            'volume'    =>  $request->volume - rand(0, $request->volume),
-                            'unit_id'   =>  $request->unit_id,
+                            'volume' => $request->volume - rand(0, $request->volume),
+                            'unit_id' => $request->unit_id,
                         ]
                     );
                     if (rand(0, 1)) {
                         $request->update(
                             [
-                                'status'    =>  'done',
+                                'status' => 'done',
                             ],
                         );
                         RequestResultAttachment::factory(rand(0, 2))->for($result, 'requestResult')->create();

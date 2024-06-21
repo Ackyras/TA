@@ -3,28 +3,23 @@
 namespace App\Repositories\Farmer;
 
 use App\Models\Farmer;
-use App\Models\Village;
-use App\Models\District;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\Paginator;
-use App\Repositories\Farmer\BaseFarmerRepository;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class FarmerRepository extends BaseFarmerRepository
 {
     protected $indexTableAction = [
         'show' => [
-            'text'  =>  'Lihat',
-            'type'  =>  'redirect',
-            'route' =>  'dashboard.farmer.show',
-            'color' =>  'primary',
+            'text' => 'Lihat',
+            'type' => 'redirect',
+            'route' => 'dashboard.farmer.show',
+            'color' => 'primary',
         ],
         'destroy' => [
-            'text'  =>  'Hapus',
-            'type'  =>  'delete',
-            'route' =>  'dashboard.farmer.destroy',
-            'color' =>  'danger',
-        ]
+            'text' => 'Hapus',
+            'type' => 'delete',
+            'route' => 'dashboard.farmer.destroy',
+            'color' => 'danger',
+        ],
     ];
 
     protected $allowedFilters = [
@@ -52,10 +47,11 @@ class FarmerRepository extends BaseFarmerRepository
                 },
                 'village.district' => function ($query) {
                     $query->select(['id', 'name']);
-                }
+                },
             ]);
 
         $farmers = $this->filter($query, $request, false, true, 10);
+
         return $farmers->withQueryString();
     }
 
@@ -67,11 +63,11 @@ class FarmerRepository extends BaseFarmerRepository
                 'requests' => function ($query) {
                     $query->with(
                         [
-                            'program'   =>  function ($query) {
+                            'program' => function ($query) {
                                 $query->withoutGlobalScope('current_period');
                             },
                             'unit',
-                            'attachments'
+                            'attachments',
                         ]
                     );
                 },
@@ -80,11 +76,12 @@ class FarmerRepository extends BaseFarmerRepository
                 },
                 'village.district' => function ($query) {
                     $query->select(['id', 'name']);
-                }
+                },
             ]
         )->loadCount([
-            'requests'
+            'requests',
         ]);
+
         return $datas;
     }
 
@@ -96,6 +93,7 @@ class FarmerRepository extends BaseFarmerRepository
     public function update(Farmer $farmer, array $data)
     {
         $farmer->update($data);
+
         return $farmer->wasChanged();
     }
 
@@ -103,6 +101,7 @@ class FarmerRepository extends BaseFarmerRepository
     {
         $config = $this->datatableConfig;
         $config['actions'] = $this->indexTableAction;
+
         return parent::prepareDatatable($datas, $config);
     }
 }

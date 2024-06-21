@@ -2,12 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Imports\BaseDataImport;
+use App\Models\District;
 use App\Models\Farmer;
 use App\Models\Village;
-use App\Models\District;
-use App\Imports\BaseDataImport;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ProductionSeeder extends Seeder
@@ -24,13 +23,13 @@ class ProductionSeeder extends Seeder
         $datas = $importer->data;
         foreach ($datas as $districtName => $villages) {
             $district = District::create([
-                'name'  =>  $districtName
+                'name' => $districtName,
             ]);
             foreach ($villages as $villageName => $farmers) {
                 $village = Village::create(
                     [
-                        'name'          =>  $villageName,
-                        'district_id'   =>  $district->id
+                        'name' => $villageName,
+                        'district_id' => $district->id,
                     ],
                 );
                 foreach ($farmers as $key => $farmer) {
