@@ -68,19 +68,6 @@
             </div>
         </li>
         @endCanImpersonate
-        <!-- Usability Test Start Button -->
-        <li class="nav-item">
-            <button id="startUsabilityTest" class="btn btn-success">
-                Start Usability Test
-            </button>
-        </li>
-
-        <!-- Usability Test Stop Button -->
-        <li class="nav-item">
-            <button id="stopUsabilityTest" class="btn btn-danger" style="display:none;">
-                Stop Usability Test
-            </button>
-        </li>
         <li class="nav-item dropdown">
             <button type="button" class="btn dropdown-toggle" id="navbarDropdown4" role="button"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -83,7 +83,7 @@
     <!-- AdminLTE App -->
     <script src="{{ asset('adminLTE/dist/js/adminlte.min.js') }}"></script>
     {{-- Custom Input --}}
-    <script src="{{ asset ('adminLTE/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
+    <script src="{{ asset('adminLTE/plugins/bs-custom-file-input/bs-custom-file-input.min.js') }}"></script>
 
     <!-- DataTables  & Plugins -->
     <script src="{{ asset('adminLTE/plugins/datatables/jquery.dataTables.min.js') }}"></script>
@@ -119,6 +119,18 @@
                 "responsive": true,
             });
         });
+    </script>
+    <script type="text/javascript">
+        (function(c, l, a, r, i, t, y) {
+            c[a] = c[a] || function() {
+                (c[a].q = c[a].q || []).push(arguments)
+            };
+            t = l.createElement(r);
+            t.async = 1;
+            t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0];
+            y.parentNode.insertBefore(t, y);
+        })(window, document, "clarity", "script", "mv9vetoer4");
     </script>
     <script>
         $(function() {
