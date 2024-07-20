@@ -13,6 +13,7 @@ class StoreProposalDictionaryRequest extends FormRequest
      */
     public function authorize()
     {
+        // dd(request()->all());
         return auth()->check();
     }
 

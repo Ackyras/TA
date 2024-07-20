@@ -49,7 +49,13 @@ class RolePermissionSeeder extends Seeder
                 'requests' => $allCruds,
             ],
             [
+                'requests.results' => $allCruds,
+            ],
+            [
                 'programs' => $allCruds,
+            ],
+            [
+                'programs.proposalDictionaries' => $allCruds,
             ],
             [
                 'archives' => [

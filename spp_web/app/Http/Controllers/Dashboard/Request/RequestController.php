@@ -18,6 +18,10 @@ class RequestController extends Controller
     public function __construct(RequestRepository $requestRepository)
     {
         $this->repo = $requestRepository;
+        $this->middleware('permission:requests.create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:requests.read', ['only' => ['index', 'show']]);
+        $this->middleware('permission:requests.update', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:requests.delete', ['only' => ['destroy']]);
     }
 
     public function index(Request $request)

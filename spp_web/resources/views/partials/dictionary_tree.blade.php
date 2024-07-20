@@ -61,6 +61,25 @@
                                                                 </option>
                                                             @endforeach
                                                         </select>
+                                                    @else
+                                                        <select class="custom-select select2bs4" id="division_id"
+                                                            name="division_id_disabled" disabled>
+                                                            @foreach ($divisions as $division)
+                                                                <option value="{{ $division->id }}"
+                                                                    @if (old('division_id') == $division->id || auth()->user()->divisions()->first()->id == $division->id) selected @endif>
+                                                                    {{ $division->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                        <select class="custom-select select2bs4" id="division_id"
+                                                            name="division_id" hidden>
+                                                            @foreach ($divisions as $division)
+                                                                <option value="{{ $division->id }}"
+                                                                    @if (old('division_id') == $division->id || auth()->user()->divisions()->first()->id == $division->id) selected @endif>
+                                                                    {{ $division->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
                                                     @endif
                                                 </div>
                                             </div>

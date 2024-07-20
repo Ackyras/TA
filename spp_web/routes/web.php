@@ -63,7 +63,7 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
             [
                 'names' => 'program',
             ]
-        );
+        )->middleware(['can:programs']);
 
         Route::resource(
             'proposalDictionaries',
@@ -71,7 +71,7 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
             [
                 'names' => 'proposalDictionary',
             ]
-        );
+        )->middleware(['can:programs.proposalDictionaries']);
 
         Route::resource(
             'periods',
@@ -79,7 +79,7 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
             [
                 'names' => 'period',
             ]
-        );
+        )->middleware(['can:periods']);
         Route::controller(SeedingController::class)->prefix('seeding')->as('seeding.')->group(function () {
             Route::get('/', 'index')->name('index');
             Route::post('/', 'storeComplete')->name('store.complete');
@@ -92,7 +92,7 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
         [
             'names' => 'district',
         ]
-    );
+    )->middleware(['can:districts']);
 
     Route::resource(
         'villages',
@@ -100,39 +100,39 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
         [
             'names' => 'village',
         ]
-    );
+    )->middleware(['can:villages']);
     Route::resource(
         'farmers',
         FarmerController::class,
         [
             'names' => 'farmer',
         ],
-    );
+    )->middleware(['can:farmers']);
 
     Route::controller(VillageController::class)->group(function () {
         Route::prefix('districts/{district}/village')->as('district.village.')->group(
             function () {
-                Route::get('/create', 'create')->name('create');
-                Route::post('/', 'store')->name('store');
-                Route::get('{village}', 'show')->name('show');
-                Route::get('{village}/edit', 'edit')->name('edit');
-                Route::put('{village}', 'update')->name('update');
-                Route::delete('{village}', 'destroy')->name('destroy');
+                Route::get('/create', 'create')->name('create')->middleware(['can:villages.create']);
+                Route::post('/', 'store')->name('store')->middleware(['can:villages.create']);
+                Route::get('{village}', 'show')->name('show')->middleware(['can:villages.read']);
+                Route::get('{village}/edit', 'edit')->name('edit')->middleware(['can:villages.update']);
+                Route::put('{village}', 'update')->name('update')->middleware(['can:villages.update']);
+                Route::delete('{village}', 'destroy')->name('destroy')->middleware(['can:villages.delete']);
             }
         );
     });
 
     Route::prefix('requests')->as('request.')->group(function () {
-        Route::get('/', [RequestController::class, 'index'])->name('index');
-        Route::post('/', [RequestController::class, 'store'])->name('store');
-        Route::get('/create', [RequestController::class, 'create'])->name('create');
-        Route::get('/{request}', [RequestController::class, 'show'])->name('show');
-        Route::put('/{instructorRequest}', [RequestController::class, 'update'])->name('update');
-        Route::delete('/{request}', [RequestController::class, 'destroy'])->name('destroy');
-        Route::match(['GET', 'DELETE'], '/dashboard/requests/{request}/attachment/{attachment}', [RequestController::class, 'destroyAttachment'])->name('attachment.destroy');
+        Route::get('/', [RequestController::class, 'index'])->name('index')->middleware(['can:requests.read']);
+        Route::post('/', [RequestController::class, 'store'])->name('store')->middleware(['can:requests.create']);
+        Route::get('/create', [RequestController::class, 'create'])->name('create')->middleware(['can:requests.create']);
+        Route::get('/{request}', [RequestController::class, 'show'])->name('show')->middleware(['can:requests.read']);
+        Route::put('/{instructorRequest}', [RequestController::class, 'update'])->name('update')->middleware(['can:requests.update']);
+        Route::delete('/{request}', [RequestController::class, 'destroy'])->name('destroy')->middleware(['can:requests.delete']);
+        Route::match(['GET', 'DELETE'], '/dashboard/requests/{request}/attachment/{attachment}', [RequestController::class, 'destroyAttachment'])->middleware(['can:requests.update'])->name('attachment.destroy');
         Route::controller(ResultController::class)->prefix('{request}/result')->as('result.')->group(function () {
-            Route::post('/', 'store')->name('store');
-            Route::delete('{result}/destroy', 'destroy')->name('destroy');
+            Route::post('/', 'store')->name('store')->middleware(['can:requests.results.create']);
+            Route::delete('{result}/destroy', 'destroy')->name('destroy')->middleware(['can:requests.results.delete']);
         });
     });
     Route::middleware([ArchiveMiddleware::class, ScopePeriod::class])->prefix('archive')->as('archive.')->group(function () {

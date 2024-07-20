@@ -51,6 +51,7 @@ class ProposalDictionaryController extends Controller
     public function store(StoreProposalDictionaryRequest $request)
     {
         //
+        // dd($request->validated());
         if ($this->repo->dictionaryStore($request->validated())) {
             return back()->with(
                 [
